@@ -1,0 +1,50 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "hubPrivateEndpointName": {
+            "value": "plhub-pe"
+        },
+        "sqlPrivateEndpointName": {
+            "value": "sql-pe"
+        },
+        "sqlOnDemandPrivateEndpointName": {
+            "value": "sqlondemand-pe"
+        },
+        "devPrivateEndpointName": {
+            "value": "dev-pe"
+        },
+        "hubPrivateLinkResource": {
+            "value": ""
+        },
+        "sqlPrivateLinkResource": {
+            "value": ""
+        },
+        "hubTargetSubResource": {
+            "value": [
+                "Web"
+            ]
+        },
+        "sqlTargetSubResource": {
+            "value": [
+                "Sql"
+            ]
+        },
+        "sqlOnDemandTargetSubResource": {
+            "value": [
+                "SqlOnDemand"
+            ]
+        },
+        "devTargetSubResource": {
+            "value": [
+                "Dev"
+            ]
+        },
+        "subnet": {
+            "value": ""
+        },
+        "virtualNetworkId": {
+            "value": ""
+        }
+    }
+}

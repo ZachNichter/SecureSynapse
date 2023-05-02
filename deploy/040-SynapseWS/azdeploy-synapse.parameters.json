@@ -1,0 +1,84 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "synapse-ws"
+        },
+        "defaultDataLakeStorageAccountName": {
+            "value": "securesynapseadls"
+        },
+        "defaultDataLakeStorageFilesystemName": {
+            "value": "synapsefiles"
+        },
+        "allowSynapseADAuthOnly": {
+            "value": true
+        },
+        "sqlAdministratorLogin": {
+            "value": "sqladminuser"
+        },
+        "sqlAdministratorPassword": {
+            "value": ""
+        },
+        "setWorkspaceIdentityRbacOnStorageAccount": {
+            "value": true
+        },
+        "allowAllConnections": {
+            "value": false
+        },
+        "grantWorkspaceIdentityControlForSql": {
+            "value": "Enabled"
+        },
+        "managedVirtualNetwork": {
+            "value": "default"
+        },
+        "storageSubscriptionID": {
+            "value": ""
+        },
+        "storageLocation": {
+            "value": ""
+        },
+        "storageRoleUniqueId": {
+            "value": ""
+        },
+        "isNewStorageAccount": {
+            "value": true
+        },
+        "isNewFileSystemOnly": {
+            "value": false
+        },
+        "adlaResourceId": {
+            "value": ""
+        },
+        "managedResourceGroupName": {
+            "value": ""
+        },
+        "storageAccessTier": {
+            "value": "Hot"
+        },
+        "storageAccountType": {
+            "value": "Standard_RAGRS"
+        },
+        "storageSupportsHttpsTrafficOnly": {
+            "value": true
+        },
+        "storageKind": {
+            "value": "StorageV2"
+        },
+        "storageIsHnsEnabled": {
+            "value": true
+        },
+        "setWorkspaceMsiByPassOnStorageAccount": {
+            "value": false
+        },
+        "workspaceStorageAccountProperties": {
+            "value": {}
+        },
+        "managedVirtualNetworkSettings": {
+            "value": {
+                "allowedAadTenantIdsForLinking": [],
+                "preventDataExfiltration": true
+            }
+        }
+    }
+}

@@ -1,0 +1,109 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "keyVaultName": {
+            "type": "string",
+			"defaultValue": "akv-PROJECTNAME",
+			"metadata": {
+				"description": "Restrictions: Alphanumerics and hyphens. Start with letter. End with letter or digit. No consecutive hyphens."
+			}
+        },
+		"publicNetworkAccess": {
+			"type": "bool",
+			"defaultValue": false,
+			"metadata": {
+				"description": "Allow public network access to Key Vault. (Enabled/Disabled)"
+			}
+		},
+        "setSynapseWorkspaceSystemMSIRbacOnKeyVault": {
+            "type": "bool",
+			"defaultValue": true
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        },
+		"synapseName": {
+			"type": "string",
+			"defaultValue": "",
+			"metadata": {
+				"description": "Name of the Synapse resouce"
+			}
+		},
+		"tenantId": {
+			"type": "string",
+			"defaultValue": "[subscription().tenantId]"
+		}
+
+    },
+    "variables": {
+		"akvSecretsUserRoleName": "Key Vault Secrets User",
+	    "akvRoleIdMapping": {
+			"Key Vault Secrets User": "4633458b-17de-408a-b874-0445c86b69e6"
+		},
+		"publicNetworkAccessTranlation": "[if(parameters('publicNetworkAccess'),'Enabled','Disabled')]",
+		"resourceGroupName": "[resourceGroup().Name]"
+	},
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2022-11-01",
+            "name": "[parameters('keyVaultName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                },
+                "tenantId": "[parameters('tenantId')]",
+                "accessPolicies": [],
+                "enabledForDeployment": false,
+                "enabledForDiskEncryption": true,
+                "enabledForTemplateDeployment": false,
+                "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 90,
+                "enableRbacAuthorization": true,
+                "vaultUri": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/')]",
+                "provisioningState": "Succeeded",
+                "publicNetworkAccess": "[variables('publicNetworkAccessTranlation')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/privateEndpointConnections",
+            "apiVersion": "2023-02-01",
+            "name": "[concat(parameters('keyVaultName'), '/', parameters('keyVaultName'), '-pe')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+            ],
+            "properties": {
+                "provisioningState": "Succeeded",
+                "privateEndpoint": {},
+                "privateLinkServiceConnectionState": {
+                    "status": "Approved",
+                    "actionsRequired": "None"
+                }
+            }
+        // },
+		// {
+		// 	"condition": "[parameters('setSynapseWorkspaceSystemMSIRbacOnKeyVault')]",
+		// 	"type": "Microsoft.Authorization/roleAssignments",
+		// 	"apiVersion": "2022-04-01",
+		// 	"scope": "[format('/Microsoft.KeyVault/vaults/{0}', parameters('keyVaultName'))]",
+		// 	"name": "[guid(resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName')), resourceId('Microsoft.Synapse/workspaces', parameters('synapseName')), subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('akvRoleIdMapping')[variables('akvSecretsUserRoleName')]))]",
+		// 	"properties": {
+		// 		"roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('akvRoleIdMapping')[variables('akvSecretsUserRoleName')])]",
+		// 		"principalId": "[reference(resourceId('Microsoft.Synapse/workspaces', parameters('synapseName')), '2018-06-01', 'full').identity.principalId]",
+		// 		"principalType": "ServicePrincipal"
+		// 	},
+		// 	"dependsOn": [
+		// 		"[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]",
+		// 		"[resourceId('Microsoft.Synapse/workspaces', parameters('synapseName'))]"
+		// 	],
+		// 	"metadata": {
+		// 		"description": "Assigns the Synapse Managed Identity to the Key Vault Secrets User role"
+		// 	}
+		}
+    ]
+}

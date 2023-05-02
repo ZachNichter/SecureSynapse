@@ -1,0 +1,412 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetwork_vnet_name": {
+      "defaultValue": "vnet-customer",
+      "type": "String"
+    },
+    "virtualNetwork_vnet_address_prefix": {
+      "defaultValue": "172.20.0.0/16",
+      "type": "string"
+    },
+	"virtualNetwork_app_subnet_name": {
+      "defaultValue": "AppSubnet",
+      "type": "string"
+	},
+    "virtualNetwork_app_subnet_address_prefix": {
+      "defaultValue": "172.20.3.0/26",
+      "type": "string"
+    },
+	"virtualNetwork_data_subnet_name": {
+      "defaultValue": "DataSubnet",
+      "type": "string"
+	},
+    "virtualNetwork_data_subnet_address_prefix": {
+      "defaultValue": "172.20.2.0/26",
+      "type": "string"
+    },
+	"virtualNetwork_gateway_subnet_name": {
+      "defaultValue": "GatewaySubnet",
+      "type": "string"
+	},
+    "virtualNetwork_gateway_subnet_address_prefix": {
+      "defaultValue": "172.20.1.0/26",
+      "type": "string"
+    },
+	"virtualNetwork_default_subnet_name": {
+      "defaultValue": "default",
+      "type": "string"
+	},
+    "virtualNetwork_default_subnet_address_prefix": {
+      "defaultValue": "172.20.0.0/26",
+      "type": "string"
+    },
+    "createJumpVM": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Create a jumpbox VM?"
+      }
+    },
+    "deployBastion": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Deploy bastion for the jumpbox VM?"
+      }
+    },
+    "virtualMachineName": {
+        "type": "String",
+        "defaultValue": "vm",    // can only be 2 characters because of unique string added to end
+        "metadata": {
+          "description": "The name of the VM"
+        }
+      },
+    "vmAdminUsername": {
+      "type": "String",
+      "defaultValue": "cloudsa",
+      "metadata": {
+        "description": "The admin user name of the VM"
+      }
+    },
+    "vmAdminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The admin password of the VM, 12 characters minimum"
+      }
+    },
+    "createNewStorageAccount": {
+      "type": "String",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Create new data lake storage account for Synapse metadata."
+      }
+    },
+    "dataLakeAccount": {
+      "type": "string",
+      "defaultValue": "adls",
+      "metadata": {
+        "description": "Name of the data lake storage account for Synapse metadata."
+      }
+    },
+    "dataLakeAccountType":  {
+      "type": "string",
+      "defaultValue": "Standard_RAGRS",
+      "metadata": {
+        "description": "Name of the data lake storage account for Synapse metadata."
+      }
+    },
+    "dataLakeAccountKind":   {
+      "type": "string",
+      "defaultValue": "StorageV2",
+      "metadata": {
+        "description": "Name of the data lake storage account for Synapse metadata."
+      }
+    },
+    "dataLakeAccountContainer": {
+      "type": "string",
+      "defaultValue": "fs-",
+      "metadata": {
+        "description": "Name of the data lake filesystem for Synapse metadata."
+      }
+    },
+    "createSynapseWS": {
+      "type": "String",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Create new Synapse workspace."
+      }
+    },
+    "synapseWSName": {
+      "type": "string",
+      "defaultValue": "syn-ws-",
+      "metadata": {
+        "description": "Name of the Synapse workspace."
+      }
+    },
+    "allowAllConnections": {
+      "type": "String",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Allow network traffic to the synapse workspace to be controlled by NSG's"
+      }
+    },
+    "allowSynapseADAuthOnly": {
+      "type": "String",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Allow Azure AD authentication only for all Workspace subresources."
+      }
+    },
+    "sqlAdministratorLogin": {
+      "type": "string",
+      "defaultValue": "sqladminuser",
+      "metadata": {
+          "description": "Synapse SQL administrator account name"
+      }
+    },
+    "sqlAdministratorPassword": {
+      "type": "securestring",
+      "metadata": {
+          "description": "Synapse SQL administrator password"
+      }
+    },
+    "createSynapseKeyVault": {
+      "type": "String",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Create a key vault resource for this deployment"
+      }
+    },
+    "keyVaultName": {
+      "type": "string",
+      "defaultValue": "akv-PROJECTNAME",
+      "metadata": {
+        "description": "Name of the key vault."
+      }
+    },
+    "disableKeyVaultPublicNetworkAccess": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "Should the key vault be accessable to the public?"
+      }
+    }
+
+  },
+  "variables": {
+	"createSynapseKeyVaultBool": "[bool(parameters('createSynapseKeyVault'))]",
+	"disableKeyVaultPublicNetworkAccessBool": "[bool(parameters('disableKeyVaultPublicNetworkAccess'))]",
+    "createSynapseWSBool": "[bool(parameters('createSynapseWS'))]",
+    "createJumpVMBool": "[bool(parameters('createJumpVM'))]",
+    "createNewStorageAccountBool": "[bool(parameters('createNewStorageAccount'))]",
+    "allowAllConnectionsBool": "[bool(parameters('allowAllConnections'))]",
+    "allowSynapseADAuthOnlyBool": "[bool(parameters('allowSynapseADAuthOnly'))]",
+    "uniqueSuffix": "[uniqueString(resourceGroup().id, deployment().name)]",
+    "dataLakeAccountUnique": "[concat(parameters('dataLakeAccount'), variables('uniqueSuffix'))]",
+    "virtualMachineNameUnique": "[concat(parameters('virtualMachineName'), variables('uniqueSuffix'))]",      // Windows has max name length 15 characters
+    "synapseWSNameUnique": "[concat(parameters('synapseWSName'), '-', variables('uniqueSuffix'))]",
+    "distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', resourceGroup().name)]",
+    "linked-vnet-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/010-vnet/azdeploy-vnet.json",
+    "linked-jumpvm-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/020-jump-vm/azdeploy-vm.json",
+    "linked-bastion-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/030-bastion/azdeploy-bastion.json",
+    "linked-synapsews-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/040-synapse-ws/azdeploy-synapse.json",
+    "linked-keyvault-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/050-key-vault/azdeploy-keyvault.json",
+    "linked-privatelinkhub-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/060-private-link-hub/azdeploy-plh.json",
+    "linked-privateendpoint-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/070-private-endpoints/azdeploy-pe.json"
+  },
+  "resources": [
+    {
+      "apiVersion": "2022-09-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "synapseVnet",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('linked-vnet-template')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "virtualNetwork_vnet_name": { "value": "[variables('distinctVnetName')]" },
+          "virtualNetwork_vnet_address_prefix": { "value": "[parameters('virtualNetwork_vnet_address_prefix')]" },
+          "virtualNetwork_app_subnet_name": { "value": "[parameters('virtualNetwork_app_subnet_name')]"},
+          "virtualNetwork_app_subnet_address_prefix": { "value": "[parameters('virtualNetwork_app_subnet_address_prefix')]" },
+          "virtualNetwork_data_subnet_name": { "value": "[parameters('virtualNetwork_data_subnet_name')]"},
+          "virtualNetwork_data_subnet_address_prefix": { "value": "[parameters('virtualNetwork_data_subnet_address_prefix')]" },
+          "virtualNetwork_gateway_subnet_name": { "value": "[parameters('virtualNetwork_gateway_subnet_name')]"},
+		  "virtualNetwork_gateway_subnet_address_prefix": { "value": "[parameters('virtualNetwork_gateway_subnet_address_prefix')]" },
+          "virtualNetwork_default_subnet_name": { "value": "[parameters('virtualNetwork_default_subnet_name')]"},
+          "virtualNetwork_default_subnet_address_prefix": { "value": "[parameters('virtualNetwork_default_subnet_address_prefix')]" }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "synapseJumpVM",
+      "condition": "[variables('createJumpVMBool')]",
+      "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'synapseVnet')]"],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('linked-jumpvm-template')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VirtualMachineName": { "value": "[variables('virtualMachineNameUnique')]" },
+          "virtualNetworkName": { "value": "[variables('distinctVnetName')]"},
+          "subnetName": { "value": "[parameters('virtualNetwork_app_subnet_name')]"},
+          "vmAdminUsername": { "value": "[parameters('vmAdminUsername')]" },
+          "vmAdminPassword": { "value": "[parameters('vmAdminPassword')]" }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "synapseWorkspace",
+      "condition": "[variables('createSynapseWSBool')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('linked-synapsews-template')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+			"name": { "value": "[variables('synapseWSNameUnique')]" },
+			"defaultDataLakeStorageAccountName": { "value": "[variables('dataLakeAccountUnique')]" },
+			"defaultDataLakeStorageFilesystemName": { "value": "[parameters('dataLakeAccountContainer')]" },
+			"allowSynapseADAuthOnly": { "value": "[variables('allowSynapseADAuthOnlyBool')]" },
+			"sqlAdministratorLogin": { "value": "[parameters('sqlAdministratorLogin')]" },
+			"sqlAdministratorPassword": { "value": "[parameters('sqlAdministratorPassword')]" },
+			"allowAllConnections": { "value": "[variables('allowAllConnectionsBool')]" },
+			"storageSubscriptionID": { "value": "[subscription().subscriptionId]"},
+			"storageLocation": {  },
+			"isNewStorageAccount": { "value": "[variables('createNewStorageAccountBool')]" },
+			"managedVirtualNetworkSettings": {
+				"value": {
+					"allowedAadTenantIdsForLinking": [],
+					"preventDataExfiltration": true
+				}
+			}
+		}
+	  }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "synapseKeyVault",
+      "condition": "[and( variables('createSynapseWSBool'), variables('createSynapseKeyVaultBool') )]",
+      "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'synapseWorkspace')]"],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('linked-keyvault-template')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+			"keyVaultName": { "value": "[parameters('keyVaultName')]" },
+			"publicNetworkAccess": { "value": "[if(equals(variables('disableKeyVaultPublicNetworkAccessBool'),bool('true')),bool('false'),bool('true'))]"},
+			"setSynapseWorkspaceSystemMSIRbacOnKeyVault": { "value": true },
+			"synapseName": { "value": "[variables('synapseWSNameUnique')]" }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "synapsePrivateLinkHub",
+      "condition": "[variables('createSynapseWSBool')]",
+      "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'synapseWorkspace')]"],
+      "properties": {
+        "mode": "Incremental",
+
+        "templateLink": {
+          "uri": "[variables('linked-privatelinkhub-template')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "hubName": { "value": "[concat('hub', replace(variables('synapseWSNameUnique'),'-',''))]" }     // only lower-case letters or digits
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "synapsePrivateLinkHubPE",
+      "condition": "[variables('createSynapseWSBool')]",
+      "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'synapsePrivateLinkHub')]"],
+      "properties": {
+        "mode": "Incremental",
+
+        "templateLink": {
+          "uri": "[variables('linked-privateendpoint-template')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "hubPrivateEndpointName": { "value": "[concat('hub-', variables('synapseWSNameUnique'),'-pe')]" },
+          "hubPrivateLinkResource": {
+            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Synapse/privateLinkHubs/', reference('synapsePrivateLinkHub').outputs.synapsePLHName.value)]"
+          },
+          "sqlPrivateEndpointName": { "value": "[concat('sql-', variables('synapseWSNameUnique'),'-pe')]" },
+          "sqlPrivateLinkResource": {
+            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Synapse/workspaces/', reference('synapseWorkspace').outputs.synapseWorkspaceName.value)]"
+          },
+          "sqlOnDemandPrivateEndpointName": { "value": "[concat('sqlondemand-', variables('synapseWSNameUnique'),'-pe')]" },
+          "devPrivateEndpointName": { "value": "[concat('dev-', variables('synapseWSNameUnique'),'-pe')]" },
+          "subnet": {
+            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('distinctVnetName'), '/subnets/', parameters('virtualNetwork_app_subnet_name'))]"
+          },
+          "virtualNetworkId": {
+            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('distinctVnetName'))]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+	// chnaged reference function syntax based on recent documentation
+	// FROM: "value": "[reference('synapseJumpVM', '2019-05-01').outputs.vmSize.value]"
+	// TO:   "value": "[reference('synapseJumpVM').outputs.vmSize.value]"
+    "vmName": {
+      "condition": "[variables('createJumpVMBool')]",
+      "type": "string",
+      "value": "[variables('virtualMachineNameUnique')]"
+    },
+    "vmSize": {
+      "condition": "[variables('createJumpVMBool')]",
+      "type": "string",
+      "value": "[reference('synapseJumpVM').outputs.vmSize.value]"
+    },
+    "vmAdminUsername": {
+      "condition": "[variables('createJumpVMBool')]",
+      "type": "String",
+      "value": "[reference('synapseJumpVM').outputs.vmAdminUsername.value]"
+    },
+    "synapseWorkspaceName": {
+      "type": "string",
+      "value": "[reference('synapseWorkspace').outputs.synapseWorkspaceName.value]"
+    },
+    "synapseWorkspaceURL": {
+      "type": "string",
+      "value": "[reference('synapseWorkspace').outputs.webEndpoint.value]"
+    },
+    "synapseStorageAccount": {
+      "type": "string",
+      "value": "[variables('dataLakeAccountUnique')]"
+    },
+    "synapseStorageString": {
+      "type": "string",
+      "value": "[reference('synapseWorkspace').outputs.synapseStorageString.value]"
+    },
+    "synapseSQL": {
+      "type": "string",
+      "value": "[reference('synapseWorkspace').outputs.sqlEndpoint.value]"
+    },
+    "synapseSqlOndemand": {
+      "type": "string",
+      "value": "[reference('synapseWorkspace').outputs.ondemandEndpoint.value]"
+    },
+    "synapsePLHName": {
+      "type": "string",
+      "value": "[reference('synapsePrivateLinkHub').outputs.synapsePLHName.value]"
+    },
+    "hubPrivateEndpointName": {
+      "type": "string",
+      "value": "[reference('synapsePrivateLinkHubPE').outputs.hubPrivateEndpointName.value]"
+    },
+    "DnsZoneGroupName": {
+      "type": "string",
+      "value": "[reference('synapsePrivateLinkHubPE').outputs.DnsZoneGroupName.value]"
+    },
+    "virtualNetworkLinkName": {
+      "type": "string",
+      "value": "[reference('synapsePrivateLinkHubPE').outputs.virtualNetworkLinkName.value]"
+    },
+    "privateDnsZone": {
+      "type": "string",
+      "value": "[reference('synapsePrivateLinkHubPE').outputs.privateDnsZone.value]"
+    }
+  }
+}

@@ -1,0 +1,400 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "hubPrivateEndpointName": {
+            "type": "string",
+            "defaultValue": "hub-pe"
+        },
+        "sqlPrivateEndpointName": {
+            "type": "string",
+            "defaultValue": "sql-pe"
+        },
+        "sqlOnDemandPrivateEndpointName": {
+            "type": "string",
+            "defaultValue": "sqlondemand-pe"
+        },
+        "devPrivateEndpointName": {
+            "type": "string",
+            "defaultValue": "dev-pe"
+        },
+        "hubPrivateLinkResource": {
+            "type": "string"
+        },
+        "sqlPrivateLinkResource": {
+            "type": "string"
+        },
+        "hubTargetSubResource": {
+            "type": "array",
+             "defaultValue": [
+                "Web"
+            ]
+        },
+        "sqlTargetSubResource": {
+            "type": "array",
+             "defaultValue": [
+                "Sql"
+            ]
+        },
+        "sqlOnDemandTargetSubResource": {
+            "type": "array",
+             "defaultValue": [
+                "SqlOnDemand"
+            ]
+        },
+        "devTargetSubResource": {
+            "type": "array",
+             "defaultValue": [
+                "Dev"
+            ]
+        },
+        "subnet": {
+            "type": "string"
+        },
+        "virtualNetworkId": {
+            "type": "string"
+        },
+        "timestamp_v": {
+            "type": "string",
+            "defaultValue": "[replace(replace(replace(utcNow(), ':',''),' ',''),'/','')]"
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "guid_v": "[guid(resourceGroup().id)]",
+        "virtualNetworkResourceGroupName": "[resourceGroup().name]",
+        "privateDnsDeploymentName": "[concat('PrivateDns-', parameters('timestamp_v'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2022-07-01",
+            "type": "Microsoft.Network/privateEndpoints",
+            "location": "[variables('location')]",
+            "name": "[parameters('hubPrivateEndpointName')]",
+            "properties": {
+                "subnet": {
+                    "id": "[parameters('subnet')]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[parameters('hubPrivateEndpointName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[parameters('hubPrivateLinkResource')]",
+                            "groupIds": "[parameters('hubTargetSubResource')]"
+                        }
+                    }
+                ]
+            },
+            "tags": {}
+        },
+        {
+            "apiVersion": "2022-07-01",
+            "type": "Microsoft.Network/privateEndpoints",
+            "location": "[variables('location')]",
+            "name": "[parameters('sqlPrivateEndpointName')]",
+            "properties": {
+                "subnet": {
+                    "id": "[parameters('subnet')]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[parameters('sqlPrivateEndpointName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[parameters('sqlPrivateLinkResource')]",
+                            "groupIds": "[parameters('sqlTargetSubResource')]"
+                        }
+                    }
+                ]
+            },
+            "tags": {}
+        },
+        {
+            "apiVersion": "2022-07-01",
+            "type": "Microsoft.Network/privateEndpoints",
+            "location": "[variables('location')]",
+            "name": "[parameters('sqlOnDemandPrivateEndpointName')]",
+            "properties": {
+                "subnet": {
+                    "id": "[parameters('subnet')]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[parameters('sqlOnDemandPrivateEndpointName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[parameters('sqlPrivateLinkResource')]",
+                            "groupIds": "[parameters('sqlOnDemandTargetSubResource')]"
+                        }
+                    }
+                ]
+            },
+            "tags": {}
+        },
+        {
+            "apiVersion": "2022-07-01",
+            "type": "Microsoft.Network/privateEndpoints",
+            "location": "[variables('location')]",
+            "name": "[parameters('devPrivateEndpointName')]",
+            "properties": {
+                "subnet": {
+                    "id": "[parameters('subnet')]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[parameters('devPrivateEndpointName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[parameters('sqlPrivateLinkResource')]",
+                            "groupIds": "[parameters('devTargetSubResource')]"
+                        }
+                    }
+                ]
+            },
+            "tags": {}
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[variables('privateDnsDeploymentName')]",
+            "dependsOn": [
+                "[parameters('hubPrivateEndpointName')]",
+                "[parameters('sqlPrivateEndpointName')]",
+                "[parameters('sqlOnDemandPrivateEndpointName')]",
+                "[parameters('devPrivateEndpointName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "2022-09-01",
+                            "type": "Microsoft.Resources/deployments",
+                            "name": "[concat('PrivateDnsZone-synapse-', variables('guid_v'))]",  //        "[concat('PrivateDnsZone-hub-', variables('guid_v'))]",
+                            "subscriptionId": "[subscription().subscriptionId]",
+                            "resourceGroup": "[variables('virtualNetworkResourceGroupName')]",
+                            "properties": {
+                                "mode": "Incremental",
+                                "template": {
+									"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                    "contentVersion": "1.0.0.0",
+                                    "resources": [
+                                        {
+											"apiVersion": "2018-09-01",
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "name": "privatelink.azuresynapse.net",
+                                            "location": "global",
+                                            "tags": {},
+                                            "properties": {}
+                                        },
+                                        {
+											"apiVersion": "2018-09-01",
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "name": "privatelink.sql.azuresynapse.net",
+                                            "location": "global",
+                                            "tags": {},
+                                            "properties": {}
+                                        },
+                                        {
+											"apiVersion": "2018-09-01",
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "name": "privatelink.dev.azuresynapse.net",
+                                            "location": "global",
+                                            "tags": {},
+                                            "properties": {}
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat('VirtualNetworkLink-', parameters('timestamp_v'))]",
+            "dependsOn": [
+                "[variables('privateDnsDeploymentName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "2022-09-01",
+                            "type": "Microsoft.Resources/deployments",
+                            "name": "[concat('VirtualNetworklink-', variables('guid_v'))]",
+                            "subscriptionId": "[subscription().subscriptionId]",
+                            "resourceGroup": "[variables('virtualNetworkResourceGroupName')]",
+                            "properties": {
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                    "contentVersion": "1.0.0.0",
+                                    "resources": [
+                                        {
+                                            "apiVersion": "2020-06-01",
+                                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                                            "name": "[concat('privatelink.azuresynapse.net', '/', uniqueString(parameters('virtualNetworkId')))]",
+                                            "location": "global",
+                                            "properties": {
+                                                "virtualNetwork": {
+                                                    "id": "[parameters('virtualNetworkId')]"
+                                                },
+                                                "registrationEnabled": false
+                                            }
+                                        },
+                                        {
+                                            "apiVersion": "2020-06-01",
+                                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                                            "name": "[concat('privatelink.sql.azuresynapse.net', '/', uniqueString(parameters('virtualNetworkId')))]",
+                                            "location": "global",
+                                            "properties": {
+                                                "virtualNetwork": {
+                                                    "id": "[parameters('virtualNetworkId')]"
+                                                },
+                                                "registrationEnabled": false
+                                            }
+                                        },
+                                        {
+                                            "apiVersion": "2020-06-01",
+                                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                                            "name": "[concat('privatelink.dev.azuresynapse.net', '/', uniqueString(parameters('virtualNetworkId')))]",
+                                            "location": "global",
+                                            "properties": {
+                                                "virtualNetwork": {
+                                                    "id": "[parameters('virtualNetworkId')]"
+                                                },
+                                                "registrationEnabled": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat('DnsZoneGroup-', parameters('timestamp_v'))]",
+            "resourceGroup": "[variables('virtualNetworkResourceGroupName')]",
+            "dependsOn": [
+                "[parameters('hubPrivateEndpointName')]",
+                "[parameters('sqlPrivateEndpointName')]",
+                "[parameters('sqlOnDemandPrivateEndpointName')]",
+                "[parameters('devPrivateEndpointName')]",
+                "[variables('privateDnsDeploymentName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "2022-07-01",
+                            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+                            "name": "[concat(parameters('hubPrivateEndpointName'), '/', 'default')]",
+                            "location": "[variables('location')]",
+                            "properties": {
+                                "privateDnsZoneConfigs": [
+                                    {
+                                        "name": "privatelink-azuresynapse-net",
+                                        "properties": {
+                                            "privateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId ,'/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Network/privateDnsZones/privatelink.azuresynapse.net')]"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "apiVersion": "2022-07-01",
+                            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+                            "name": "[concat(parameters('sqlPrivateEndpointName'), '/', 'default')]",
+                            "location": "[variables('location')]",
+                            "properties": {
+                                "privateDnsZoneConfigs": [
+                                    {
+                                        "name": "privatelink-sql-azuresynapse-net",
+                                        "properties": {
+                                            "privateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.sql.azuresynapse.net')]"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "apiVersion": "2022-07-01",
+                            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+                            "name": "[concat(parameters('sqlOnDemandPrivateEndpointName'), '/', 'default')]",
+                            "location": "[variables('location')]",
+                            "properties": {
+                                "privateDnsZoneConfigs": [
+                                    {
+                                        "name": "privatelink-sqlondemand-azuresynapse-net",
+                                        "properties": {
+                                            "privateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.sql.azuresynapse.net')]"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "apiVersion": "2022-07-01",
+                            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+                            "name": "[concat(parameters('devPrivateEndpointName'), '/', 'default')]",
+                            "location": "[variables('location')]",
+                            "properties": {
+                                "privateDnsZoneConfigs": [
+                                    {
+                                        "name": "privatelink-dev-azuresynapse-net",
+                                        "properties": {
+                                            "privateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.dev.azuresynapse.net')]"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "hubPrivateEndpointName": {
+            "type": "string",
+            "value": "[parameters('hubPrivateEndpointName')]"
+        },
+        "sqlPrivateEndpointName": {
+            "type": "string",
+            "value": "[parameters('sqlPrivateEndpointName')]"
+        },
+        "sqlOnDemandPrivateEndpointName": {
+            "type": "string",
+            "value": "[parameters('sqlOnDemandPrivateEndpointName')]"
+        },
+        "devPrivateEndpointName": {
+            "type": "string",
+            "value": "[parameters('devPrivateEndpointName')]"
+        },
+        "DnsZoneGroupName": {
+            "type": "string",
+            "value": "[concat('DnsZoneGroup-', parameters('timestamp_v'))]"
+        },
+        "virtualNetworkLinkName": {
+            "type": "string",
+            "value": "[concat('VirtualNetworkLink-', parameters('timestamp_v'))]"
+        },
+        "privateDnsZone": {
+            "type": "string",
+            "value": "[concat('PrivateDnsZone-', variables('guid_v'))]"
+        }
+    }
+
+}
