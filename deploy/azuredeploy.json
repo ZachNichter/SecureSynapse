@@ -188,13 +188,13 @@
     "virtualMachineNameUnique": "[concat(parameters('virtualMachineName'), variables('uniqueSuffix'))]",      // Windows has max name length 15 characters
     "synapseWSNameUnique": "[concat(parameters('synapseWSName'), '-', variables('uniqueSuffix'))]",
     "distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', resourceGroup().name)]",
-    "linked-vnet-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/010-vnet/azdeploy-vnet.json",
-    "linked-jumpvm-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/020-jump-vm/azdeploy-vm.json",
-    "linked-bastion-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/030-bastion/azdeploy-bastion.json",
-    "linked-synapsews-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/040-synapse-ws/azdeploy-synapse.json",
-    "linked-keyvault-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/050-key-vault/azdeploy-keyvault.json",
-    "linked-privatelinkhub-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/060-private-link-hub/azdeploy-plh.json",
-    "linked-privateendpoint-template": "https://crayonazuredeployments.blob.core.windows.net/dpi30/SecureSynapse/070-private-endpoints/azdeploy-pe.json"
+    "linked-vnet-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/010-vnet/azdeploy-vnet.json",
+    "linked-jumpvm-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/020-jump-vm/azdeploy-vm.json",
+    "linked-bastion-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/030-bastion/azdeploy-bastion.json",
+    "linked-synapsews-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/040-synapse-ws/azdeploy-synapse.json",
+    "linked-keyvault-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/050-key-vault/azdeploy-keyvault.json",
+    "linked-privatelinkhub-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/060-private-link-hub/azdeploy-plh.json",
+    "linked-privateendpoint-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/070-private-endpoints/azdeploy-pe.json"
   },
   "resources": [
     {
