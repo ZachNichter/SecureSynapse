@@ -147,10 +147,10 @@
 						},
 						"defaultValue": {
 							"name": "[concat('vnet-', steps('general').resNamingSection.defaultResNamePart)]",
-							"addressPrefixSize": "/24"
+							"addressPrefixSize": "/20"
 						},
 						"constraints": {
-							"minAddressPrefixSize": "/24"
+							"minAddressPrefixSize": "/20"
 						},
 						"options": {
 							"hideExisting": true
@@ -216,10 +216,10 @@
 						},
 						"defaultValue": {
 							"name": "[concat('vnet-', steps('general').resNamingSection.defaultResNamePart)]",
-							"addressPrefixSize": "/24"
+							"addressPrefixSize": "/20"
 						},
 						"constraints": {
-							"minAddressPrefixSize": "/24"
+							"minAddressPrefixSize": "/20"
 						},
 						"options": {
 							"hideExisting": true
