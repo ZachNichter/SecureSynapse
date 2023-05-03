@@ -370,9 +370,6 @@
 	}
   ],
   "outputs": {
-	// chnaged reference function syntax based on recent documentation
-	// FROM: "value": "[reference('synapseJumpVM', '2019-05-01').outputs.vmSize.value]"
-	// TO:   "value": "[reference('synapseJumpVM').outputs.vmSize.value]"
 	"vmName": {
 	  "condition": "[variables('createJumpVMBool')]",
 	  "type": "string",

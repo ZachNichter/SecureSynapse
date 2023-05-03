@@ -4,44 +4,129 @@
 	"version": "0.1.2-preview",
 	"parameters": {
 		"config": {
-			"isWizard": true,
+			"isWizard": false,
 			"basics": { }
 		},
 		"basics": [
+			{
+				"name": "resourceScope",
+				"type": "Microsoft.Common.ResourceScope",
+				"location": {
+					"resourceTypes": [
+						"Microsoft.Resources/resourcegroups"
+					]
+				}
+			},
+			{
+				"name": "resNamingSection",
+				"type": "Microsoft.Common.Section",
+				"label": "Default resource naming",
+				"elements": [
+					{
+						"name": "projectInfo",
+						"type": "Microsoft.Common.TextBlock",
+						"options": {
+							"text": "Provide a one word project name that will assist in providing a pre-poulated name for the resources in this deployment."
+						},
+						"visible": true
+					},
+					{
+						"name": "defaultResNamePart",
+						"type": "Microsoft.Common.TextBox",
+						"label": "Project name",
+						"defaultValue": "",
+						"placeHolder": "crayondeploy",
+						"toolTip": "Used to build the default resource names in each section. Resource names can be overwritten.",
+						"constraints": {
+							"required": true,
+							"regex": "^[a-zA-Z]{5,20}$",
+							"validationMessage": "Value must be letters, a length of 5-20 charaters. No spaces or special characters allowed."
+						},
+						"visible": true
+					}
+				]
+			}
 		],
 		"steps": [
 			{
-				"name": "generalStep",
-				"label": "General",
+				"name": "vmStep",
+				"label": "Virtual machine",
 				"elements": [
 					{
-						"name": "resNamingSection",
+						"name": "deployJumpbox",
+						"type": "Microsoft.Common.CheckBox",
+						"label": "Deploy a Synapse Studio VM jumpbox? (Recommended)",
+						"defaultValue": true,
+						"visible": true
+					},
+					{
+						"name": "deployBastion",
+						"type": "Microsoft.Common.CheckBox",
+						"label": "Deploy Bastion for secure public VM access? (Recommended)",
+						"defaultValue": true,
+						"visible": "[steps('vmStep').deployJumpbox]"
+					},
+					{
+						"name": "bastionHostName",
+						"type": "Microsoft.Common.TextBox",
+						"label": "Bastion hostname",
+						"defaultValue": "[concat('bas-', substring(steps('general').resNamingSection.defaultResNamePart,1,71))]",
+						"constraints": {
+							"required": true,
+							"regex": "^[a-zA-Z0-9][a-zA-Z0-9_-.]{0,78}[a-zA-Z0-9_]$",
+							"validationMessage": "Only Alphanumerics, underscores, periods, and hyphens. Start with alphanumeric. End alphanumeric or underscore. Length must be 1-80 characters."
+						},
+						"visible": "[steps('vmStep').deployBastion]"
+					},
+					{
+						"name": "vmName",
+						"type": "Microsoft.Common.TextBox",
+						"label": "Virtual machine name",
+						"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,1,13))]",
+						"constraints": {
+							"required": true,
+							"regex": "^[a-z0-9-]{2,15}$",
+							"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
+						},
+						"visible": "[steps('vmStep').deployJumpbox]"
+					},
+					{
+						"name": "vmCredentialSection",
 						"type": "Microsoft.Common.Section",
-						"label": "Resource Naming",
+						"label": "VM credentials",
 						"elements": [
 							{
-								"name": "projectInfo",
-								"type": "Microsoft.Common.TextBlock",
-								"options": {
-									"text": "Provide a one word project name that will assist in providing a pre-poulated name for the resources in this deployment."
-								},
-								"visible": true
-							},
-							{
-								"name": "defaultResNamePart",
+								"name": "vmAdminUsername",
 								"type": "Microsoft.Common.TextBox",
-								"label": "Project Name",
-								"defaultValue": "",
-								"placeHolder": "crayondeploy",
-								"toolTip": "Used to build the default resource names in each section. Resource names can be overwritten.",
+								"label": "VM admin username",
+								"defaultValue": "vmAdmin",
+								"toolTip": "",
 								"constraints": {
 									"required": true,
-									"regex": "^[a-zA-Z]{5,15}$",
-									"validationMessage": "Value must be bewteen 5-15 charaters, upper and\\or lower case. No spaces or special characters allowed."
+									"regex": "^[a-z0-9A-Z]{1,30}$",
+									"validationMessage": "Only alphanumeric characters are allowed, and must be 1-30 characters long."
 								},
-								"visible": true
+								"visible": "[steps('vmStep').deployJumpbox]"
+							},
+							{
+								"name": "vmCredentials",
+								"type": "Microsoft.Common.PasswordBox",
+								"label": {
+									"password": "Password",
+									"confirmPassword": "Confirm password"
+								},
+								"constraints": {
+									"required": true,
+									"customPasswordRegex": "",
+									"customValidationMessage": ""
+								},
+								"options": {
+									"hideConfirmation": false
+								},
+								"visible": "[steps('vmStep').deployJumpbox]"
 							}
-						]
+						],
+						"visible": "[steps('vmStep').deployJumpbox]"
 					}
 				]
 			},
@@ -61,7 +146,7 @@
 							"subnets": ""
 						},
 						"defaultValue": {
-							"name": "[concat('vnet-', steps('generalStep').resNamingSection.defaultResNamePart)]",
+							"name": "[concat('vnet-', steps('general').resNamingSection.defaultResNamePart)]",
 							"addressPrefixSize": "/24"
 						},
 						"constraints": {
@@ -72,123 +157,148 @@
 						},
 						"subnets": {
 							"defaultSubnet": {
-								"label": "Default Subnet",
+								"label": "Default subnet",
 								"defaultValue": {
 									"name": "default",
-									"addressPrefixSize": "/24"
+									"addressPrefixSize": "/26"
 								},
 								"constraints": {
-									"minAddressPrefixSize": "/24",
+									"minAddressPrefixSize": "/26",
 									"minAddressCount": 64
 								}
 							},
 							"gatewaySubnet": {
-								"label": "Gateway Subnet",
+								"label": "Gateway subnet",
 								"defaultValue": {
 									"name": "GatewaySubnet",
-									"addressPrefixSize": "/24"
+									"addressPrefixSize": "/26"
 								},
 								"constraints": {
-									"minAddressPrefixSize": "/24",
+									"minAddressPrefixSize": "/26",
 									"minAddressCount": 64
 								}
 							},
 							"dataSubnet": {
-								"label": "Data Subnet",
+								"label": "Data subnet",
 								"defaultValue": {
 									"name": "DataSubnet",
-									"addressPrefixSize": "/24"
+									"addressPrefixSize": "/26"
 								},
 								"constraints": {
-									"minAddressPrefixSize": "/24",
+									"minAddressPrefixSize": "/26",
 									"minAddressCount": 64
 								}
 							},
 							"appSubnet": {
-								"label": "Application Subnet",
+								"label": "Application subnet",
 								"defaultValue": {
-									"name": "AppSubnet",
-									"addressPrefixSize": "/24"
+									"name": "PrivateEndpointSubnet",
+									"addressPrefixSize": "/26"
 								},
 								"constraints": {
-									"minAddressPrefixSize": "/24",
+									"minAddressPrefixSize": "/26",
 									"minAddressCount": 64
 								}
 							}
 						},
-						"visible": true
+						"visible": "[not(steps('vmStep').deployBastion)]"
+					},
+					{
+						"name": "vnetBastion",
+						"type": "Microsoft.Network.VirtualNetworkCombo",
+						"label": {
+							"virtualNetwork": "Virtual network",
+							"subnets": "Subnets"
+						},
+						"toolTip": {
+							"virtualNetwork": "Click 'New network' to define the IP range used in this virtual network.",
+							"subnets": ""
+						},
+						"defaultValue": {
+							"name": "[concat('vnet-', steps('general').resNamingSection.defaultResNamePart)]",
+							"addressPrefixSize": "/24"
+						},
+						"constraints": {
+							"minAddressPrefixSize": "/24"
+						},
+						"options": {
+							"hideExisting": true
+						},
+						"subnets": {
+							"defaultSubnet": {
+								"label": "Default subnet",
+								"defaultValue": {
+									"name": "default",
+									"addressPrefixSize": "/26"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/26",
+									"minAddressCount": 64
+								}
+							},
+							"gatewaySubnet": {
+								"label": "Gateway subnet",
+								"defaultValue": {
+									"name": "GatewaySubnet",
+									"addressPrefixSize": "/26"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/26",
+									"minAddressCount": 64
+								}
+							},
+							"dataSubnet": {
+								"label": "Data subnet",
+								"defaultValue": {
+									"name": "DataSubnet",
+									"addressPrefixSize": "/26"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/26",
+									"minAddressCount": 64
+								}
+							},
+							"appSubnet": {
+								"label": "Application subnet",
+								"defaultValue": {
+									"name": "PrivateEndpointSubnet",
+									"addressPrefixSize": "/26"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/26",
+									"minAddressCount": 64
+								}
+							},
+							"bastionSubnet": {
+								"label": "Bastion subnet",
+								"defaultValue": {
+									"name": "BastionSubnet",
+									"addressPrefixSize": "/26"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/26",
+									"minAddressCount": 8
+								}
+							}
+						},
+						"visible": "[steps('vmStep').deployBastion]"
 					}
 				]
 			},
-            {
-				"name": "vmStep",
-				"label": "Virtual Machine",
-				"elements": [
-					{
-						"name": "deployJumpbox",
-						"type": "Microsoft.Common.CheckBox",
-						"label": "Deploy a Synapse Studio VM jumpbox? (Recommended)",
-						"defaultValue": true,
-						"visible": true
-					},
-                    {
-						"name": "vmName",
-						"type": "Microsoft.Common.TextBox",
-						"label": "Virtual Machine Name",
-						"defaultValue": "[concat('vm', substring(steps('generalStep').resNamingSection.defaultResNamePart,1,13))]",
-						"constraints": {
-							"required": true,
-							"regex": "^[a-z0-9-]{2,15}$",
-							"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
-						},
-						"visible": "[steps('vmStep').deployJumpbox]"
-					},
-					{
-						"name": "vmAdminUsername",
-						"type": "Microsoft.Common.TextBox",
-						"label": "VM Admin Username",
-						"defaultValue": "vmAdmin",
-						"toolTip": "",
-						"constraints": {
-							"required": true,
-							"regex": "^[a-z0-9A-Z]{1,30}$",
-							"validationMessage": "Only alphanumeric characters are allowed, and must be 1-30 characters long."
-						},
-						"visible": "[steps('vmStep').deployJumpbox]"
-					},
-					{
-						"name": "vmCredentials",
-						"type": "Microsoft.Common.PasswordBox",
-						"label": {
-							"password": "Password",
-							"confirmPassword": "Confirm Password"
-						},
-						"constraints": {
-							"required": true,
-							"customPasswordRegex": "",
-							"customValidationMessage": ""
-						},
-						"options": {
-							"hideConfirmation": false
-						},
-						"visible": "[steps('vmStep').deployJumpbox]"
-					}
-                ]
-            },
 			{
 				"name": "synapseStep",
 				"label": "Synapse Workspace",
 				"elements": [
-                    {
-                        "name": "workspaceSection",
-                        "type": "Microsoft.Common.Section",
-                        "label": "Synapse Workspace",
-                        "elements": [
-                            {
+					{
+						"name": "workspaceSection",
+						"type": "Microsoft.Common.Section",
+						"label": "Synapse workspace",
+						"elements": [
+							{
 								"name": "synapseWSName",
 								"type": "Microsoft.Common.TextBox",
-								"label": "Synapse Workspace Name",
-								"defaultValue": "[concat('syn-ws-', steps('generalStep').resNamingSection.defaultResNamePart)]",
+								"label": "Synapse workspace name",
+								"defaultValue": "[concat('syn-ws-', steps('general').resNamingSection.defaultResNamePart)]",
 								"tooltip": "Only lowercase alphanumeric characters and hyphens '-' are allowed. Must start and end with letter or number, length of 1-50 characters, and not contain '-ondemand'.",
 								"constraints": {
 									"required": true,
@@ -198,17 +308,17 @@
 								"visible": true
 							},
 							{
-                                "name": "allowSynapseADAuthOnly",
-                                "type": "Microsoft.Common.CheckBox",
-                                "label": "Allow Azure AD authentication only for all Workspace SQL pools? (Recommended)",
+								"name": "allowSynapseADAuthOnly",
+								"type": "Microsoft.Common.CheckBox",
+								"label": "Allow Azure AD authentication only for SQL pools? (Recommended)",
 								"tooltip": "Azure AD authentication is the most secure authentication into all synapse SQL pools. This option will disable SQL authentication for synapse SQL pools",
-		                        "defaultValue": true,
+								"defaultValue": true,
 								"visible": true
 							},
 							{
 								"name": "sqlAdministratorLogin",
 								"type": "Microsoft.Common.TextBox",
-								"label": "SQL Admin Username",
+								"label": "SQL admin username",
 								"defaultValue": "sqladminuser",
 								"toolTip": "",
 								"constraints": {
@@ -223,7 +333,7 @@
 								"type": "Microsoft.Common.PasswordBox",
 								"label": {
 									"password": "Password",
-									"confirmPassword": "Confirm Password"
+									"confirmPassword": "Confirm password"
 								},
 								"toolTip": "",
 								"constraints": {
@@ -238,18 +348,18 @@
 							}
 						]
 					},
-                    {
-                        "name": "storageSection",
-                        "type": "Microsoft.Common.Section",
-                        "label": "Synapse Storage",
-                        "elements": [
+					{
+						"name": "storageSection",
+						"type": "Microsoft.Common.Section",
+						"label": "Synapse Storage",
+						"elements": [
 							{
 								"name": "selectSynapseADLSStorageAccount",
 								"type": "Microsoft.Storage.StorageAccountSelector",
-								"label": "Storage Account",
+								"label": "Storage account",
 								"toolTip": "",
 								"defaultValue": {
-									"name": "[concat('adls', steps('generalStep').resNamingSection.defaultResNamePart)]",
+									"name": "[concat('adls', steps('general').resNamingSection.defaultResNamePart)]",
 									"type": "Standard_RAGRS",
 									"kind": "StorageV2"
 								},
@@ -262,11 +372,11 @@
 								},
 								"visible": true
 							},
-                            {
+							{
 								"name": "dataLakeAccountContainer",
-                                "type": "Microsoft.Common.TextBox",
-								"label": "Synapse ADLS Filesystem Name",
-								"defaultValue": "[concat('fs-', steps('generalStep').resNamingSection.defaultResNamePart)]",
+								"type": "Microsoft.Common.TextBox",
+								"label": "Synapse ADLS filesystem name",
+								"defaultValue": "[concat('fs-', steps('general').resNamingSection.defaultResNamePart)]",
 								"tooltip": "Name of the data lake filesystem for Synapse.",
 								"constraints": {
 									"required": true,
@@ -277,12 +387,12 @@
 							}
 						]
 					},
-                    {
-                        "name": "keyVaultSection",
-                        "type": "Microsoft.Common.Section",
-                        "label": "Key Vault",
-                        "elements": [
-                            {
+					{
+						"name": "keyVaultSection",
+						"type": "Microsoft.Common.Section",
+						"label": "Key Vault",
+						"elements": [
+							{
 								"name": "keyVaultInfo",
 								"type": "Microsoft.Common.TextBlock",
 								"options": {
@@ -291,17 +401,17 @@
 								"visible": true
 							},
 							{
-                                "name": "deploySynapseKeyVault",
-                                "type": "Microsoft.Common.CheckBox",
-                                "label": "Create a new key vault resource for this deployment? (Recommended)",
-		                        "defaultValue": true,
+								"name": "deploySynapseKeyVault",
+								"type": "Microsoft.Common.CheckBox",
+								"label": "Create a new key vault resource for this deployment? (Recommended)",
+								"defaultValue": true,
 								"visible": true
 							},
 							{
 								"name": "keyVaultName",
-		                        "label": "Key Vault Name",
+								"label": "Key vault name",
 								"type": "Microsoft.Common.TextBox",
-								"defaultValue": "[concat('akv-', steps('generalStep').resNamingSection.defaultResNamePart)]",
+								"defaultValue": "[concat('akv-', steps('general').resNamingSection.defaultResNamePart)]",
 								"tooltip": "Name of the key vault created for this Synapse deployment.",
 								"constraints": {
 									"required": true,

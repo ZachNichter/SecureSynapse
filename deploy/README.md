@@ -25,7 +25,33 @@ The resulting deployment looks like this:
 ![Deployed Architecture](images/deployedArchitecture.png?raw=true "Architecture")
 
 ## Prerequisites
+### Existing Resource Group
 **You must have an existing resource group** which will be used for all deployments. Note that Synapse creates a managed resource group as part of the deployment process. The managed resource group is not alway cleaned up if you delete your own resource group.
+
+### Portal Resource Permissions
+#### List of resource providers used in this deployment
+Microsoft.Authorization/roleAssignments
+Microsoft.Compute/virtualMachines
+Microsoft.Compute/virtualMachines/extensions
+Microsoft.DevTestLab/schedules
+Microsoft.KeyVault/vaults
+Microsoft.KeyVault/vaults/privateEndpointConnections
+Microsoft.Network/bastionHosts
+Microsoft.Network/networkInterfaces
+Microsoft.Network/networkSecurityGroups
+Microsoft.Network/networkSecurityGroups/securityRules
+Microsoft.Network/privateDnsZones
+Microsoft.Network/privateDnsZones/virtualNetworkLinks
+Microsoft.Network/privateEndpoints
+Microsoft.Network/privateEndpoints/privateDnsZoneGroups
+Microsoft.Network/publicIPAddresses
+Microsoft.Network/virtualNetworks
+Microsoft.Network/virtualNetworks/subnets
+Microsoft.Resources/deployments
+Microsoft.Storage/storageAccounts
+Microsoft.Storage/storageAccounts/blobServices/containers
+Microsoft.Synapse/privateLinkHubs
+Microsoft.Synapse/workspaces
 
 ## Secure Synapse Deployment
 

@@ -6,15 +6,15 @@
             "title": "DPi30 Secure Synapse Deployment",
             "steps": [
                 {
-                    "name": "general",
-                    "label": "General",
+                    "name": "basics",
+                    "label": "Basics",
                     "elements": [
                         {
                             "name": "resourceScope",
                             "type": "Microsoft.Common.ResourceScope",
                             "location": {
                                 "resourceTypes": [
-                                    "microsoft.resources/resourcegroups"
+                                    "Microsoft.Resources/resourcegroups"
                                 ]
                             }
                         },
@@ -432,13 +432,36 @@
 							]
 						}
 					]
+				},
+				{
+					"name": "tagStep",
+					"label": "Tags",
+					"elements": [
+						{
+							"name": "tagsByResource",
+							"type": "Microsoft.Common.TagsByResource",
+							"resources": [
+								"Microsoft.Compute/virtualMachines",
+								"Microsoft.KeyVault/vaults",
+								"Microsoft.Network/bastionHosts",
+								"Microsoft.Network/networkSecurityGroups",
+								"Microsoft.Network/privateDnsZones",
+								"Microsoft.Network/privateEndpoints",
+								"Microsoft.Network/publicIPAddresses",
+								"Microsoft.Network/virtualNetworks",
+								"Microsoft.Storage/storageAccounts",
+								"Microsoft.Synapse/privateLinkHubs",
+								"Microsoft.Synapse/workspaces"
+							]
+						}
+					]
 				}
-				]
+			]
         },
 	    "outputs": {
             "kind": "ResourceGroup",
-            "resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
-            "location": "[steps('general').resourceScope.location.name]",
+            "resourceGroupId": "[steps('basics').resourceScope.resourceGroup.id]",
+            "location": "[steps('basics').resourceScope.location.name]",
             "parameters": {
 				"virtualNetwork_vnet_name": "[coalesce(steps('vnetStep').vnet.name,steps('vnetStep').vnetBastion.name)]",
 				"virtualNetwork_vnet_address_prefix": "[coalesce(steps('vnetStep').vnet.name, steps('vnetStep').vnetBastion.addressPrefix)]",
@@ -468,7 +491,6 @@
 				"keyVaultName": "[steps('synapseStep').keyVaultSection.keyVaultName]",
 				"disableKeyVaultPublicNetworkAccess": "[steps('synapseStep').keyVaultSection.disableKeyVaultPublicNetworkAccess]",
 
-
 				"createJumpVM": "[steps('vmStep').deployJumpbox]",
 				"deployBastion": "[steps('vmStep').deployBastion]",
 				"bastionHostName": "[steps('vmStep').bastionHostName]",
@@ -476,7 +498,7 @@
 				"vmAdminUsername": "[steps('vmStep').vmCredentialSection.vmAdminUsername]",
 				"vmAdminPassword": "[steps('vmStep').vmCredentialSection.vmCredentials]",
 
-				"tagsByResource": "[steps('tags').tagsByResource]"
+				"tagsByResource": "[steps('tagStep').tagsByResource]"
 			}
 		}
 
