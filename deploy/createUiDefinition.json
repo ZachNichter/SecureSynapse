@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2021-09-09/uiFormDefinition.schema.json",
+    "$schema": "<relative path to createFormUI.schema.json>",
     "view": {
         "kind": "Form",
         "properties": {
@@ -435,7 +435,10 @@
 				}
 				]
         },
-	    "deployment": {
+	    "outputs": {
+            "kind": "ResourceGroup",
+            "resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
+            "location": "[steps('general').resourceScope.location.name]",
             "parameters": {
 				"virtualNetwork_vnet_name": "[coalesce(steps('vnetStep').vnet.name,steps('vnetStep').vnetBastion.name)]",
 				"virtualNetwork_vnet_address_prefix": "[coalesce(steps('vnetStep').vnet.name, steps('vnetStep').vnetBastion.addressPrefix)]",
@@ -474,12 +477,6 @@
 				"vmAdminPassword": "[steps('vmStep').vmCredentialSection.vmCredentials]",
 
 				"tagsByResource": "[steps('tags').tagsByResource]"
-			},
-            "kind": "ResourceGroup",
-            "location": "[steps('general').resourceScope.location.name]",
-            "resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
-			"template": {
-				"file": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/azuredeploy.json"
 			}
 		}
 
