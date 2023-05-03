@@ -5,11 +5,11 @@
         "name": {
             "value": "synapse-ws"
         },
-        "defaultDataLakeStorageAccountName": {
-            "value": "securesynapseadls"
+        "dataLakeStorageAccountName": {
+            "value": "adlssecuresynapse"
         },
-        "defaultDataLakeStorageFilesystemName": {
-            "value": "synapsefiles"
+        "dataLakeStorageFilesystemName": {
+            "value": "fs-securesynapse"
         },
         "allowSynapseADAuthOnly": {
             "value": true
@@ -32,13 +32,13 @@
         "managedVirtualNetwork": {
             "value": "default"
         },
-        "storageSubscriptionID": {
+        "dataLakeStorageAccountSubscriptionID": {
             "value": ""
         },
-        "storageLocation": {
+        "dataLakeStorageAccountLocation": {
             "value": ""
         },
-        "storageRoleUniqueId": {
+        "dataLakeStorageAccountRoleUniqueId": {
             "value": ""
         },
         "isNewStorageAccount": {
@@ -53,16 +53,16 @@
         "managedResourceGroupName": {
             "value": ""
         },
-        "storageAccessTier": {
+        "dataLakeStorageAccountAccessTier": {
             "value": "Hot"
         },
-        "storageAccountType": {
+        "dataLakeStorageAccountType": {
             "value": "Standard_RAGRS"
         },
         "storageSupportsHttpsTrafficOnly": {
             "value": true
         },
-        "storageKind": {
+        "dataLakeStorageAccountKind": {
             "value": "StorageV2"
         },
         "storageIsHnsEnabled": {

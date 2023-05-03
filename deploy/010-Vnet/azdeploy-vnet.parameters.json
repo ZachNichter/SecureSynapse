@@ -2,35 +2,47 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "virtualNetwork_vnet_name": {
-        "value": ""
-      },
-      "virtualNetwork_vnet_address_prefix": {
-        "value": "172.20.0.0/20"
-      },
-      "virtualNetwork_app_subnet_name": {
-        "value": "PrivateEndpointSubnet"
-      },
-      "virtualNetwork_app_subnet_address_prefix": {
-        "value": "172.20.3.0/24"
-      },
-      "virtualNetwork_data_subnet_name": {
-        "value": "DataSubnet"
-      },
-      "virtualNetwork_data_subnet_address_prefix": {
-        "value": "172.20.2.0/24"
-      },
-	  "virtualNetwork_gateway_subnet_name": {
-		"value": "GatewaySubnet"
-	  },
-	  "virtualNetwork_gateway_subnet_address_prefix": {
-        "value": "172.20.1.0/24"
-      },
-	  "virtualNetwork_default_subnet_name": {
-        "value": "default"
-      },
-      "virtualNetwork_default_subnet_address_prefix": {
-        "value": "172.20.0.0/24"
-      }
+		"virtualNetwork_vnet_name": {
+			"value": "vnet-projectname"
+		},
+		"virtualNetwork_vnet_address_prefix": {
+			"value": "172.20.0.0/20"
+		},
+		"virtualNetwork_bastion_subnet_name": {
+			"value": "BastionSubnet"
+		},
+		"virtualNetwork_bastion_subnet_address_prefix": {
+			"value": "172.20.4.0/24"
+		},
+		"virtualNetwork_app_subnet_name": {
+			"value": "PrivateEndpointSubnet"
+		},
+		"virtualNetwork_app_subnet_address_prefix": {
+			"value": "172.20.3.0/24"
+		},
+		"virtualNetwork_data_subnet_name": {
+			"value": "DataSubnet"
+		},
+		"virtualNetwork_data_subnet_address_prefix": {
+			"value": "172.20.2.0/24"
+		},
+		"virtualNetwork_gateway_subnet_name": {
+			"value": "GatewaySubnet"
+		},
+		"virtualNetwork_gateway_subnet_address_prefix": {
+			"value": "172.20.1.0/24"
+		},
+		"virtualNetwork_default_subnet_name": {
+			"value": "default"
+		},
+		"virtualNetwork_default_subnet_address_prefix": {
+			"value": "172.20.0.0/24"
+		},
+		"bastion_Deploy": {
+			"value": true
+		},
+		"bastion_HostName": {
+			"value": "bastionhostname"
+		}
     }
 }
