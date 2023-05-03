@@ -72,7 +72,7 @@
 							"name": "bastionHostName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "Bastion hostname",
-							"defaultValue": "[concat('bas-', substring(steps('general').resNamingSection.defaultResNamePart,1,71))]",
+							"defaultValue": "[concat('bas-', substring(steps('general').resNamingSection.defaultResNamePart,0,71))]",
 							"constraints": {
 								"required": true,
 								"regex": "^[a-zA-Z0-9][a-zA-Z0-9_-.]{0,78}[a-zA-Z0-9_]$",
@@ -84,7 +84,7 @@
 							"name": "vmName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "Virtual machine name",
-							"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,1,13))]",
+							"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,0,13))]",
 							"constraints": {
 								"required": true,
 								"regex": "^[a-z0-9-]{2,15}$",
@@ -501,6 +501,5 @@
 				"tagsByResource": "[steps('tagStep').tagsByResource]"
 			}
 		}
-
     }
 }
