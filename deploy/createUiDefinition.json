@@ -6,8 +6,8 @@
             "title": "DPi30 Secure Synapse Deployment",
             "steps": [
                 {
-                    "name": "basics",
-                    "label": "Basics",
+                    "name": "general",
+                    "label": "General",
                     "elements": [
                         {
                             "name": "resourceScope",
@@ -460,8 +460,8 @@
         },
 	    "outputs": {
             "kind": "ResourceGroup",
-            "resourceGroupId": "[steps('basics').resourceScope.resourceGroup.id]",
-            "location": "[steps('basics').resourceScope.location.name]",
+            "resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
+            "location": "[steps('general').resourceScope.location.name]",
             "parameters": {
 				"virtualNetwork_vnet_name": "[coalesce(steps('vnetStep').vnet.name,steps('vnetStep').vnetBastion.name)]",
 				"virtualNetwork_vnet_address_prefix": "[coalesce(steps('vnetStep').vnet.name, steps('vnetStep').vnetBastion.addressPrefix)]",
