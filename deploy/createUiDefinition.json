@@ -413,8 +413,8 @@
 				"deployBastion": "[steps('vmStep').deployJumpbox]",
 				"bastionHostName": "[concat('bas-', steps('general').resNamingSection.defaultResNamePart)]",
 				"virtualMachineName": "[steps('vmStep').vmSettingsSection.vmName]",
-				"vmAdminUsername": "[steps('vmStep').vmSettingsSection.vmCredentialSection.vmAdminUsername]",
-				"vmAdminPassword": "[steps('vmStep').vmSettingsSection.vmCredentialSection.vmCredentials]",
+				"vmAdminUsername": "[steps('vmStep').vmSettingsSection.vmAdminUsername]",
+				"vmAdminPassword": "[steps('vmStep').vmSettingsSection.vmCredentials]",
 
 				"tagsByResource": "[steps('tagStep').tagsByResource]"
 			}
