@@ -148,7 +148,7 @@
 							},
 							"defaultValue": {
 								"name": "",
-								"addressPrefixSize": "/24"
+								"addressPrefixSize": "/22"
 							},
 							"constraints": {
 								"minAddressPrefixSize": "/26"
