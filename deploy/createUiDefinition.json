@@ -411,7 +411,7 @@
 
 				"createJumpVM": "[steps('vmStep').deployJumpbox]",
 				"deployBastion": "[steps('vmStep').deployJumpbox]",
-				"bastionHostName": "[format('bas-{0}', substring(steps('general').resNamingSection.defaultResNamePart,0,71))]",
+				"bastionHostName": "[concat('bas-', substring(steps('general').resNamingSection.defaultResNamePart,0,71))]",
 				"virtualMachineName": "[steps('vmStep').vmName]",
 				"vmAdminUsername": "[steps('vmStep').vmCredentialSection.vmAdminUsername]",
 				"vmAdminPassword": "[steps('vmStep').vmCredentialSection.vmCredentials]",
