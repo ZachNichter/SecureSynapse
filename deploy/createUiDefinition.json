@@ -76,51 +76,55 @@
 							"visible": true
 						},
 						{
-							"name": "vmName",
-							"type": "Microsoft.Common.TextBox",
-							"label": "Virtual machine name",
-							"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,0,13))]",
-							"constraints": {
-								"required": true,
-								"regex": "^[a-z0-9-]{2,15}$",
-								"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
-							},
-							"visible": "[steps('vmStep').deployJumpbox]"
-						},
-						{
-							"name": "vmCredentialSection",
+							"name": "vmSettings",
 							"type": "Microsoft.Common.Section",
-							"label": "VM credentials",
+							"label": "",
 							"elements": [
 								{
-									"name": "vmAdminUsername",
+									"name": "vmName",
 									"type": "Microsoft.Common.TextBox",
-									"label": "VM admin username",
-									"defaultValue": "vmAdmin",
-									"toolTip": "",
+									"label": "Virtual machine name",
+									"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,0,13))]",
 									"constraints": {
 										"required": true,
-										"regex": "^[a-z0-9A-Z]{1,30}$",
-										"validationMessage": "Only alphanumeric characters are allowed, and must be 1-30 characters long."
-									},
-									"visible": "[steps('vmStep').deployJumpbox]"
+										"regex": "^[a-z0-9-]{2,15}$",
+										"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
+									}
 								},
 								{
-									"name": "vmCredentials",
-									"type": "Microsoft.Common.PasswordBox",
-									"label": {
-										"password": "Password",
-										"confirmPassword": "Confirm password"
-									},
-									"constraints": {
-										"required": true,
-										"customPasswordRegex": "",
-										"customValidationMessage": ""
-									},
-									"options": {
-										"hideConfirmation": false
-									},
-									"visible": "[steps('vmStep').deployJumpbox]"
+									"name": "vmCredentialSection",
+									"type": "Microsoft.Common.Section",
+									"label": "VM credentials",
+									"elements": [
+										{
+											"name": "vmAdminUsername",
+											"type": "Microsoft.Common.TextBox",
+											"label": "VM admin username",
+											"defaultValue": "vmAdmin",
+											"toolTip": "",
+											"constraints": {
+												"required": true,
+												"regex": "^[a-z0-9A-Z]{1,30}$",
+												"validationMessage": "Only alphanumeric characters are allowed, and must be 1-30 characters long."
+											}
+										},
+										{
+											"name": "vmCredentials",
+											"type": "Microsoft.Common.PasswordBox",
+											"label": {
+												"password": "Password",
+												"confirmPassword": "Confirm password"
+											},
+											"constraints": {
+												"required": true,
+												"customPasswordRegex": "",
+												"customValidationMessage": ""
+											},
+											"options": {
+												"hideConfirmation": false
+											}
+										}
+									]
 								}
 							],
 							"visible": "[steps('vmStep').deployJumpbox]"
