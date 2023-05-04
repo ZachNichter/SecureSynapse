@@ -95,7 +95,7 @@
 									"name": "projectInfo",
 									"type": "Microsoft.Common.TextBlock",
 									"options": {
-										"text": "## VM credentials"
+										"text": "**VM credentials**"
 									}
 								},
 								{
@@ -275,17 +275,24 @@
 							"elements": [
 								{
 									"name": "selectSynapseADLSStorageAccount",
-									"type": "Microsoft.Storage.StorageAccountSelector",
-									"label": "Storage account",
+									"type": "Microsoft.Storage.MultiStorageAccountCombo",
+									"label": {
+										"prefix": "Storage account name",
+										"type": "Storage account type"
+									},
 									"toolTip": "",
 									"defaultValue": {
 										"name": "[concat('adls', steps('general').resNamingSection.defaultResNamePart)]",
-										"type": "Standard_RAGRS",
-										"kind": "StorageV2"
+										"type": "Standard_RAGRS"
 									},
 									"constraints": {
-										"allowedTypes": [],
-										"excludedTypes": []
+										"allowedTypes": ["Standard_RAGRS"],
+										"excludedTypes": [
+											"Premium_LRS",
+											"Standard_LRS",
+											"Standard_GRS",
+											"Standard_ZRS"
+										]
 									},
 									"options": {
 										"hideExisting": true
