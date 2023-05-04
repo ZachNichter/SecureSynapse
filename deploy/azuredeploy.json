@@ -11,35 +11,27 @@
 	  "type": "string"
 	},
 	"virtualNetwork_bastion_subnet_name": {
-	//   "defaultValue": "BastionSubnet",
 	  "type": "string"
 	},
 	"virtualNetwork_bastion_subnet_address_prefix": {
-	//   "defaultValue": "172.20.4.0/26",
 	  "type": "string"
 	},
 	"virtualNetwork_app_subnet_name": {
-	//   "defaultValue": "AppSubnet",
 	  "type": "string"
 	},
 	"virtualNetwork_app_subnet_address_prefix": {
-	//   "defaultValue": "172.20.3.0/26",
 	  "type": "string"
 	},
 	"virtualNetwork_data_subnet_name": {
-	//   "defaultValue": "DataSubnet",
 	  "type": "string"
 	},
 	"virtualNetwork_data_subnet_address_prefix": {
-	//   "defaultValue": "172.20.2.0/26",
 	  "type": "string"
 	},
 	"virtualNetwork_gateway_subnet_name": {
-	//   "defaultValue": "GatewaySubnet",
 	  "type": "string"
 	},
 	"virtualNetwork_gateway_subnet_address_prefix": {
-	//   "defaultValue": "172.20.1.0/26",
 	  "type": "string"
 	},
 	"virtualNetwork_default_subnet_name": {
@@ -47,7 +39,7 @@
 	  "type": "string"
 	},
 	"virtualNetwork_default_subnet_address_prefix": {
-	  "defaultValue": "172.20.0.0/26",
+	  "defaultValue": "/20",
 	  "type": "string"
 	},
 	"createJumpVM": {
@@ -66,14 +58,14 @@
 	},
 	"bastionHostName": {
 		"type": "String",
-		"defaultValue": "bas-",    // can only be 2 characters because of unique string added to end
+		"defaultValue": "bas-",
 		"metadata": {
 		  "description": "The name of the Bastion host"
 		}
 	  },
 	"virtualMachineName": {
 		"type": "String",
-		"defaultValue": "vm",    // can only be 2 characters because of unique string added to end
+		"defaultValue": "vm",
 		"metadata": {
 		  "description": "The name of the VM"
 		}
@@ -202,7 +194,7 @@
 	"uniqueSuffix": "[uniqueString(resourceGroup().id, deployment().name)]",
 	"dataLakeStorageAccountUnique": "[concat(parameters('dataLakeAccount'), variables('uniqueSuffix'))]",
 	"vmUniqueName": "[format('{0}{1}', parameters('virtualMachineName'), variables('uniqueSuffix'))]",
-	"virtualMachineNameUnique": "[substring(variables('vmUniqueName'), 0, 15)]",      // Windows has max name length 15 characters
+	"virtualMachineNameUnique": "[substring(variables('vmUniqueName'), 0, 15)]",
 	"bastionHostNameUnique": "[concat(parameters('bastionHostName'), '-', variables('uniqueSuffix'))]",
 	"synapseWSNameUnique": "[concat(parameters('synapseWSName'), '-', variables('uniqueSuffix'))]",
 	"distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', resourceGroup().name)]",
@@ -331,7 +323,7 @@
 		  "contentVersion": "1.0.0.0"
 		},
 		"parameters": {
-		  "hubName": { "value": "[concat('hub', replace(variables('synapseWSNameUnique'),'-',''))]" }     // only lower-case letters or digits
+		  "hubName": { "value": "[concat('hub', replace(variables('synapseWSNameUnique'),'-',''))]" }
 		}
 	  }
 	},
