@@ -148,10 +148,10 @@
 							},
 							"defaultValue": {
 								"name": "",
-								"addressPrefixSize": "/22"
+								"addressPrefixSize": "/16"
 							},
 							"constraints": {
-								"minAddressPrefixSize": "/26",
+								"minAddressPrefixSize": "/24",
 								"requireContiguousAddresses": true
 							},
 							"options": {
@@ -162,10 +162,10 @@
 									"label": "Default subnet",
 									"defaultValue": {
 										"name": "default",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
+										"minAddressPrefixSize": "/24",
 										"minAddressCount": 64,
 										"requireContiguousAddresses": true
 									}
@@ -174,10 +174,10 @@
 									"label": "Gateway subnet",
 									"defaultValue": {
 										"name": "GatewaySubnet",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
+										"minAddressPrefixSize": "/24",
 										"minAddressCount": 32,
 										"requireContiguousAddresses": true
 									}
@@ -186,10 +186,10 @@
 									"label": "Data subnet",
 									"defaultValue": {
 										"name": "DataSubnet",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
+										"minAddressPrefixSize": "/24",
 										"minAddressCount": 32,
 										"requireContiguousAddresses": true
 									}
@@ -198,10 +198,10 @@
 									"label": "Application subnet",
 									"defaultValue": {
 										"name": "PrivateEndpointSubnet",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
+										"minAddressPrefixSize": "/24",
 										"minAddressCount": 32,
 										"requireContiguousAddresses": true
 									}
@@ -210,10 +210,10 @@
 									"label": "Bastion subnet",
 									"defaultValue": {
 										"name": "BastionSubnet",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
+										"minAddressPrefixSize": "/24",
 										"minAddressCount": 32,
 										"requireContiguousAddresses": true
 									}
