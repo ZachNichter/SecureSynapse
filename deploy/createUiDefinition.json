@@ -92,39 +92,39 @@
 									}
 								},
 								{
-									"name": "vmCredentialSection",
-									"type": "Microsoft.Common.Section",
-									"label": "VM credentials",
-									"elements": [
-										{
-											"name": "vmAdminUsername",
-											"type": "Microsoft.Common.TextBox",
-											"label": "VM admin username",
-											"defaultValue": "vmAdmin",
-											"toolTip": "",
-											"constraints": {
-												"required": true,
-												"regex": "^[a-z0-9A-Z]{1,30}$",
-												"validationMessage": "Only alphanumeric characters are allowed, and must be 1-30 characters long."
-											}
-										},
-										{
-											"name": "vmCredentials",
-											"type": "Microsoft.Common.PasswordBox",
-											"label": {
-												"password": "Password",
-												"confirmPassword": "Confirm password"
-											},
-											"constraints": {
-												"required": true,
-												"customPasswordRegex": "",
-												"customValidationMessage": ""
-											},
-											"options": {
-												"hideConfirmation": false
-											}
-										}
-									]
+									"name": "projectInfo",
+									"type": "Microsoft.Common.TextBlock",
+									"options": {
+										"text": "## VM credentials"
+									}
+								},
+								{
+									"name": "vmAdminUsername",
+									"type": "Microsoft.Common.TextBox",
+									"label": "VM admin username",
+									"defaultValue": "vmAdmin",
+									"toolTip": "",
+									"constraints": {
+										"required": true,
+										"regex": "^[a-z0-9A-Z]{1,30}$",
+										"validationMessage": "Only alphanumeric characters are allowed, and must be 1-30 characters long."
+									}
+								},
+								{
+									"name": "vmCredentials",
+									"type": "Microsoft.Common.PasswordBox",
+									"label": {
+										"password": "Password",
+										"confirmPassword": "Confirm password"
+									},
+									"constraints": {
+										"required": true,
+										"customPasswordRegex": "",
+										"customValidationMessage": ""
+									},
+									"options": {
+										"hideConfirmation": false
+									}
 								}
 							],
 							"visible": "[steps('vmStep').deployJumpbox]"
