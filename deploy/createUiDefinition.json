@@ -143,12 +143,12 @@
 								"subnets": "Subnets"
 							},
 							"toolTip": {
-								"virtualNetwork": "Click 'New network' to define the IP range used in this virtual network.",
+								"virtualNetwork": "Click 'New network' to define the IP prefix used in this virtual network.",
 								"subnets": ""
 							},
 							"defaultValue": {
 								"name": "[concat('vnet-', steps('general').resNamingSection.defaultResNamePart)]",
-								"addressPrefixSize": "/20"
+								"addressPrefixSize": "172.20.0.0/20"
 							},
 							"constraints": {
 								"minAddressPrefixSize": "/20"
@@ -161,47 +161,44 @@
 									"label": "Default subnet",
 									"defaultValue": {
 										"name": "default",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 64
+										"minAddressPrefixSize": "/24"
 									}
 								},
 								"gatewaySubnet": {
 									"label": "Gateway subnet",
 									"defaultValue": {
 										"name": "GatewaySubnet",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 64
+										"minAddressPrefixSize": "/24"
 									}
 								},
 								"dataSubnet": {
 									"label": "Data subnet",
 									"defaultValue": {
 										"name": "DataSubnet",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 64
+										"minAddressPrefixSize": "/24"
 									}
 								},
 								"appSubnet": {
 									"label": "Application subnet",
 									"defaultValue": {
 										"name": "PrivateEndpointSubnet",
-										"addressPrefixSize": "/26"
+										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 64
+										"minAddressPrefixSize": "/24"
 									}
 								}
-							}
+							},
+							"visible": true
 						}
 					]
 				},
