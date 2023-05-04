@@ -52,33 +52,28 @@
 				},
 				{
 					"name": "vmStep",
-					"label": "Virtual machine",
+					"label": "Virtual Machine",
 					"elements": [
 						{
 							"name": "deployJumpbox",
-							"type": "Microsoft.Common.CheckBox",
-							"label": "Deploy a Synapse Studio VM jumpbox? (Recommended)",
-							"defaultValue": true,
-							"visible": true
-						},
-						{
-							"name": "deployBastion",
-							"type": "Microsoft.Common.CheckBox",
-							"label": "Deploy Bastion for secure public VM access? (Recommended)",
-							"defaultValue": true,
-							"visible": "[steps('vmStep').deployJumpbox]"
-						},
-						{
-							"name": "bastionHostName",
-							"type": "Microsoft.Common.TextBox",
-							"label": "Bastion hostname",
-							"defaultValue": "[concat('bas-', substring(steps('general').resNamingSection.defaultResNamePart,0,71))]",
+							"type": "Microsoft.Common.OptionsGroup",
+							"label": "Deploy a Synapse Studio VM jumpbox?",
+							"defaultValue": "Yes (Recommended)",
+							"toolTip": "",
 							"constraints": {
-								"required": true,
-								"regex": "^[a-zA-Z0-9][a-zA-Z0-9_-.]{0,78}[a-zA-Z0-9_]$",
-								"validationMessage": "Only Alphanumerics, underscores, periods, and hyphens. Start with alphanumeric. End alphanumeric or underscore. Length must be 1-80 characters."
+								"allowedValues": [
+									{
+										"label": "Yes (Recommended)",
+										"value": true
+									},
+									{
+										"label": "No",
+										"value": false
+									}
+								],
+								"required": true
 							},
-							"visible": "[steps('vmStep').deployBastion]"
+							"visible": true
 						},
 						{
 							"name": "vmName",
@@ -202,88 +197,7 @@
 										"minAddressCount": 64
 									}
 								}
-							},
-							"visible": "[not(steps('vmStep').deployBastion)]"
-						},
-						{
-							"name": "vnetBastion",
-							"type": "Microsoft.Network.VirtualNetworkCombo",
-							"label": {
-								"virtualNetwork": "Virtual network",
-								"subnets": "Subnets"
-							},
-							"toolTip": {
-								"virtualNetwork": "Click 'New network' to define the IP range used in this virtual network.",
-								"subnets": ""
-							},
-							"defaultValue": {
-								"name": "[concat('vnet-', steps('general').resNamingSection.defaultResNamePart)]",
-								"addressPrefixSize": "/20"
-							},
-							"constraints": {
-								"minAddressPrefixSize": "/20"
-							},
-							"options": {
-								"hideExisting": true
-							},
-							"subnets": {
-								"defaultSubnet": {
-									"label": "Default subnet",
-									"defaultValue": {
-										"name": "default",
-										"addressPrefixSize": "/26"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 64
-									}
-								},
-								"gatewaySubnet": {
-									"label": "Gateway subnet",
-									"defaultValue": {
-										"name": "GatewaySubnet",
-										"addressPrefixSize": "/26"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 64
-									}
-								},
-								"dataSubnet": {
-									"label": "Data subnet",
-									"defaultValue": {
-										"name": "DataSubnet",
-										"addressPrefixSize": "/26"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 64
-									}
-								},
-								"appSubnet": {
-									"label": "Application subnet",
-									"defaultValue": {
-										"name": "PrivateEndpointSubnet",
-										"addressPrefixSize": "/26"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 64
-									}
-								},
-								"bastionSubnet": {
-									"label": "Bastion subnet",
-									"defaultValue": {
-										"name": "BastionSubnet",
-										"addressPrefixSize": "/26"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/26",
-										"minAddressCount": 8
-									}
-								}
-							},
-							"visible": "[steps('vmStep').deployBastion]"
+							}
 						}
 					]
 				},
@@ -463,18 +377,18 @@
             "resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
             "location": "[steps('general').resourceScope.location.name]",
             "parameters": {
-				"virtualNetwork_vnet_name": "[coalesce(steps('vnetStep').vnet.name,steps('vnetStep').vnetBastion.name)]",
-				"virtualNetwork_vnet_address_prefix": "[coalesce(steps('vnetStep').vnet.name, steps('vnetStep').vnetBastion.addressPrefix)]",
-				"virtualNetwork_bastion_subnet_name": "[coalesce(steps('vnetStep').vnet.subnets.subnet5.name, steps('vnetStep').vnetBastion.subnets.subnet5.name)]",
-				"virtualNetwork_bastion_subnet_address_prefix": "[coalesce(steps('vnetStep').vnet.subnets.subnet5.addressPrefix, steps('vnetStep').vnetBastion.subnets.subnet5.addressPrefix)]",
-				"virtualNetwork_app_subnet_name": "[coalesce(steps('vnetStep').vnet.subnets.subnet4.name, steps('vnetStep').vnetBastion.subnets.subnet4.name)]",
-				"virtualNetwork_app_subnet_address_prefix": "[coalesce(steps('vnetStep').vnet.subnets.subnet4.addressPrefix, steps('vnetStep').vnetBastion.subnets.subnet4.addressPrefix)]",
-				"virtualNetwork_data_subnet_name": "[coalesce(steps('vnetStep').vnet.subnets.subnet3.name, steps('vnetStep').vnetBastion.subnets.subnet3.name)]",
-				"virtualNetwork_data_subnet_address_prefix": "[coalesce(steps('vnetStep').vnet.subnets.subnet3.addressPrefix, steps('vnetStep').vnetBastion.subnets.subnet3.addressPrefix)]",
-				"virtualNetwork_gateway_subnet_name": "[coalesce(steps('vnetStep').vnet.subnets.subnet2.name, steps('vnetStep').vnetBastion.subnets.subnet2.name)]",
-				"virtualNetwork_gateway_subnet_address_prefix": "[coalesce(steps('vnetStep').vnet.subnets.subnet2.addressPrefix, steps('vnetStep').vnetBastion.subnets.subnet2.addressPrefix)]",
-				"virtualNetwork_default_subnet_name": "[coalesce(steps('vnetStep').vnet.subnets.subnet1.name, steps('vnetStep').vnetBastion.subnets.subnet1.name)]",
-				"virtualNetwork_default_subnet_address_prefix": "[coalesce(steps('vnetStep').vnet.subnets.subnet1.addressPrefix, steps('vnetStep').vnetBastion.subnets.subnet1.addressPrefix)]",
+				"virtualNetwork_vnet_name": "[steps('vnetStep').vnet.name]",
+				"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.name]",
+				"virtualNetwork_bastion_subnet_name": "[if(equals(steps('vmStep').deployJumpbox, true), 'BastionSubnet', '')]",
+				"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.subnet4.addressPrefix]",
+				"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.subnet4.name]",
+				"virtualNetwork_app_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.subnet4.addressPrefix]",
+				"virtualNetwork_data_subnet_name": "[steps('vnetStep').vnet.subnets.subnet3.name]",
+				"virtualNetwork_data_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.subnet3.addressPrefix]",
+				"virtualNetwork_gateway_subnet_name": "[steps('vnetStep').vnet.subnets.subnet2.name]",
+				"virtualNetwork_gateway_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.subnet2.addressPrefix]",
+				"virtualNetwork_default_subnet_name": "[steps('vnetStep').vnet.subnets.subnet1.name]",
+				"virtualNetwork_default_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.subnet1.addressPrefix]",
 
 				"createSynapseWS": "true",
 				"synapseWSName": "[steps('synapseStep').workspaceSection.synapseWSName]",
@@ -492,8 +406,8 @@
 				"disableKeyVaultPublicNetworkAccess": "[steps('synapseStep').keyVaultSection.disableKeyVaultPublicNetworkAccess]",
 
 				"createJumpVM": "[steps('vmStep').deployJumpbox]",
-				"deployBastion": "[steps('vmStep').deployBastion]",
-				"bastionHostName": "[steps('vmStep').bastionHostName]",
+				"deployBastion": "[steps('vmStep').deployJumpbox]",
+				"bastionHostName": "[format('bas-{0}', substring(steps('general').resNamingSection.defaultResNamePart,0,71)]",
 				"virtualMachineName": "[steps('vmStep').vmName]",
 				"vmAdminUsername": "[steps('vmStep').vmCredentialSection.vmAdminUsername]",
 				"vmAdminPassword": "[steps('vmStep').vmCredentialSection.vmCredentials]",
