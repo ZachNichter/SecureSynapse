@@ -148,10 +148,10 @@
 							},
 							"defaultValue": {
 								"name": "",
-								"addressPrefixSize": "/16"
+								"addressPrefixSize": "/20"
 							},
 							"constraints": {
-								"minAddressPrefixSize": "/24",
+								"minAddressPrefixSize": "/20",
 								"requireContiguousAddresses": true
 							},
 							"options": {
@@ -166,7 +166,7 @@
 									},
 									"constraints": {
 										"minAddressPrefixSize": "/24",
-										"minAddressCount": 64,
+										"minAddressCount": 12,
 										"requireContiguousAddresses": true
 									}
 								},
@@ -178,7 +178,7 @@
 									},
 									"constraints": {
 										"minAddressPrefixSize": "/24",
-										"minAddressCount": 32,
+										"minAddressCount": 12,
 										"requireContiguousAddresses": true
 									}
 								},
@@ -190,7 +190,7 @@
 									},
 									"constraints": {
 										"minAddressPrefixSize": "/24",
-										"minAddressCount": 32,
+										"minAddressCount": 12,
 										"requireContiguousAddresses": true
 									}
 								},
@@ -202,7 +202,7 @@
 									},
 									"constraints": {
 										"minAddressPrefixSize": "/24",
-										"minAddressCount": 32,
+										"minAddressCount": 12,
 										"requireContiguousAddresses": true
 									}
 								},
@@ -214,7 +214,7 @@
 									},
 									"constraints": {
 										"minAddressPrefixSize": "/24",
-										"minAddressCount": 32,
+										"minAddressCount": 12,
 										"requireContiguousAddresses": true
 									}
 								}
