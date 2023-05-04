@@ -148,7 +148,7 @@
 							},
 							"defaultValue": {
 								"name": "",
-								"addressPrefixSize": "/22"
+								"addressPrefixSize": "/24"
 							},
 							"constraints": {
 								"minAddressPrefixSize": "/26"
@@ -165,7 +165,7 @@
 									},
 									"constraints": {
 										"minAddressPrefixSize": "/26",
-										"minAddressCount": 32,
+										"minAddressCount": 64,
 										"requireContiguousAddresses": true
 									}
 								},
