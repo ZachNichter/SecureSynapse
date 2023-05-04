@@ -76,7 +76,7 @@
 							"visible": true
 						},
 						{
-							"name": "vmSettings",
+							"name": "vmSettingsSection",
 							"type": "Microsoft.Common.Section",
 							"label": "",
 							"elements": [
@@ -412,9 +412,9 @@
 				"createJumpVM": "[steps('vmStep').deployJumpbox]",
 				"deployBastion": "[steps('vmStep').deployJumpbox]",
 				"bastionHostName": "[concat('bas-', steps('general').resNamingSection.defaultResNamePart)]",
-				"virtualMachineName": "[if(equals(steps('vmStep').deployJumpbox, true), steps('vmStep').vmName, '')]",
-				"vmAdminUsername": "[steps('vmStep').vmCredentialSection.vmAdminUsername]",
-				"vmAdminPassword": "[steps('vmStep').vmCredentialSection.vmCredentials]",
+				"virtualMachineName": "[steps('vmStep').vmSettingsSection.vmName]",
+				"vmAdminUsername": "[steps('vmStep').vmSettingsSection.vmCredentialSection.vmAdminUsername]",
+				"vmAdminPassword": "[steps('vmStep').vmSettingsSection.vmCredentialSection.vmCredentials]",
 
 				"tagsByResource": "[steps('tagStep').tagsByResource]"
 			}
