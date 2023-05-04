@@ -164,7 +164,9 @@
 										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/24"
+										"minAddressPrefixSize": "/24",
+										"minAddressCount": 32,
+										"requireContiguousAddresses": true
 									}
 								},
 								"gatewaySubnet": {
@@ -174,7 +176,9 @@
 										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/24"
+										"minAddressPrefixSize": "/24",
+										"minAddressCount": 32,
+										"requireContiguousAddresses": true
 									}
 								},
 								"dataSubnet": {
@@ -184,7 +188,9 @@
 										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/24"
+										"minAddressPrefixSize": "/24",
+										"minAddressCount": 32,
+										"requireContiguousAddresses": true
 									}
 								},
 								"appSubnet": {
@@ -194,7 +200,21 @@
 										"addressPrefixSize": "/24"
 									},
 									"constraints": {
-										"minAddressPrefixSize": "/24"
+										"minAddressPrefixSize": "/24",
+										"minAddressCount": 32,
+										"requireContiguousAddresses": true
+									}
+								},
+								"bastionSubnet": {
+									"label": "Bastion subnet",
+									"defaultValue": {
+										"name": "BastionSubnet",
+										"addressPrefixSize": "/24"
+									},
+									"constraints": {
+										"minAddressPrefixSize": "/24",
+										"minAddressCount": 32,
+										"requireContiguousAddresses": true
 									}
 								}
 							},
@@ -387,8 +407,8 @@
             "parameters": {
 				"virtualNetwork_vnet_name": "[steps('vnetStep').vnet.name]",
 				"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.name]",
-				"virtualNetwork_bastion_subnet_name": "[if(equals(steps('vmStep').deployJumpbox, true), 'BastionSubnet', '')]",
-				"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.subnet4.addressPrefix]",
+				"virtualNetwork_bastion_subnet_name": "[steps('vnetStep').vnet.subnets.subnet5.name]",
+				"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.subnet5.addressPrefix]",
 				"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.subnet4.name]",
 				"virtualNetwork_app_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.subnet4.addressPrefix]",
 				"virtualNetwork_data_subnet_name": "[steps('vnetStep').vnet.subnets.subnet3.name]",
