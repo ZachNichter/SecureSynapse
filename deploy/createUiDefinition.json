@@ -148,10 +148,10 @@
 							},
 							"defaultValue": {
 								"name": "",
-								"addressPrefixSize": "/20"
+								"addressPrefixSize": "/22"
 							},
 							"constraints": {
-								"minAddressPrefixSize": "/20"
+								"minAddressPrefixSize": "/22"
 							},
 							"options": {
 								"hideExisting": true
