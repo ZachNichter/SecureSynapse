@@ -151,7 +151,7 @@
 								"addressPrefixSize": "/22"
 							},
 							"constraints": {
-								"minAddressPrefixSize": "/22"
+								"minAddressPrefixSize": "/26"
 							},
 							"options": {
 								"hideExisting": true
