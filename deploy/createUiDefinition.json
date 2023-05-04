@@ -147,8 +147,8 @@
 								"subnets": ""
 							},
 							"defaultValue": {
-								"name": "[concat('vnet-', steps('general').resNamingSection.defaultResNamePart)]",
-								"addressPrefixSize": "172.20.0.0/20"
+								"name": "",
+								"addressPrefixSize": "/20"
 							},
 							"constraints": {
 								"minAddressPrefixSize": "/20"
