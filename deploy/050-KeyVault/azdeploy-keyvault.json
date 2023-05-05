@@ -62,6 +62,7 @@
                 "enabledForDiskEncryption": true,
                 "enabledForTemplateDeployment": false,
                 "enableSoftDelete": true,
+				"enablePurgeProtection": true,
                 "softDeleteRetentionInDays": 90,
                 "enableRbacAuthorization": true,
                 "vaultUri": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/')]",

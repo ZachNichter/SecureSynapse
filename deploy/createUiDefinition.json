@@ -95,7 +95,7 @@
 									"name": "projectInfo",
 									"type": "Microsoft.Common.TextBlock",
 									"options": {
-										"text": "**VM credentials**"
+										"text": "VM Credentials"
 									}
 								},
 								{
