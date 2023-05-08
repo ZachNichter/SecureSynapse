@@ -76,22 +76,15 @@
 							"visible": true
 						},
 						{
-							"name": "vmSettingsSection",
-							"type": "Microsoft.Common.Section",
-							"label": "",
-							"elements": [
-								{
-									"name": "vmName",
-									"type": "Microsoft.Common.TextBox",
-									"label": "Virtual machine name",
-									"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,0,13))]",
-									"constraints": {
-										"required": true,
-										"regex": "^[a-z0-9-]{2,15}$",
-										"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
-									}
-								}
-							],
+							"name": "vmName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Virtual machine name",
+							"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,0,13))]",
+							"constraints": {
+								"required": true,
+								"regex": "^[a-z0-9-]{2,15}$",
+								"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
+							},
 							"visible": "[steps('vmStep').deployJumpbox]"
 						},
 						{
