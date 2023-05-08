@@ -90,14 +90,15 @@
 										"regex": "^[a-z0-9-]{2,15}$",
 										"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
 									}
-								},
-								{
-									"name": "projectInfo",
-									"type": "Microsoft.Common.TextBlock",
-									"options": {
-										"text": "VM Credentials"
-									}
-								},
+								}
+							],
+							"visible": "[steps('vmStep').deployJumpbox]"
+						},
+						{
+							"name": "vmSettingsSection",
+							"type": "Microsoft.Common.Section",
+							"label": "VM Credentials",
+							"elements": [
 								{
 									"name": "vmAdminUsername",
 									"type": "Microsoft.Common.TextBox",
