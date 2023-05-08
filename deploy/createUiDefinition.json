@@ -95,7 +95,7 @@
 							"visible": "[steps('vmStep').deployJumpbox]"
 						},
 						{
-							"name": "vmSettingsSection",
+							"name": "vmCredSection",
 							"type": "Microsoft.Common.Section",
 							"label": "VM Credentials",
 							"elements": [
@@ -439,8 +439,8 @@
 				"deployBastion": "[steps('vmStep').deployJumpbox]",
 				"bastionHostName": "[concat('bas-', steps('general').resNamingSection.defaultResNamePart)]",
 				"virtualMachineName": "[steps('vmStep').vmSettingsSection.vmName]",
-				"vmAdminUsername": "[steps('vmStep').vmSettingsSection.vmAdminUsername]",
-				"vmAdminPassword": "[steps('vmStep').vmSettingsSection.vmCredentials]",
+				"vmAdminUsername": "[steps('vmStep').vmCredSection.vmAdminUsername]",
+				"vmAdminPassword": "[steps('vmStep').vmCredSection.vmCredentials]",
 
 				"tagsByResource": "[steps('tagStep').tagsByResource]"
 			}
