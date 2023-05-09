@@ -94,9 +94,7 @@
 									"confirmPassword": "Confirm password"
 								},
 								"constraints": {
-									"required": true,
-									"customPasswordRegex": "",
-									"customValidationMessage": ""
+									"required": true
 								},
 								"options": {
 									"hideConfirmation": false
@@ -127,8 +125,7 @@
 							"addressPrefixSize": "/20"
 						},
 						"constraints": {
-							"minAddressPrefixSize": "/20",
-							"requireContiguousAddresses": true
+							"minAddressPrefixSize": "/20"
 						},
 						"options": {
 							"hideExisting": true
@@ -251,9 +248,7 @@
 								},
 								"toolTip": "",
 								"constraints": {
-									"required": true,
-									"customPasswordRegex": "",
-									"customValidationMessage": ""
+									"required": true
 								},
 								"options": {
 									"hideConfirmation": false
@@ -275,7 +270,7 @@
 									"type": "Storage account type"
 								},
 								"defaultValue": {
-									"name": "[concat('adls', steps('general').resNamingSection.defaultResNamePart)]",
+									"prefix": "[concat('adls', steps('general').resNamingSection.defaultResNamePart)]",
 									"type": "Standard_RAGRS"
 								},
 								"constraints": {
@@ -384,7 +379,7 @@
 				"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.name]",
 				"virtualNetwork_bastion_subnet_name": "[steps('vnetStep').vnet.subnets.bastionSubnet.name]",
 				"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.bastionSubnet.addressPrefix]",
-				"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.subnet4.name]",
+				"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.appSubnet.name]",
 				"virtualNetwork_app_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.appSubnet.addressPrefix]",
 				"virtualNetwork_data_subnet_name": "[steps('vnetStep').vnet.subnets.dataSubnet.name]",
 				"virtualNetwork_data_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.dataSubnet.addressPrefix]",
@@ -400,7 +395,7 @@
 				"sqlAdministratorLogin": "[steps('synapseStep').workspaceSection.sqlAdministratorLogin]",
 				"sqlAdministratorPassword": "[steps('synapseStep').workspaceSection.sqlAdministratorPassword]",
 				"createNewStorageAccount": "true",
-				"dataLakeAccount": "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.name]",
+				"dataLakeAccount": "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.prefix]",
 				"dataLakeAccountType":  "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.type]",
 				"dataLakeAccountKind":  "StorageV2",
 				"dataLakeAccountContainer": "[steps('synapseStep').storageSection.dataLakeAccountContainer]",
