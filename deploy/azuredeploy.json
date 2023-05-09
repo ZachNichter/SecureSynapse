@@ -155,6 +155,7 @@
 	},
 	"sqlAdministratorPassword": {
 	  "type": "securestring",
+	  "defaultValue": "ChangeMe!",
 	  "metadata": {
 		  "description": "Synapse SQL administrator password"
 	  }
