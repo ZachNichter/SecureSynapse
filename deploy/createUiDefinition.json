@@ -2,440 +2,439 @@
     "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
 	"handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
-	"view": {
-        "kind": "form",
-        "properties": {
-            "title": "DPi30 Secure Synapse Deployment",
-            "steps": [
-                {
-                    "name": "general",
-                    "label": "General",
-                    "elements": [
-                        {
-                            "name": "resourceScope",
-                            "type": "Microsoft.Common.ResourceScope",
-                            "location": {
-                                "resourceTypes": [
-                                    "Microsoft.Resources/resourcegroups"
-                                ]
-                            }
-                        },
-						{
-							"name": "resNamingSection",
-							"type": "Microsoft.Common.Section",
-							"label": "Default resource naming",
-							"elements": [
-								{
-									"name": "projectInfo",
-									"type": "Microsoft.Common.TextBlock",
-									"options": {
-										"text": "Provide a one word project name that will assist in providing a pre-poulated name for the resources in this deployment."
-									},
-									"visible": true
-								},
-								{
-									"name": "defaultResNamePart",
-									"type": "Microsoft.Common.TextBox",
-									"label": "Project name",
-									"defaultValue": "",
-									"placeHolder": "crayondeploy",
-									"toolTip": "Used to build the default resource names in each section. Resource names can be overwritten.",
-									"constraints": {
-										"required": true,
-										"regex": "^[a-zA-Z]{5,20}$",
-										"validationMessage": "Value must be letters, a length of 5-20 charaters. No spaces or special characters allowed."
-									},
-									"visible": true
-								}
+	"title": "DPi30 Secure Synapse Deployment",
+	"parameters": {
+		"config": { },
+		"basics": [ ],
+		"steps": [
+			{
+				"name": "general",
+				"label": "General",
+				"elements": [
+					{
+						"name": "resourceScope",
+						"type": "Microsoft.Common.ResourceScope",
+						"location": {
+							"resourceTypes": [
+								"Microsoft.Resources/resourcegroups"
 							]
 						}
+					},
+					{
+						"name": "resNamingSection",
+						"type": "Microsoft.Common.Section",
+						"label": "Default resource naming",
+						"elements": [
+							{
+								"name": "projectInfo",
+								"type": "Microsoft.Common.TextBlock",
+								"options": {
+									"text": "Provide a one word project name that will assist in providing a pre-poulated name for the resources in this deployment."
+								},
+								"visible": true
+							},
+							{
+								"name": "defaultResNamePart",
+								"type": "Microsoft.Common.TextBox",
+								"label": "Project name",
+								"defaultValue": "",
+								"placeHolder": "crayondeploy",
+								"toolTip": "Used to build the default resource names in each section. Resource names can be overwritten.",
+								"constraints": {
+									"required": true,
+									"regex": "^[a-zA-Z]{5,20}$",
+									"validationMessage": "Value must be letters, a length of 5-20 charaters. No spaces or special characters allowed."
+								},
+								"visible": true
+							}
+						]
+					}
 
-					]
-				},
-				{
-					"name": "vmStep",
-					"label": "Virtual Machine",
-					"elements": [
-						{
-							"name": "deployJumpbox",
-							"type": "Microsoft.Common.OptionsGroup",
-							"label": "Deploy a Synapse Studio VM jumpbox?",
-							"defaultValue": "Yes (Recommended)",
-							"constraints": {
-								"allowedValues": [
-									{
-										"label": "Yes (Recommended)",
-										"value": true
-									},
-									{
-										"label": "No",
-										"value": false
-									}
-								],
-								"required": true
-							},
-							"visible": true
-						},
-						{
-							"name": "vmName",
-							"type": "Microsoft.Common.TextBox",
-							"label": "Virtual machine name",
-							"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,0,13))]",
-							"constraints": {
-								"required": true,
-								"regex": "^[a-z0-9-]{2,15}$",
-								"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
-							},
-							"visible": "[steps('vmStep').deployJumpbox]"
-						},
-						{
-							"name": "vmCredSection",
-							"type": "Microsoft.Common.Section",
-							"label": "VM Credentials",
-							"elements": [
+				]
+			},
+			{
+				"name": "vmStep",
+				"label": "Virtual Machine",
+				"elements": [
+					{
+						"name": "deployJumpbox",
+						"type": "Microsoft.Common.OptionsGroup",
+						"label": "Deploy a Synapse Studio VM jumpbox?",
+						"defaultValue": "Yes (Recommended)",
+						"constraints": {
+							"allowedValues": [
 								{
-									"name": "vmAdminUsername",
-									"type": "Microsoft.Common.TextBox",
-									"label": "VM admin username",
-									"defaultValue": "vmAdmin",
-									"constraints": {
-										"required": true,
-										"regex": "^[a-z0-9A-Z]{1,30}$",
-										"validationMessage": "Only alphanumeric characters are allowed, and must be 1-30 characters long."
-									}
+									"label": "Yes (Recommended)",
+									"value": true
 								},
 								{
-									"name": "vmCredentials",
-									"type": "Microsoft.Common.PasswordBox",
-									"label": {
-										"password": "Password",
-										"confirmPassword": "Confirm password"
-									},
-									"constraints": {
-										"required": true,
-										"customPasswordRegex": "",
-										"customValidationMessage": ""
-									},
-									"options": {
-										"hideConfirmation": false
-									}
+									"label": "No",
+									"value": false
 								}
 							],
-							"visible": "[steps('vmStep').deployJumpbox]"
-						}
-					]
-				},
-				{
-					"name": "vnetStep",
-					"label": "Virtual Network",
-					"elements": [
-						{
-							"name": "vnet",
-							"type": "Microsoft.Network.VirtualNetworkCombo",
-							"label": {
-								"virtualNetwork": "Virtual network",
-								"subnets": "Subnets"
-							},
-							"toolTip": {
-								"virtualNetwork": "Click 'New network' to define the IP prefix used in this virtual network.",
-								"subnets": ""
-							},
-							"defaultValue": {
-								"name": "",
-								"addressPrefixSize": "/20"
-							},
-							"constraints": {
-								"minAddressPrefixSize": "/20",
-								"requireContiguousAddresses": true
-							},
-							"options": {
-								"hideExisting": true
-							},
-							"subnets": {
-								"defaultSubnet": {
-									"label": "Default subnet",
-									"defaultValue": {
-										"name": "default",
-										"addressPrefixSize": "/24"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/24",
-										"minAddressCount": 12,
-										"requireContiguousAddresses": true
-									}
-								},
-								"gatewaySubnet": {
-									"label": "Gateway subnet",
-									"defaultValue": {
-										"name": "GatewaySubnet",
-										"addressPrefixSize": "/24"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/24",
-										"minAddressCount": 12,
-										"requireContiguousAddresses": true
-									}
-								},
-								"dataSubnet": {
-									"label": "Data subnet",
-									"defaultValue": {
-										"name": "DataSubnet",
-										"addressPrefixSize": "/24"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/24",
-										"minAddressCount": 12,
-										"requireContiguousAddresses": true
-									}
-								},
-								"appSubnet": {
-									"label": "Application subnet",
-									"defaultValue": {
-										"name": "PrivateEndpointSubnet",
-										"addressPrefixSize": "/24"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/24",
-										"minAddressCount": 12,
-										"requireContiguousAddresses": true
-									}
-								},
-								"bastionSubnet": {
-									"label": "Bastion subnet",
-									"defaultValue": {
-										"name": "BastionSubnet",
-										"addressPrefixSize": "/24"
-									},
-									"constraints": {
-										"minAddressPrefixSize": "/24",
-										"minAddressCount": 12,
-										"requireContiguousAddresses": true
-									}
-								}
-							},
-							"visible": true
-						}
-					]
-				},
-				{
-					"name": "synapseStep",
-					"label": "Synapse Workspace",
-					"elements": [
-						{
-							"name": "workspaceSection",
-							"type": "Microsoft.Common.Section",
-							"label": "Synapse workspace",
-							"elements": [
-								{
-									"name": "synapseWSName",
-									"type": "Microsoft.Common.TextBox",
-									"label": "Synapse workspace name",
-									"defaultValue": "[concat('syn-ws-', steps('general').resNamingSection.defaultResNamePart)]",
-									"tooltip": "Only lowercase alphanumeric characters and hyphens '-' are allowed. Must start and end with letter or number, length of 1-50 characters, and not contain '-ondemand'.",
-									"constraints": {
-										"required": true,
-										"regex": "^[a-z0-9-]{1,50}$",
-										"validationMessage": "Only lowercase alphanumeric characters and hyphens '-' are allowed. Must be unique across Azure, start and end with letter or number, length of 1-50 characters, and not contain '-ondemand'."
-									},
-									"visible": true
-								},
-								{
-									"name": "allowSynapseADAuthOnly",
-									"type": "Microsoft.Common.CheckBox",
-									"label": "Allow Azure AD authentication only for SQL pools? (Recommended)",
-									"tooltip": "Azure AD authentication is the most secure authentication into all synapse SQL pools. This option will disable SQL authentication for synapse SQL pools",
-									"defaultValue": true,
-									"visible": true
-								},
-								{
-									"name": "sqlAdministratorLogin",
-									"type": "Microsoft.Common.TextBox",
-									"label": "SQL admin username",
-									"defaultValue": "sqladminuser",
-									"toolTip": "",
-									"constraints": {
-										"required": true,
-										"regex": "^[a-zA-Z0-9]{1,30}$",
-										"validationMessage": "Only alphanumeric characters are allowed. Must be 1-30 characters long."
-									},
-									"visible": "[not(steps('synapseStep').workspaceSection.allowSynapseADAuthOnly)]"
-								},
-								{
-									"name": "sqlAdministratorPassword",
-									"type": "Microsoft.Common.PasswordBox",
-									"label": {
-										"password": "Password",
-										"confirmPassword": "Confirm password"
-									},
-									"toolTip": "",
-									"constraints": {
-										"required": true,
-										"customPasswordRegex": "",
-										"customValidationMessage": ""
-									},
-									"options": {
-										"hideConfirmation": false
-									},
-									"visible": "[not(steps('synapseStep').workspaceSection.allowSynapseADAuthOnly)]"
-								}
-							]
+							"required": true
 						},
-						{
-							"name": "storageSection",
-							"type": "Microsoft.Common.Section",
-							"label": "Synapse Storage",
-							"elements": [
-								{
-									"name": "selectSynapseADLSStorageAccount",
-									"type": "Microsoft.Storage.MultiStorageAccountCombo",
-									"label": {
-										"prefix": "Storage account name",
-										"type": "Storage account type"
-									},
-									"defaultValue": {
-										"name": "[concat('adls', steps('general').resNamingSection.defaultResNamePart)]",
-										"type": "Standard_RAGRS"
-									},
-									"constraints": {
-										"allowedTypes": ["Standard_RAGRS"],
-										"excludedTypes": [
-											"Premium_LRS",
-											"Standard_LRS",
-											"Standard_GRS",
-											"Standard_ZRS"
-										]
-									},
-									"options": {
-										"hideExisting": true
-									},
-									"visible": true
-								},
-								{
-									"name": "dataLakeAccountContainer",
-									"type": "Microsoft.Common.TextBox",
-									"label": "Synapse ADLS filesystem name",
-									"defaultValue": "[concat('fs-', steps('general').resNamingSection.defaultResNamePart)]",
-									"tooltip": "Name of the data lake filesystem for Synapse.",
-									"constraints": {
-										"required": true,
-										"regex": "^[a-z0-9-]{3,63}$",
-										"validationMessage": "Only lowercase alphanumeric characters and hyphens '-' are allowed. Must start with lowercase letter or number, length of 3-63 characters, and can't use consecutive hyphens."
-									},
-									"visible": true
-								}
-							]
+						"visible": true
+					},
+					{
+						"name": "vmName",
+						"type": "Microsoft.Common.TextBox",
+						"label": "Virtual machine name",
+						"defaultValue": "[concat('vm', substring(steps('general').resNamingSection.defaultResNamePart,0,13))]",
+						"constraints": {
+							"required": true,
+							"regex": "^[a-z0-9-]{2,15}$",
+							"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
 						},
-						{
-							"name": "keyVaultSection",
-							"type": "Microsoft.Common.Section",
-							"label": "Key Vault",
-							"elements": [
-								{
-									"name": "keyVaultInfo",
-									"type": "Microsoft.Common.TextBlock",
-									"options": {
-										"text": "This section will set up a Key Vault for Synapse Pipelines and grant Synapse the RBAC role of 'Secrets User'."
-									},
-									"visible": true
-								},
-								{
-									"name": "deploySynapseKeyVault",
-									"type": "Microsoft.Common.CheckBox",
-									"label": "Create a new key vault resource for this deployment? (Recommended)",
-									"defaultValue": true,
-									"visible": true
-								},
-								{
-									"name": "keyVaultName",
-									"label": "Key vault name",
-									"type": "Microsoft.Common.TextBox",
-									"defaultValue": "[concat('akv-', steps('general').resNamingSection.defaultResNamePart)]",
-									"tooltip": "Name of the key vault created for this Synapse deployment.",
-									"constraints": {
-										"required": true,
-										"regex": "^[a-zA-Z0-9-]{3,24}$",
-										"validationMessage": "Only alphanumeric characters and hyphens '-' are allowed. Must start with letter, end with a letter or number, length of 3-24 characters, and can't use consecutive hyphens."
-									},
-									"visible": "[steps('synapseStep').keyVaultSection.deploySynapseKeyVault]"
-								},
-								{
-									"name": "disableKeyVaultPublicNetworkAccess",
-									"type": "Microsoft.Common.CheckBox",
-									"label": "Disable public network access to this key vault? (Recommended)",
-									"defaultValue": true,
-									"visible": "[steps('synapseStep').keyVaultSection.deploySynapseKeyVault]"
+						"visible": "[steps('vmStep').deployJumpbox]"
+					},
+					{
+						"name": "vmCredSection",
+						"type": "Microsoft.Common.Section",
+						"label": "VM Credentials",
+						"elements": [
+							{
+								"name": "vmAdminUsername",
+								"type": "Microsoft.Common.TextBox",
+								"label": "VM admin username",
+								"defaultValue": "vmAdmin",
+								"constraints": {
+									"required": true,
+									"regex": "^[a-z0-9A-Z]{1,30}$",
+									"validationMessage": "Only alphanumeric characters are allowed, and must be 1-30 characters long."
 								}
-							]
-						}
-					]
-				},
-				{
-					"name": "tagStep",
-					"label": "Tags",
-					"elements": [
-						{
-							"name": "tagsByResource",
-							"type": "Microsoft.Common.TagsByResource",
-							"resources": [
-								"Microsoft.Compute/virtualMachines",
-								"Microsoft.KeyVault/vaults",
-								"Microsoft.Network/bastionHosts",
-								"Microsoft.Network/networkSecurityGroups",
-								"Microsoft.Network/privateDnsZones",
-								"Microsoft.Network/privateEndpoints",
-								"Microsoft.Network/publicIPAddresses",
-								"Microsoft.Network/virtualNetworks",
-								"Microsoft.Storage/storageAccounts",
-								"Microsoft.Synapse/privateLinkHubs",
-								"Microsoft.Synapse/workspaces"
-							]
-						}
-					]
-				}
-			],
-			"outputs": {
-				"kind": "ResourceGroup",
-				"resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
-				"location": "[steps('general').resourceScope.location.name]",
-				"parameters": {
-					"virtualNetwork_vnet_name": "[steps('vnetStep').vnet.name]",
-					"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.name]",
-					"virtualNetwork_bastion_subnet_name": "[steps('vnetStep').vnet.subnets.bastionSubnet.name]",
-					"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.bastionSubnet.addressPrefix]",
-					"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.subnet4.name]",
-					"virtualNetwork_app_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.appSubnet.addressPrefix]",
-					"virtualNetwork_data_subnet_name": "[steps('vnetStep').vnet.subnets.dataSubnet.name]",
-					"virtualNetwork_data_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.dataSubnet.addressPrefix]",
-					"virtualNetwork_gateway_subnet_name": "[steps('vnetStep').vnet.subnets.gatewaySubnet.name]",
-					"virtualNetwork_gateway_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.gatewaySubnet.addressPrefix]",
-					"virtualNetwork_default_subnet_name": "[steps('vnetStep').vnet.subnets.default.name]",
-					"virtualNetwork_default_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.default.addressPrefix]",
-
-					"createSynapseWS": "true",
-					"synapseWSName": "[steps('synapseStep').workspaceSection.synapseWSName]",
-					"allowNSGManagementSynapseNetworkTraffic": "true",
-					"allowSynapseADAuthOnly": "[steps('synapseStep').workspaceSection.allowSynapseADAuthOnly]",
-					"sqlAdministratorLogin": "[steps('synapseStep').workspaceSection.sqlAdministratorLogin]",
-					"sqlAdministratorPassword": "[steps('synapseStep').workspaceSection.sqlAdministratorPassword]",
-					"createNewStorageAccount": "true",
-					"dataLakeAccount": "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.name]",
-					"dataLakeAccountType":  "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.type]",
-					"dataLakeAccountKind":  "StorageV2",
-					"dataLakeAccountContainer": "[steps('synapseStep').storageSection.dataLakeAccountContainer]",
-					"createSynapseKeyVault": "[string(steps('synapseStep').keyVaultSection.deploySynapseKeyVault)]",
-					"keyVaultName": "[steps('synapseStep').keyVaultSection.keyVaultName]",
-					"disableKeyVaultPublicNetworkAccess": "[steps('synapseStep').keyVaultSection.disableKeyVaultPublicNetworkAccess]",
-
-					"createJumpVM": "[steps('vmStep').deployJumpbox]",
-					"deployBastion": "[steps('vmStep').deployJumpbox]",
-					"bastionHostName": "[concat('bas-', steps('general').resNamingSection.defaultResNamePart)]",
-					"virtualMachineName": "[steps('vmStep').vmName]",
-					"vmAdminUsername": "[steps('vmStep').vmCredSection.vmAdminUsername]",
-					"vmAdminPassword": "[steps('vmStep').vmCredSection.vmCredentials]",
-
-					"tagsByResource": "[steps('tagStep').tagsByResource]"
-				}
+							},
+							{
+								"name": "vmCredentials",
+								"type": "Microsoft.Common.PasswordBox",
+								"label": {
+									"password": "Password",
+									"confirmPassword": "Confirm password"
+								},
+								"constraints": {
+									"required": true,
+									"customPasswordRegex": "",
+									"customValidationMessage": ""
+								},
+								"options": {
+									"hideConfirmation": false
+								}
+							}
+						],
+						"visible": "[steps('vmStep').deployJumpbox]"
+					}
+				]
+			},
+			{
+				"name": "vnetStep",
+				"label": "Virtual Network",
+				"elements": [
+					{
+						"name": "vnet",
+						"type": "Microsoft.Network.VirtualNetworkCombo",
+						"label": {
+							"virtualNetwork": "Virtual network",
+							"subnets": "Subnets"
+						},
+						"toolTip": {
+							"virtualNetwork": "Click 'New network' to define the IP prefix used in this virtual network.",
+							"subnets": ""
+						},
+						"defaultValue": {
+							"name": "",
+							"addressPrefixSize": "/20"
+						},
+						"constraints": {
+							"minAddressPrefixSize": "/20",
+							"requireContiguousAddresses": true
+						},
+						"options": {
+							"hideExisting": true
+						},
+						"subnets": {
+							"defaultSubnet": {
+								"label": "Default subnet",
+								"defaultValue": {
+									"name": "default",
+									"addressPrefixSize": "/24"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/24",
+									"minAddressCount": 12,
+									"requireContiguousAddresses": true
+								}
+							},
+							"gatewaySubnet": {
+								"label": "Gateway subnet",
+								"defaultValue": {
+									"name": "GatewaySubnet",
+									"addressPrefixSize": "/24"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/24",
+									"minAddressCount": 12,
+									"requireContiguousAddresses": true
+								}
+							},
+							"dataSubnet": {
+								"label": "Data subnet",
+								"defaultValue": {
+									"name": "DataSubnet",
+									"addressPrefixSize": "/24"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/24",
+									"minAddressCount": 12,
+									"requireContiguousAddresses": true
+								}
+							},
+							"appSubnet": {
+								"label": "Application subnet",
+								"defaultValue": {
+									"name": "PrivateEndpointSubnet",
+									"addressPrefixSize": "/24"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/24",
+									"minAddressCount": 12,
+									"requireContiguousAddresses": true
+								}
+							},
+							"bastionSubnet": {
+								"label": "Bastion subnet",
+								"defaultValue": {
+									"name": "BastionSubnet",
+									"addressPrefixSize": "/24"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/24",
+									"minAddressCount": 12,
+									"requireContiguousAddresses": true
+								}
+							}
+						},
+						"visible": true
+					}
+				]
+			},
+			{
+				"name": "synapseStep",
+				"label": "Synapse Workspace",
+				"elements": [
+					{
+						"name": "workspaceSection",
+						"type": "Microsoft.Common.Section",
+						"label": "Synapse workspace",
+						"elements": [
+							{
+								"name": "synapseWSName",
+								"type": "Microsoft.Common.TextBox",
+								"label": "Synapse workspace name",
+								"defaultValue": "[concat('syn-ws-', steps('general').resNamingSection.defaultResNamePart)]",
+								"tooltip": "Only lowercase alphanumeric characters and hyphens '-' are allowed. Must start and end with letter or number, length of 1-50 characters, and not contain '-ondemand'.",
+								"constraints": {
+									"required": true,
+									"regex": "^[a-z0-9-]{1,50}$",
+									"validationMessage": "Only lowercase alphanumeric characters and hyphens '-' are allowed. Must be unique across Azure, start and end with letter or number, length of 1-50 characters, and not contain '-ondemand'."
+								},
+								"visible": true
+							},
+							{
+								"name": "allowSynapseADAuthOnly",
+								"type": "Microsoft.Common.CheckBox",
+								"label": "Allow Azure AD authentication only for SQL pools? (Recommended)",
+								"tooltip": "Azure AD authentication is the most secure authentication into all synapse SQL pools. This option will disable SQL authentication for synapse SQL pools",
+								"defaultValue": true,
+								"visible": true
+							},
+							{
+								"name": "sqlAdministratorLogin",
+								"type": "Microsoft.Common.TextBox",
+								"label": "SQL admin username",
+								"defaultValue": "sqladminuser",
+								"toolTip": "",
+								"constraints": {
+									"required": true,
+									"regex": "^[a-zA-Z0-9]{1,30}$",
+									"validationMessage": "Only alphanumeric characters are allowed. Must be 1-30 characters long."
+								},
+								"visible": "[not(steps('synapseStep').workspaceSection.allowSynapseADAuthOnly)]"
+							},
+							{
+								"name": "sqlAdministratorPassword",
+								"type": "Microsoft.Common.PasswordBox",
+								"label": {
+									"password": "Password",
+									"confirmPassword": "Confirm password"
+								},
+								"toolTip": "",
+								"constraints": {
+									"required": true,
+									"customPasswordRegex": "",
+									"customValidationMessage": ""
+								},
+								"options": {
+									"hideConfirmation": false
+								},
+								"visible": "[not(steps('synapseStep').workspaceSection.allowSynapseADAuthOnly)]"
+							}
+						]
+					},
+					{
+						"name": "storageSection",
+						"type": "Microsoft.Common.Section",
+						"label": "Synapse Storage",
+						"elements": [
+							{
+								"name": "selectSynapseADLSStorageAccount",
+								"type": "Microsoft.Storage.MultiStorageAccountCombo",
+								"label": {
+									"prefix": "Storage account name",
+									"type": "Storage account type"
+								},
+								"defaultValue": {
+									"name": "[concat('adls', steps('general').resNamingSection.defaultResNamePart)]",
+									"type": "Standard_RAGRS"
+								},
+								"constraints": {
+									"allowedTypes": ["Standard_RAGRS"],
+									"excludedTypes": [
+										"Premium_LRS",
+										"Standard_LRS",
+										"Standard_GRS",
+										"Standard_ZRS"
+									]
+								},
+								"options": {
+									"hideExisting": true
+								},
+								"visible": true
+							},
+							{
+								"name": "dataLakeAccountContainer",
+								"type": "Microsoft.Common.TextBox",
+								"label": "Synapse ADLS filesystem name",
+								"defaultValue": "[concat('fs-', steps('general').resNamingSection.defaultResNamePart)]",
+								"tooltip": "Name of the data lake filesystem for Synapse.",
+								"constraints": {
+									"required": true,
+									"regex": "^[a-z0-9-]{3,63}$",
+									"validationMessage": "Only lowercase alphanumeric characters and hyphens '-' are allowed. Must start with lowercase letter or number, length of 3-63 characters, and can't use consecutive hyphens."
+								},
+								"visible": true
+							}
+						]
+					},
+					{
+						"name": "keyVaultSection",
+						"type": "Microsoft.Common.Section",
+						"label": "Key Vault",
+						"elements": [
+							{
+								"name": "keyVaultInfo",
+								"type": "Microsoft.Common.TextBlock",
+								"options": {
+									"text": "This section will set up a Key Vault for Synapse Pipelines and grant Synapse the RBAC role of 'Secrets User'."
+								},
+								"visible": true
+							},
+							{
+								"name": "deploySynapseKeyVault",
+								"type": "Microsoft.Common.CheckBox",
+								"label": "Create a new key vault resource for this deployment? (Recommended)",
+								"defaultValue": true,
+								"visible": true
+							},
+							{
+								"name": "keyVaultName",
+								"label": "Key vault name",
+								"type": "Microsoft.Common.TextBox",
+								"defaultValue": "[concat('akv-', steps('general').resNamingSection.defaultResNamePart)]",
+								"tooltip": "Name of the key vault created for this Synapse deployment.",
+								"constraints": {
+									"required": true,
+									"regex": "^[a-zA-Z0-9-]{3,24}$",
+									"validationMessage": "Only alphanumeric characters and hyphens '-' are allowed. Must start with letter, end with a letter or number, length of 3-24 characters, and can't use consecutive hyphens."
+								},
+								"visible": "[steps('synapseStep').keyVaultSection.deploySynapseKeyVault]"
+							},
+							{
+								"name": "disableKeyVaultPublicNetworkAccess",
+								"type": "Microsoft.Common.CheckBox",
+								"label": "Disable public network access to this key vault? (Recommended)",
+								"defaultValue": true,
+								"visible": "[steps('synapseStep').keyVaultSection.deploySynapseKeyVault]"
+							}
+						]
+					}
+				]
+			},
+			{
+				"name": "tagStep",
+				"label": "Tags",
+				"elements": [
+					{
+						"name": "tagsByResource",
+						"type": "Microsoft.Common.TagsByResource",
+						"resources": [
+							"Microsoft.Compute/virtualMachines",
+							"Microsoft.KeyVault/vaults",
+							"Microsoft.Network/bastionHosts",
+							"Microsoft.Network/networkSecurityGroups",
+							"Microsoft.Network/privateDnsZones",
+							"Microsoft.Network/privateEndpoints",
+							"Microsoft.Network/publicIPAddresses",
+							"Microsoft.Network/virtualNetworks",
+							"Microsoft.Storage/storageAccounts",
+							"Microsoft.Synapse/privateLinkHubs",
+							"Microsoft.Synapse/workspaces"
+						]
+					}
+				]
 			}
-        }
-    }
+		],
+		"outputs": {
+			"kind": "ResourceGroup",
+			"resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
+			"location": "[steps('general').resourceScope.location.name]",
+			"parameters": {
+				"virtualNetwork_vnet_name": "[steps('vnetStep').vnet.name]",
+				"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.name]",
+				"virtualNetwork_bastion_subnet_name": "[steps('vnetStep').vnet.subnets.bastionSubnet.name]",
+				"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.bastionSubnet.addressPrefix]",
+				"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.subnet4.name]",
+				"virtualNetwork_app_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.appSubnet.addressPrefix]",
+				"virtualNetwork_data_subnet_name": "[steps('vnetStep').vnet.subnets.dataSubnet.name]",
+				"virtualNetwork_data_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.dataSubnet.addressPrefix]",
+				"virtualNetwork_gateway_subnet_name": "[steps('vnetStep').vnet.subnets.gatewaySubnet.name]",
+				"virtualNetwork_gateway_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.gatewaySubnet.addressPrefix]",
+				"virtualNetwork_default_subnet_name": "[steps('vnetStep').vnet.subnets.default.name]",
+				"virtualNetwork_default_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.default.addressPrefix]",
+
+				"createSynapseWS": "true",
+				"synapseWSName": "[steps('synapseStep').workspaceSection.synapseWSName]",
+				"allowNSGManagementSynapseNetworkTraffic": "true",
+				"allowSynapseADAuthOnly": "[steps('synapseStep').workspaceSection.allowSynapseADAuthOnly]",
+				"sqlAdministratorLogin": "[steps('synapseStep').workspaceSection.sqlAdministratorLogin]",
+				"sqlAdministratorPassword": "[steps('synapseStep').workspaceSection.sqlAdministratorPassword]",
+				"createNewStorageAccount": "true",
+				"dataLakeAccount": "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.name]",
+				"dataLakeAccountType":  "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.type]",
+				"dataLakeAccountKind":  "StorageV2",
+				"dataLakeAccountContainer": "[steps('synapseStep').storageSection.dataLakeAccountContainer]",
+				"createSynapseKeyVault": "[string(steps('synapseStep').keyVaultSection.deploySynapseKeyVault)]",
+				"keyVaultName": "[steps('synapseStep').keyVaultSection.keyVaultName]",
+				"disableKeyVaultPublicNetworkAccess": "[steps('synapseStep').keyVaultSection.disableKeyVaultPublicNetworkAccess]",
+
+				"createJumpVM": "[steps('vmStep').deployJumpbox]",
+				"deployBastion": "[steps('vmStep').deployJumpbox]",
+				"bastionHostName": "[concat('bas-', steps('general').resNamingSection.defaultResNamePart)]",
+				"virtualMachineName": "[steps('vmStep').vmName]",
+				"vmAdminUsername": "[steps('vmStep').vmCredSection.vmAdminUsername]",
+				"vmAdminPassword": "[steps('vmStep').vmCredSection.vmCredentials]",
+
+				"tagsByResource": "[steps('tagStep').tagsByResource]"
+			}
+		}
+	}
 }
