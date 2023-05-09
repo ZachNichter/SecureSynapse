@@ -272,7 +272,6 @@
                         "publicAccess": "None"
                     },
 					"dependsOn": [
-		                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('dataLakeStorageAccountName'), 'default')]",
 						"[resourceId('Microsoft.Storage/storageAccounts', parameters('dataLakeStorageAccountName'))]"
 					]
 				}
@@ -303,7 +302,6 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('dataLakeStorageAccountName'), 'default')]",
 				"[resourceId('Microsoft.Storage/storageAccounts', parameters('dataLakeStorageAccountName'))]"
             ]
         }
