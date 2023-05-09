@@ -1,5 +1,6 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+	"handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
 	"view": {
         "kind": "form",
@@ -60,7 +61,6 @@
 							"type": "Microsoft.Common.OptionsGroup",
 							"label": "Deploy a Synapse Studio VM jumpbox?",
 							"defaultValue": "Yes (Recommended)",
-							"toolTip": "",
 							"constraints": {
 								"allowedValues": [
 									{
@@ -98,7 +98,6 @@
 									"type": "Microsoft.Common.TextBox",
 									"label": "VM admin username",
 									"defaultValue": "vmAdmin",
-									"toolTip": "",
 									"constraints": {
 										"required": true,
 										"regex": "^[a-z0-9A-Z]{1,30}$",
@@ -293,7 +292,6 @@
 										"prefix": "Storage account name",
 										"type": "Storage account type"
 									},
-									"toolTip": "",
 									"defaultValue": {
 										"name": "[concat('adls', steps('general').resNamingSection.defaultResNamePart)]",
 										"type": "Standard_RAGRS"
@@ -394,50 +392,50 @@
 						}
 					]
 				}
-			]
-        },
-	    "outputs": {
-            "kind": "ResourceGroup",
-            "resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
-            "location": "[steps('general').resourceScope.location.name]",
-            "parameters": {
-				"virtualNetwork_vnet_name": "[steps('vnetStep').vnet.name]",
-				"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.name]",
-				"virtualNetwork_bastion_subnet_name": "[steps('vnetStep').vnet.subnets.bastionSubnet.name]",
-				"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.bastionSubnet.addressPrefix]",
-				"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.subnet4.name]",
-				"virtualNetwork_app_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.appSubnet.addressPrefix]",
-				"virtualNetwork_data_subnet_name": "[steps('vnetStep').vnet.subnets.dataSubnet.name]",
-				"virtualNetwork_data_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.dataSubnet.addressPrefix]",
-				"virtualNetwork_gateway_subnet_name": "[steps('vnetStep').vnet.subnets.gatewaySubnet.name]",
-				"virtualNetwork_gateway_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.gatewaySubnet.addressPrefix]",
-				"virtualNetwork_default_subnet_name": "[steps('vnetStep').vnet.subnets.default.name]",
-				"virtualNetwork_default_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.default.addressPrefix]",
+			],
+			"outputs": {
+				"kind": "ResourceGroup",
+				"resourceGroupId": "[steps('general').resourceScope.resourceGroup.id]",
+				"location": "[steps('general').resourceScope.location.name]",
+				"parameters": {
+					"virtualNetwork_vnet_name": "[steps('vnetStep').vnet.name]",
+					"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.name]",
+					"virtualNetwork_bastion_subnet_name": "[steps('vnetStep').vnet.subnets.bastionSubnet.name]",
+					"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.bastionSubnet.addressPrefix]",
+					"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.subnet4.name]",
+					"virtualNetwork_app_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.appSubnet.addressPrefix]",
+					"virtualNetwork_data_subnet_name": "[steps('vnetStep').vnet.subnets.dataSubnet.name]",
+					"virtualNetwork_data_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.dataSubnet.addressPrefix]",
+					"virtualNetwork_gateway_subnet_name": "[steps('vnetStep').vnet.subnets.gatewaySubnet.name]",
+					"virtualNetwork_gateway_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.gatewaySubnet.addressPrefix]",
+					"virtualNetwork_default_subnet_name": "[steps('vnetStep').vnet.subnets.default.name]",
+					"virtualNetwork_default_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.default.addressPrefix]",
 
-				"createSynapseWS": "true",
-				"synapseWSName": "[steps('synapseStep').workspaceSection.synapseWSName]",
-				"allowNSGManagementSynapseNetworkTraffic": "true",
-				"allowSynapseADAuthOnly": "[steps('synapseStep').workspaceSection.allowSynapseADAuthOnly]",
-				"sqlAdministratorLogin": "[steps('synapseStep').workspaceSection.sqlAdministratorLogin]",
-				"sqlAdministratorPassword": "[steps('synapseStep').workspaceSection.sqlAdministratorPassword]",
-				"createNewStorageAccount": "true",
-				"dataLakeAccount": "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.name]",
-				"dataLakeAccountType":  "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.type]",
-				"dataLakeAccountKind":  "StorageV2",
-				"dataLakeAccountContainer": "[steps('synapseStep').storageSection.dataLakeAccountContainer]",
-				"createSynapseKeyVault": "[string(steps('synapseStep').keyVaultSection.deploySynapseKeyVault)]",
-				"keyVaultName": "[steps('synapseStep').keyVaultSection.keyVaultName]",
-				"disableKeyVaultPublicNetworkAccess": "[steps('synapseStep').keyVaultSection.disableKeyVaultPublicNetworkAccess]",
+					"createSynapseWS": "true",
+					"synapseWSName": "[steps('synapseStep').workspaceSection.synapseWSName]",
+					"allowNSGManagementSynapseNetworkTraffic": "true",
+					"allowSynapseADAuthOnly": "[steps('synapseStep').workspaceSection.allowSynapseADAuthOnly]",
+					"sqlAdministratorLogin": "[steps('synapseStep').workspaceSection.sqlAdministratorLogin]",
+					"sqlAdministratorPassword": "[steps('synapseStep').workspaceSection.sqlAdministratorPassword]",
+					"createNewStorageAccount": "true",
+					"dataLakeAccount": "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.name]",
+					"dataLakeAccountType":  "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.type]",
+					"dataLakeAccountKind":  "StorageV2",
+					"dataLakeAccountContainer": "[steps('synapseStep').storageSection.dataLakeAccountContainer]",
+					"createSynapseKeyVault": "[string(steps('synapseStep').keyVaultSection.deploySynapseKeyVault)]",
+					"keyVaultName": "[steps('synapseStep').keyVaultSection.keyVaultName]",
+					"disableKeyVaultPublicNetworkAccess": "[steps('synapseStep').keyVaultSection.disableKeyVaultPublicNetworkAccess]",
 
-				"createJumpVM": "[steps('vmStep').deployJumpbox]",
-				"deployBastion": "[steps('vmStep').deployJumpbox]",
-				"bastionHostName": "[concat('bas-', steps('general').resNamingSection.defaultResNamePart)]",
-				"virtualMachineName": "[steps('vmStep').vmName]",
-				"vmAdminUsername": "[steps('vmStep').vmCredSection.vmAdminUsername]",
-				"vmAdminPassword": "[steps('vmStep').vmCredSection.vmCredentials]",
+					"createJumpVM": "[steps('vmStep').deployJumpbox]",
+					"deployBastion": "[steps('vmStep').deployJumpbox]",
+					"bastionHostName": "[concat('bas-', steps('general').resNamingSection.defaultResNamePart)]",
+					"virtualMachineName": "[steps('vmStep').vmName]",
+					"vmAdminUsername": "[steps('vmStep').vmCredSection.vmAdminUsername]",
+					"vmAdminPassword": "[steps('vmStep').vmCredSection.vmCredentials]",
 
-				"tagsByResource": "[steps('tagStep').tagsByResource]"
+					"tagsByResource": "[steps('tagStep').tagsByResource]"
+				}
 			}
-		}
+        }
     }
 }
