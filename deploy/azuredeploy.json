@@ -8,39 +8,39 @@
 	},
 	"virtualNetwork_vnet_address_prefix": {
 	  "defaultValue": "172.20.0.0/20",
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_bastion_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_bastion_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_app_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_app_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_data_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_data_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_gateway_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_gateway_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_default_subnet_name": {
 	  "defaultValue": "default",
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_default_subnet_address_prefix": {
 	  "defaultValue": "/20",
-	  "type": "string"
+	  "type": "String"
 	},
 	"createJumpVM": {
 	  "type": "bool",
@@ -84,8 +84,8 @@
 	  }
 	},
 	"createNewStorageAccount": {
-	  "type": "string",
-	  "defaultValue": "true",
+	  "type": "Bool",
+	  "defaultValue": true,
 	  "metadata": {
 		"description": "Create new data lake storage account for Synapse metadata."
 	  }
@@ -132,7 +132,7 @@
 		"description": "Name of the Synapse workspace."
 	  }
 	},
-	"allowAllConnections": {
+	"allowNSGManagementSynapseNetworkTraffic": {
 	  "type": "String",
 	  "defaultValue": "true",
 	  "metadata": {
@@ -188,7 +188,7 @@
 	"createSynapseWSBool": "[bool(parameters('createSynapseWS'))]",
 	"createJumpVMBool": "[bool(parameters('createJumpVM'))]",
 	"createNewStorageAccountBool": "[bool(parameters('createNewStorageAccount'))]",
-	"allowAllConnectionsBool": "[bool(parameters('allowAllConnections'))]",
+	"allowNSGManagementSynapseNetworkTrafficBool": "[bool(parameters('allowNSGManagementSynapseNetworkTraffic'))]",
 	"allowSynapseADAuthOnlyBool": "[bool(parameters('allowSynapseADAuthOnly'))]",
 
 	"uniqueSuffix": "[uniqueString(resourceGroup().id, deployment().name)]",
@@ -199,12 +199,12 @@
 	"synapseWSNameUnique": "[concat(parameters('synapseWSName'), '-', variables('uniqueSuffix'))]",
 	"distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', resourceGroup().name)]",
 
-	"linked-vnet-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/010-vnet/azdeploy-vnet.json",
-	"linked-jumpvm-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/020-jump-vm/azdeploy-vm.json",
-	"linked-synapsews-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/040-synapse-ws/azdeploy-synapse.json",
-	"linked-keyvault-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/050-key-vault/azdeploy-keyvault.json",
-	"linked-privatelinkhub-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/060-private-link-hub/azdeploy-plh.json",
-	"linked-privateendpoint-template": "https://github.com/ZachNichter/SecureSynapse/tree/main/deploy/070-private-endpoints/azdeploy-pe.json"
+	"linked-vnet-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/010-Vnet/azdeploy-vnet.json",
+	"linked-jumpvm-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/020-JumpVM/azdeploy-vm.json",
+	"linked-synapsews-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/040-SynapseWS/azdeploy-synapse.json",
+	"linked-keyvault-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/050-KeyVault/azdeploy-keyvault.json",
+	"linked-privatelinkhub-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/060-PrivateLinkHub/azdeploy-plh.json",
+	"linked-privateendpoint-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/070-PrivateEndpoints/azdeploy-pe.json"
   },
   "resources": [
 	{
@@ -276,9 +276,7 @@
 			"allowSynapseADAuthOnly": { "value": "[variables('allowSynapseADAuthOnlyBool')]" },
 			"sqlAdministratorLogin": { "value": "[parameters('sqlAdministratorLogin')]" },
 			"sqlAdministratorPassword": { "value": "[parameters('sqlAdministratorPassword')]" },
-			"allowAllConnections": { "value": "[variables('allowAllConnectionsBool')]" },
-			"storageSubscriptionID": { "value": "[subscription().subscriptionId]"},
-			"storageLocation": {  },
+			"allowNSGManagementSynapseNetworkTraffic": { "value": "[variables('allowNSGManagementSynapseNetworkTrafficBool')]" },
 			"isNewStorageAccount": { "value": "[variables('createNewStorageAccountBool')]" },
 			"managedVirtualNetworkSettings": {
 				"value": {

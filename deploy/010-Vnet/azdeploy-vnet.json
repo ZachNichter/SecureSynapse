@@ -635,23 +635,23 @@
 	  "type": "string",
 	  "value": "[resourceGroup().location]"
 	},
-	"virtualNetworkName": {
+	"virtualNetwork_vnet_name": {
 	  "type": "string",
 	  "value": "[parameters('virtualNetwork_vnet_name')]"
 	},
-	"virtualNetworkIPPrefix": {
+	"virtualNetwork_vnet_address_prefix": {
 	  "type": "string",
 	  "value": "[parameters('virtualNetwork_vnet_address_prefix')]"
 	},
-	"appSubnetName": {
+	"virtualNetwork_app_subnet_name": {
 	  "type": "string",
 	  "value": "[parameters('virtualNetwork_app_subnet_name')]"
 	},
-	"dataSubnetName": {
+	"virtualNetwork_data_subnet_name": {
 	  "type": "string",
 	  "value": "[parameters('virtualNetwork_data_subnet_name')]"
 	},
-	"bastionSubnetName": {
+	"virtualNetwork_bastion_subnet_name": {
 	  "type": "string",
 	  "value": "[parameters('virtualNetwork_bastion_subnet_name')]"
 	}

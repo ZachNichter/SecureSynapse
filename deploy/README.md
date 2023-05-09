@@ -2,7 +2,7 @@
 
 ## Crayon's DPi30 Secure Synapse Deployment Structure
 
-This project consists of a driver ARM template that is linked to a number of scoped ARM templates as listed:
+This project consists of a driver ARM template that is linked to a number of scoped ARM sub-templates as listed:
 
 ```
 * 010-Vnet: creates VNET necessary for deployment
@@ -88,11 +88,11 @@ Because Azure Bastion is protected by the virtual network's NSG, your NSG needs 
 > Azure Gateway Manager manages portal connections to the Azure Bastion service.
 
 > **NOTE:**
-> If have a Hub\Spoke network architecture, the Bastion subnet should be created in the hub vNet. The article [Bastion and Network Security Groups](https://learn.microsoft.com/en-us/azure/bastion/bastion-nsg#nsg) can provide additiona information on Bastion ingress\egress traffic rules.
+> If have a Hub\Spoke network architecture, the Bastion subnet should be created in the hub vNet. The article [Bastion and Network Security Groups](https://learn.microsoft.com/en-us/azure/bastion/bastion-nsg#nsg) can provide additional information on Bastion ingress\egress traffic rules.
 
 ![Bastion Architecture](images/bastionDiagram.png?raw=true "Architecture")
 
-#### Components
+#### Bastion Components
 Microsoft.Network/bastionHosts - Creates the bastion host
 Microsoft.Network/virtualNetworks  - Creates a virtual network
 Microsoft.Network/virtualNetworks/subnets - Creates the subnet
@@ -109,14 +109,14 @@ Microsoft.Network/publicIpAddresses - Specifies the public IP address value used
 
 
 ## Post Deployment Requirements
-```
+
 1. The jumpbox VM is configured to use AAD authentication. You will need to add yourself to the "Virtual Machine User Login" or "Virtual Machine Administrator Login" roles for this VM or you will not be able to log in with you AAD credentials.
-2. Make sure the Windows OS is fully updated. You may have to check for updates multiple times after rebooting if needed.
-3. You will need to configure the jumpbox VM with Microsoft endpoint protection. On the VM, go to "Settings/Account/Access Work or School". Disconnect from Microsoft Azure AD, reboot, and re-login as the local administrator account. Go back to "Settings/Account/Access Work or School" and add a new connection to Microsoft Azure AD with your Microsoft account. This will register the VM with Microsoft endpoint protection.
-4. (Optional) It would be best practice to enable just in time access through the Azure Portal for this VM. You may be prompted for VPN and disk encryption which are optional.
-5. Manually create a private endpoint for the default Synapse data lake account in the "privateEndpointSubnet". This will allow Synapse Studio to see files in the storage account. I will fix this in the near future.
-6. Manually create a *managed* private endpoint for the default Synapse data lake account. This will allow Synapse background processes to see files in the storage account. I will fix this in the near future.
-```
+	1. Make sure the Windows OS is fully updated. You may have to check for updates multiple times after rebooting if needed.
+	2. You will need to configure the jumpbox VM with Microsoft endpoint protection. On the VM, go to "Settings/Account/Access Work or School". Disconnect from Microsoft Azure AD, reboot, and re-login as the local administrator account. Go back to "Settings/Account/Access Work or School" and add a new connection to Microsoft Azure AD with your Microsoft account. This will register the VM with Microsoft endpoint protection.
+	3. (Optional) It would be best practice to enable just in time access through the Azure Portal for this VM. You may be prompted for VPN and disk encryption which are optional.
+2. Manually create a private endpoint for the default Synapse data lake account in the "privateEndpointSubnet". This will allow Synapse Studio to see files in the storage account. I will fix this in the near future.
+3. Manually create a *managed* private endpoint for the default Synapse data lake account. This will allow Synapse background processes to see files in the storage account. I will fix this in the near future.
+
 
 ## Notes and Bugs
 The main ARM template (azuredeploy.json) references several linked templates that are stored in a read only Azure blob account. If you wish to modify these linked templates then you will need to change the main ARM template to point to your local version.

@@ -47,7 +47,7 @@
 		"synapseWSName": {
 			"value": "syn-ws-projectname"
 		},
-        "allowAllConnections": {
+        "allowNSGManagementSynapseNetworkTraffic": {
             "value": "false"
         },
         "allowSynapseADAuthOnly": {
@@ -71,9 +71,6 @@
 		"dataLakeAccountKind":   {
 			"value": "StorageV2"
 		},
-		"dataLakeAccountContainer": {
-            "value": "fs-projectname"
-        },
         "createJumpVM": {
             "value": true
         },

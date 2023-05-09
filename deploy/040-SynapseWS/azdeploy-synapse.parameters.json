@@ -9,13 +9,13 @@
             "value": "adlssecuresynapse"
         },
         "dataLakeStorageFilesystemName": {
-            "value": "fs-securesynapse"
+            "value": "securesynapse-fs"
         },
         "allowSynapseADAuthOnly": {
             "value": true
         },
         "sqlAdministratorLogin": {
-            "value": "sqladminuser"
+            "value": "sqladmin"
         },
         "sqlAdministratorPassword": {
             "value": ""
@@ -23,9 +23,9 @@
         "setWorkspaceIdentityRbacOnStorageAccount": {
             "value": true
         },
-        "allowAllConnections": {
-            "value": false
-        },
+		"allowNSGManagementSynapseNetworkTraffic": {
+			"value": true
+		},
         "grantWorkspaceIdentityControlForSql": {
             "value": "Enabled"
         },
@@ -56,7 +56,10 @@
         "dataLakeStorageAccountAccessTier": {
             "value": "Hot"
         },
-        "dataLakeStorageAccountType": {
+		"dataLakeMinimumTlsVersion": {
+			"value": "TLS1_2"
+		},
+		"dataLakeStorageAccountType": {
             "value": "Standard_RAGRS"
         },
         "storageSupportsHttpsTrafficOnly": {
