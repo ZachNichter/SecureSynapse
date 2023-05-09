@@ -5,14 +5,8 @@
 		"keyVaultName": {
             "value": "akv-PROJECTNAME"
         },
-        "setSynapseWorkspaceSystemMSIRbacOnKeyVault": {
-            "value": true
-        },
-		"synapseName": {
-			"value": ""
-		},
 		"publicNetworkAccess": {
-			"value": false
+			"value": "Enabled"
 		}
     }
 }

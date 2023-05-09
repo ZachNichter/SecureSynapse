@@ -10,40 +10,25 @@
 			}
         },
 		"publicNetworkAccess": {
-			"type": "bool",
-			"defaultValue": false,
+			"type": "string",
+			"defaultValue": "Enabled",
 			"metadata": {
 				"description": "Allow public network access to Key Vault. (Enabled/Disabled)"
 			}
 		},
-        "setSynapseWorkspaceSystemMSIRbacOnKeyVault": {
-            "type": "bool",
-			"defaultValue": true
-        },
         "location": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "[resourceGroup().location]"
         },
-		"synapseName": {
-			"type": "String",
-			"defaultValue": "",
-			"metadata": {
-				"description": "Name of the Synapse resouce"
-			}
-		},
 		"tenantId": {
-			"type": "String",
+			"type": "string",
 			"defaultValue": "[subscription().tenantId]"
 		}
 
     },
     "variables": {
 		"akvSecretsUserRoleName": "Key Vault Secrets User",
-	    "akvRoleIdMapping": {
-			"Key Vault Secrets User": "4633458b-17de-408a-b874-0445c86b69e6"
-		},
-		"publicNetworkAccessTranlation": "[if(parameters('publicNetworkAccess'),'Enabled','Disabled')]",
-		"resourceGroupName": "[resourceGroup().Name]"
+	    "akvRoleIdMapping": { "Key Vault Secrets User": "4633458b-17de-408a-b874-0445c86b69e6" }
 	},
     "resources": [
         {
@@ -67,12 +52,12 @@
                 "enableRbacAuthorization": true,
                 "vaultUri": "[concat('https://', parameters('keyVaultName'), '.vault.azure.net/')]",
                 "provisioningState": "Succeeded",
-                "publicNetworkAccess": "[variables('publicNetworkAccessTranlation')]"
+                "publicNetworkAccess": "[parameters('publicNetworkAccess')]"
             }
         },
         {
             "type": "Microsoft.KeyVault/vaults/privateEndpointConnections",
-            "apiVersion": "2023-02-01",
+            "apiVersion": "2022-11-01",
             "name": "[concat(parameters('keyVaultName'), '/', parameters('keyVaultName'), '-pe')]",
             "location": "[parameters('location')]",
             "dependsOn": [

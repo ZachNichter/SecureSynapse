@@ -185,6 +185,7 @@
   },
   "variables": {
 	"createSynapseKeyVaultBool": "[bool(parameters('createSynapseKeyVault'))]",
+	"disableKeyVaultPublicNetworkAccessTranslation": "[if(parameters('disableKeyVaultPublicNetworkAccess'),'Disabled','Enabled')]",
 	"createSynapseWSBool": "[bool(parameters('createSynapseWS'))]",
 	"createJumpVMBool": "[bool(parameters('createJumpVM'))]",
 	"createNewStorageAccountBool": "[bool(parameters('createNewStorageAccount'))]",
@@ -197,6 +198,7 @@
 	"bastionHostNameUnique": "[concat(parameters('bastionHostName'), '-', variables('uniqueSuffix'))]",
 	"synapseWSNameUnique": "[concat(parameters('synapseWSName'), '-', variables('uniqueSuffix'))]",
 	"distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', resourceGroup().name)]",
+
 
 	"linked-vnet-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/010-Vnet/azdeploy-vnet.json",
 	"linked-jumpvm-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/020-JumpVM/azdeploy-vm.json",
@@ -300,7 +302,7 @@
 		},
 		"parameters": {
 			"keyVaultName": { "value": "[parameters('keyVaultName')]" },
-			"publicNetworkAccess": { "value": "[if(equals(parameters('disableKeyVaultPublicNetworkAccess'),bool('true')),bool('false'),bool('true'))]"},
+			"publicNetworkAccess": { "value": "[variables('disableKeyVaultPublicNetworkAccessTranslation')]"},
 			"setSynapseWorkspaceSystemMSIRbacOnKeyVault": { "value": true },
 			"synapseName": { "value": "[variables('synapseWSNameUnique')]" }
 		}
