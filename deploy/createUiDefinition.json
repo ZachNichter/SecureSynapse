@@ -239,7 +239,7 @@
 									"name": "sqlAdministratorLogin",
 									"type": "Microsoft.Common.TextBox",
 									"label": "SQL admin username",
-									"defaultValue": "sqladminuser",
+									"defaultValue": "sqlAdmin",
 									"toolTip": "",
 									"constraints": {
 										"required": true,
@@ -251,6 +251,7 @@
 								{
 									"name": "sqlAdministratorPassword",
 									"type": "Microsoft.Common.PasswordBox",
+									"defaultValue": "ChangeMe!",
 									"label": {
 										"password": "Password",
 										"confirmPassword": "Confirm password"
