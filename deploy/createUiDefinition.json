@@ -2,56 +2,38 @@
     "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
 	"handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
-	"title": "DPi30 Secure Synapse Deployment",
 	"parameters": {
-		"config": { },
-		"basics": [ ],
-		"steps": [
+		"basics": [
 			{
-				"name": "general",
-				"label": "General",
+				"name": "resNamingSection",
+				"type": "Microsoft.Common.Section",
+				"label": "Default resource naming",
 				"elements": [
 					{
-						"name": "resourceScope",
-						"type": "Microsoft.Common.ResourceScope",
-						"location": {
-							"resourceTypes": [
-								"Microsoft.Resources/resourcegroups"
-							]
-						}
+						"name": "projectInfo",
+						"type": "Microsoft.Common.TextBlock",
+						"options": {
+							"text": "Provide a one word project name that will assist in providing a pre-poulated name for the resources in this deployment."
+						},
+						"visible": true
 					},
 					{
-						"name": "resNamingSection",
-						"type": "Microsoft.Common.Section",
-						"label": "Default resource naming",
-						"elements": [
-							{
-								"name": "projectInfo",
-								"type": "Microsoft.Common.TextBlock",
-								"options": {
-									"text": "Provide a one word project name that will assist in providing a pre-poulated name for the resources in this deployment."
-								},
-								"visible": true
-							},
-							{
-								"name": "defaultResNamePart",
-								"type": "Microsoft.Common.TextBox",
-								"label": "Project name",
-								"defaultValue": "",
-								"placeHolder": "crayondeploy",
-								"toolTip": "Used to build the default resource names in each section. Resource names can be overwritten.",
-								"constraints": {
-									"required": true,
-									"regex": "^[a-zA-Z]{5,20}$",
-									"validationMessage": "Value must be letters, a length of 5-20 charaters. No spaces or special characters allowed."
-								},
-								"visible": true
-							}
-						]
+						"name": "defaultResNamePart",
+						"type": "Microsoft.Common.TextBox",
+						"label": "Project name",
+						"defaultValue": "",
+						"toolTip": "Used to build the default resource names in each section. Resource names can be overwritten.",
+						"constraints": {
+							"required": true,
+							"regex": "^[a-zA-Z]{5,20}$",
+							"validationMessage": "Value must be letters, a length of 5-20 charaters. No spaces or special characters allowed."
+						},
+						"visible": true
 					}
-
 				]
-			},
+			}
+		],
+		"steps": [
 			{
 				"name": "vmStep",
 				"label": "Virtual Machine",
