@@ -175,8 +175,8 @@
 	  }
 	},
 	"disableKeyVaultPublicNetworkAccess": {
-	  "type": "String",
-	  "defaultValue": "false",
+	  "type": "bool",
+	  "defaultValue": false,
 	  "metadata": {
 		"description": "Should the key vault be accessable to the public?"
 	  }
@@ -185,7 +185,6 @@
   },
   "variables": {
 	"createSynapseKeyVaultBool": "[bool(parameters('createSynapseKeyVault'))]",
-	"disableKeyVaultPublicNetworkAccessBool": "[bool(parameters('disableKeyVaultPublicNetworkAccess'))]",
 	"createSynapseWSBool": "[bool(parameters('createSynapseWS'))]",
 	"createJumpVMBool": "[bool(parameters('createJumpVM'))]",
 	"createNewStorageAccountBool": "[bool(parameters('createNewStorageAccount'))]",
@@ -301,7 +300,7 @@
 		},
 		"parameters": {
 			"keyVaultName": { "value": "[parameters('keyVaultName')]" },
-			"publicNetworkAccess": { "value": "[if(equals(variables('disableKeyVaultPublicNetworkAccessBool'),bool('true')),bool('false'),bool('true'))]"},
+			"publicNetworkAccess": { "value": "[if(equals(parameters('disableKeyVaultPublicNetworkAccess'),bool('true')),bool('false'),bool('true'))]"},
 			"setSynapseWorkspaceSystemMSIRbacOnKeyVault": { "value": true },
 			"synapseName": { "value": "[variables('synapseWSNameUnique')]" }
 		}
