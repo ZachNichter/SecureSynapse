@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "keyVaultName": {
-            "type": "string",
+            "type": "String",
 			"defaultValue": "akv-PROJECTNAME",
 			"metadata": {
 				"description": "Restrictions: Alphanumerics and hyphens. Start with letter. End with letter or digit. No consecutive hyphens."
@@ -21,18 +21,18 @@
 			"defaultValue": true
         },
         "location": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "[resourceGroup().location]"
         },
 		"synapseName": {
-			"type": "string",
+			"type": "String",
 			"defaultValue": "",
 			"metadata": {
 				"description": "Name of the Synapse resouce"
 			}
 		},
 		"tenantId": {
-			"type": "string",
+			"type": "String",
 			"defaultValue": "[subscription().tenantId]"
 		}
 

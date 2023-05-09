@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "hubName": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "hubPROJECTNAME"
         }
     },
@@ -30,7 +30,7 @@
     ],
     "outputs": {
         "synapsePLHName": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('hubName')]"
         }
     }

@@ -3,26 +3,26 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "hubPrivateEndpointName": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "hub-pe"
         },
         "sqlPrivateEndpointName": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "sql-pe"
         },
         "sqlOnDemandPrivateEndpointName": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "sqlondemand-pe"
         },
         "devPrivateEndpointName": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "dev-pe"
         },
         "hubPrivateLinkResource": {
-            "type": "string"
+            "type": "String"
         },
         "sqlPrivateLinkResource": {
-            "type": "string"
+            "type": "String"
         },
         "hubTargetSubResource": {
             "type": "array",
@@ -49,13 +49,13 @@
             ]
         },
         "subnet": {
-            "type": "string"
+            "type": "String"
         },
         "virtualNetworkId": {
-            "type": "string"
+            "type": "String"
         },
         "timestamp_v": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "[replace(replace(replace(utcNow(), ':',''),' ',''),'/','')]"
         }
     },
@@ -63,7 +63,10 @@
         "location": "[resourceGroup().location]",
         "guid_v": "[guid(resourceGroup().id)]",
         "virtualNetworkResourceGroupName": "[resourceGroup().name]",
-        "privateDnsDeploymentName": "[concat('PrivateDns-', parameters('timestamp_v'))]"
+        "privateDnsDeploymentName": "[concat('PrivateDns-', parameters('timestamp_v'))]",
+		"sqlPEPrivateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.sql.azuresynapse.net')]",
+		"sqlOnDemandPEPrivateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.sql.azuresynapse.net')]",
+		"devPEPrivateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.dev.azuresynapse.net')]"
     },
     "resources": [
         {
@@ -236,7 +239,7 @@
                                     "contentVersion": "1.0.0.0",
                                     "resources": [
                                         {
-                                            "apiVersion": "2020-06-01",
+                                            "apiVersion": "2018-09-01",
                                             "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
                                             "name": "[concat('privatelink.azuresynapse.net', '/', uniqueString(parameters('virtualNetworkId')))]",
                                             "location": "global",
@@ -248,7 +251,7 @@
                                             }
                                         },
                                         {
-                                            "apiVersion": "2020-06-01",
+                                            "apiVersion": "2018-09-01",
                                             "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
                                             "name": "[concat('privatelink.sql.azuresynapse.net', '/', uniqueString(parameters('virtualNetworkId')))]",
                                             "location": "global",
@@ -260,7 +263,7 @@
                                             }
                                         },
                                         {
-                                            "apiVersion": "2020-06-01",
+                                            "apiVersion": "2018-09-01",
                                             "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
                                             "name": "[concat('privatelink.dev.azuresynapse.net', '/', uniqueString(parameters('virtualNetworkId')))]",
                                             "location": "global",
@@ -323,7 +326,7 @@
                                     {
                                         "name": "privatelink-sql-azuresynapse-net",
                                         "properties": {
-                                            "privateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.sql.azuresynapse.net')]"
+                                            "privateDnsZoneId": "[variables('sqlPEPrivateDnsZoneId')]"
                                         }
                                     }
                                 ]
@@ -339,7 +342,7 @@
                                     {
                                         "name": "privatelink-sqlondemand-azuresynapse-net",
                                         "properties": {
-                                            "privateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.sql.azuresynapse.net')]"
+                                            "privateDnsZoneId": "[variables('sqlOnDemandPEPrivateDnsZoneId')]"
                                         }
                                     }
                                 ]
@@ -355,7 +358,7 @@
                                     {
                                         "name": "privatelink-dev-azuresynapse-net",
                                         "properties": {
-                                            "privateDnsZoneId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/privateDnsZones/privatelink.dev.azuresynapse.net')]"
+                                            "privateDnsZoneId": "[variables('devPEPrivateDnsZoneId')]"
                                         }
                                     }
                                 ]
@@ -368,31 +371,31 @@
     ],
     "outputs": {
         "hubPrivateEndpointName": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('hubPrivateEndpointName')]"
         },
         "sqlPrivateEndpointName": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('sqlPrivateEndpointName')]"
         },
         "sqlOnDemandPrivateEndpointName": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('sqlOnDemandPrivateEndpointName')]"
         },
         "devPrivateEndpointName": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('devPrivateEndpointName')]"
         },
         "DnsZoneGroupName": {
-            "type": "string",
+            "type": "String",
             "value": "[concat('DnsZoneGroup-', parameters('timestamp_v'))]"
         },
         "virtualNetworkLinkName": {
-            "type": "string",
+            "type": "String",
             "value": "[concat('VirtualNetworkLink-', parameters('timestamp_v'))]"
         },
         "privateDnsZone": {
-            "type": "string",
+            "type": "String",
             "value": "[concat('PrivateDnsZone-', variables('guid_v'))]"
         }
     }

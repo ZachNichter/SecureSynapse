@@ -1,6 +1,7 @@
 {
-    "$schema": "<relative path to createFormUI.schema.json>",
-    "view": {
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "version": "0.1.2-preview",
+	"view": {
         "kind": "form",
         "properties": {
             "title": "DPi30 Secure Synapse Deployment",

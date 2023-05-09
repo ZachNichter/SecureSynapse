@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "type": "string"
+            "type": "String"
         },
 	    "allowSynapseADAuthOnly": {
 			"type": "bool",
@@ -13,7 +13,7 @@
 			}
 		},
         "sqlAdministratorLogin": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "",
 			"metadata": {
 				"description": "SQL Auth admin login for Synapse WS and SQL. (If not AD Auth Only)"
@@ -35,37 +35,37 @@
             "defaultValue": true
         },
         "grantWorkspaceIdentityControlForSql": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Enabled"
         },
         "managedVirtualNetwork": {
-            "type": "string",
+            "type": "String",
             "defaultValue": ""
         },
         "dataLakeStorageAccountName": {
-            "type": "string"
+            "type": "String"
         },
         "dataLakeStorageFilesystemName": {
-            "type": "string"
+            "type": "String"
         },
         "dataLakeStorageAccountType": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Standard_RAGRS"
         },
         "dataLakeStorageAccountKind": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "StorageV2"
         },
         "dataLakeStorageAccountSubscriptionID": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "[subscription().subscriptionId]"
         },
         "dataLakeStorageAccountLocation": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "[resourceGroup().location]"
         },
         "dataLakeStorageAccountRoleUniqueId": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "[newGuid()]"
         },
         "isNewStorageAccount": {
@@ -77,19 +77,19 @@
             "defaultValue": true
         },
         "adlaResourceId": {
-            "type": "string",
+            "type": "String",
             "defaultValue": ""
         },
         "managedResourceGroupName": {
-            "type": "string",
+            "type": "String",
             "defaultValue": ""
         },
         "dataLakeStorageAccountAccessTier": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Hot"
         },
 		"dataLakeMinimumTlsVersion": {
-			"type": "string",
+			"type": "String",
 			"defaultValue": "TLS1_2"
 		},
         "storageSupportsHttpsTrafficOnly": {
@@ -310,43 +310,43 @@
     ],
     "outputs": {
         "resourceGroupName": {
-            "type": "string",
+            "type": "String",
             "value": "[resourceGroup().name]"
         },
         "resourceGroupLocation": {
-            "type": "string",
+            "type": "String",
             "value": "[variables('synapseResourceLocation')]"
         },
         "synapseWorkspaceName": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('name')]"
         },
 		"synapseMsiId": {
-            "type": "string",
+            "type": "String",
             "value": "[reference(resourceId('Microsoft.Synapse/workspaces', parameters('name')), '2021-06-01', 'Full').identity.principalId]"
 		},
         "defaultDataLakeStorageAccountName": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('dataLakeStorageAccountName')]"
         },
         "synapseStorageString": {
-            "type": "string",
+            "type": "String",
             "value": "[concat(parameters('dataLakeStorageAccountName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', parameters('name'), '/', parameters('dataLakeStorageAccountRoleUniqueId'))))]"
         },
         "webEndpoint": {
-            "type": "string",
+            "type": "String",
             "value": "[variables('webEndpoint')]"
         },
         "devEndpoint": {
-            "type": "string",
+            "type": "String",
             "value": "[variables('devEndpoint')]"
         },
         "ondemandEndpoint": {
-            "type": "string",
+            "type": "String",
             "value": "[variables('ondemandEndpoint')]"
         },
         "sqlEndpoint": {
-            "type": "string",
+            "type": "String",
             "value": "[variables('sqlEndpoint')]"
         }
     }

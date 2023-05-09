@@ -91,28 +91,28 @@
 	  }
 	},
 	"dataLakeAccount": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "adls",
 	  "metadata": {
 		"description": "Name of the data lake storage account for Synapse metadata."
 	  }
 	},
 	"dataLakeAccountType":  {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "Standard_RAGRS",
 	  "metadata": {
 		"description": "Name of the data lake storage account for Synapse metadata."
 	  }
 	},
 	"dataLakeAccountKind":   {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "StorageV2",
 	  "metadata": {
 		"description": "Name of the data lake storage account for Synapse metadata."
 	  }
 	},
 	"dataLakeStorageAccountContainer": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "fs-",
 	  "metadata": {
 		"description": "Name of the data lake filesystem for Synapse metadata."
@@ -126,7 +126,7 @@
 	  }
 	},
 	"synapseWSName": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "syn-ws-",
 	  "metadata": {
 		"description": "Name of the Synapse workspace."
@@ -147,7 +147,7 @@
 	  }
 	},
 	"sqlAdministratorLogin": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "sqladminuser",
 	  "metadata": {
 		  "description": "Synapse SQL administrator account name"
@@ -167,14 +167,14 @@
 	  }
 	},
 	"keyVaultName": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "akv-PROJECTNAME",
 	  "metadata": {
 		"description": "Name of the key vault."
 	  }
 	},
 	"disableKeyVaultPublicNetworkAccess": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "false",
 	  "metadata": {
 		"description": "Should the key vault be accessable to the public?"
@@ -362,12 +362,12 @@
   "outputs": {
 	"vmName": {
 	  "condition": "[variables('createJumpVMBool')]",
-	  "type": "string",
+	  "type": "String",
 	  "value": "[variables('virtualMachineNameUnique')]"
 	},
 	"vmSize": {
 	  "condition": "[variables('createJumpVMBool')]",
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapseJumpVM').outputs.vmSize.value]"
 	},
 	"vmAdminUsername": {
@@ -376,47 +376,47 @@
 	  "value": "[reference('synapseJumpVM').outputs.vmAdminUsername.value]"
 	},
 	"synapseWorkspaceName": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapseWorkspace').outputs.synapseWorkspaceName.value]"
 	},
 	"synapseWorkspaceURL": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapseWorkspace').outputs.webEndpoint.value]"
 	},
 	"synapseStorageAccount": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[variables('dataLakeStorageAccountUnique')]"
 	},
 	"synapseStorageString": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapseWorkspace').outputs.synapseStorageString.value]"
 	},
 	"synapseSQL": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapseWorkspace').outputs.sqlEndpoint.value]"
 	},
 	"synapseSqlOndemand": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapseWorkspace').outputs.ondemandEndpoint.value]"
 	},
 	"synapsePLHName": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapsePrivateLinkHub').outputs.synapsePLHName.value]"
 	},
 	"hubPrivateEndpointName": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapsePrivateLinkHubPE').outputs.hubPrivateEndpointName.value]"
 	},
 	"DnsZoneGroupName": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapsePrivateLinkHubPE').outputs.DnsZoneGroupName.value]"
 	},
 	"virtualNetworkLinkName": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapsePrivateLinkHubPE').outputs.virtualNetworkLinkName.value]"
 	},
 	"privateDnsZone": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[reference('synapsePrivateLinkHubPE').outputs.privateDnsZone.value]"
 	}
   }

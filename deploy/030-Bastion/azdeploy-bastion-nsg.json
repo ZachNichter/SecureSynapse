@@ -3,27 +3,27 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
 	"vnetName": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "",
 	  "metadata": {
 		"description": "Name of the existing vnet to which Azure Bastion will be deployed."
 	  }
 	},
 	"bastionSubnetIpPrefix": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "",
 	  "metadata": {
 		"description": "The Bastion subnet IP prefix must be within vnet IP prefix address space."
 	  }
 	},
 	"bastionHostName": {
-	  "type": "string",
+	  "type": "String",
 	  "metadata": {
 		"description": "Name of Azure Bastion resource"
 	  }
 	},
 	"location": {
-	  "type": "string",
+	  "type": "String",
 	  "defaultValue": "[resourceGroup().location]",
 	  "metadata": {
 		"description": "Azure region for Bastion and virtual network"

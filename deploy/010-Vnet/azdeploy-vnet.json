@@ -6,43 +6,43 @@
 	  "type": "String"
 	},
 	"virtualNetwork_vnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_bastion_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_bastion_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_app_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_app_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_data_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_data_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_gateway_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_gateway_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_default_subnet_name": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"virtualNetwork_default_subnet_address_prefix": {
-	  "type": "string"
+	  "type": "String"
 	},
 	"bastion_Deploy": {
 		"type": "bool"
 	},
 	"bastion_HostName": {
-	  "type": "string"
+	  "type": "String"
 	}
 
   },
@@ -624,35 +624,35 @@
   ],
   "outputs": {
 	"resourceGroupName": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[resourceGroup().name]"
 	},
 	"resourceGroupID": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[resourceGroup().id]"
 	},
 	"resourceGroupLocation": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[resourceGroup().location]"
 	},
 	"virtualNetwork_vnet_name": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[parameters('virtualNetwork_vnet_name')]"
 	},
 	"virtualNetwork_vnet_address_prefix": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[parameters('virtualNetwork_vnet_address_prefix')]"
 	},
 	"virtualNetwork_app_subnet_name": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[parameters('virtualNetwork_app_subnet_name')]"
 	},
 	"virtualNetwork_data_subnet_name": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[parameters('virtualNetwork_data_subnet_name')]"
 	},
 	"virtualNetwork_bastion_subnet_name": {
-	  "type": "string",
+	  "type": "String",
 	  "value": "[parameters('virtualNetwork_bastion_subnet_name')]"
 	}
   }

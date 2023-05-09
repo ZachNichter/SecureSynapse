@@ -1,0 +1,977 @@
+
+Validating deploy\createUiDefinition.json
+  JSONFiles Should Be Valid
+    [+] JSONFiles Should Be Valid (38 ms)
+Validating deploy\azuredeploy.json
+  adminUsername Should Not Be A Literal
+    [+] adminUsername Should Not Be A Literal (70 ms)
+  apiVersions Should Be Recent In Reference Functions
+    [+] apiVersions Should Be Recent In Reference Functions (48 ms)
+  apiVersions Should Be Recent
+    [?] apiVersions Should Be Recent (187 ms)
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+
+  artifacts parameter
+    [+] artifacts parameter (15 ms)
+  CommandToExecute Must Use ProtectedSettings For Secrets
+    [+] CommandToExecute Must Use ProtectedSettings For Secrets (120 ms)
+  DependsOn Best Practices
+    [+] DependsOn Best Practices (61 ms)
+  Deployment Resources Must Not Be Debug
+    [+] Deployment Resources Must Not Be Debug (64 ms)
+  DeploymentTemplate Must Not Contain Hardcoded Uri
+    [+] DeploymentTemplate Must Not Contain Hardcoded Uri (21 ms)
+  DeploymentTemplate Schema Is Correct
+    [+] DeploymentTemplate Schema Is Correct (15 ms)
+  Dynamic Variable References Should Not Use Concat
+    [+] Dynamic Variable References Should Not Use Concat (17 ms)
+  IDs Should Be Derived From ResourceIDs
+    [-] IDs Should Be Derived From ResourceIDs (66 ms)
+        Property: "virtualNetworkId" must use one of the following expressions for an resourceId property:
+            extensionResourceId,resourceId,subscriptionResourceId,tenantResourceId,if,parameters,reference,variables,subscription,guid
+
+  Location Should Not Be Hardcoded
+    [+] Location Should Not Be Hardcoded (287 ms)
+  ManagedIdentityExtension must not be used
+    [+] ManagedIdentityExtension must not be used (15 ms)
+  Min And Max Value Are Numbers
+    [+] Min And Max Value Are Numbers (27 ms)
+  Outputs Must Not Contain Secrets
+    [+] Outputs Must Not Contain Secrets (24 ms)
+  Parameter Types Should Be Consistent
+    [+] Parameter Types Should Be Consistent (107 ms)
+  Parameters Must Be Referenced
+    [+] Parameters Must Be Referenced (161 ms)
+  Password params must be secure
+    [+] Password params must be secure (14 ms)
+  providers apiVersions Is Not Permitted
+    [+] providers apiVersions Is Not Permitted (15 ms)
+  ResourceIds should not contain
+    [+] ResourceIds should not contain (20 ms)
+  Resources Should Have Location
+    [+] Resources Should Have Location (15 ms)
+  Resources Should Not Be Ambiguous
+    [+] Resources Should Not Be Ambiguous (15 ms)
+  Secure Params In Nested Deployments
+    [+] Secure Params In Nested Deployments (74 ms)
+  Secure String Parameters Cannot Have Default
+    [+] Secure String Parameters Cannot Have Default (17 ms)
+  Template Should Not Contain Blanks
+    [-] Template Should Not Contain Blanks (288 ms)
+        Empty property:  [] Line: 283, Column: 38
+
+  URIs Should Be Properly Constructed
+    [+] URIs Should Be Properly Constructed (137 ms)
+  Variables Must Be Referenced
+    [+] Variables Must Be Referenced (139 ms)
+  Virtual Machines Should Not Be Preview
+    [+] Virtual Machines Should Not Be Preview (101 ms)
+  VM Images Should Use Latest Version
+    [+] VM Images Should Use Latest Version (15 ms)
+  VM Size Should Be A Parameter
+    [-] VM Size Should Be A Parameter (121 ms)
+        VM Size for resourceType '' named '' must be a parameter
+
+Validating deploy\azuredeploy.parameters.json
+  DeploymentParameters Should Have ContentVersion
+    [+] DeploymentParameters Should Have ContentVersion (14 ms)
+  DeploymentParameters Should Have Parameters
+    [+] DeploymentParameters Should Have Parameters (13 ms)
+  DeploymentParameters Should Have Schema
+    [+] DeploymentParameters Should Have Schema (14 ms)
+  DeploymentParameters Should Have Value
+    [+] DeploymentParameters Should Have Value (14 ms)
+Validating deploy\azuredeploy.ui.definition.json
+  Allowed Values Should Actually Be Allowed
+    [+] Allowed Values Should Actually Be Allowed (112 ms)
+  Controls In Outputs Must Exist
+    [+] Controls In Outputs Must Exist (17 ms)
+  CreateUIDefinition Must Not Have Blanks
+    [-] CreateUIDefinition Must Not Have Blanks (86 ms)
+        Empty property: toolTip found on line: 62 Line: 62, Column: 18
+        Empty property: toolTip found on line: 100 Line: 100, Column: 20
+        Empty property: customPasswordRegex found on line: 116 Line: 116, Column: 33
+        Empty property: customValidationMessage found on line: 117 Line: 117, Column: 37
+        Empty property: subnets found on line: 141 Line: 141, Column: 19
+        Empty property: name found on line: 144 Line: 144, Column: 16
+        Empty property: toolTip found on line: 255 Line: 255, Column: 20
+        Empty property: toolTip found on line: 270 Line: 270, Column: 20
+        Empty property: customPasswordRegex found on line: 273 Line: 273, Column: 33
+        Empty property: customValidationMessage found on line: 274 Line: 274, Column: 37
+        Empty property: toolTip found on line: 295 Line: 295, Column: 20
+
+  CreateUIDefinition Should Have Schema
+    [-] CreateUIDefinition Should Have Schema (14 ms)
+        CreateUIDefintion has an incorrect schema.  Schema must be https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#, and is '<relative path to createFormUI.schema.json>'
+        CreateUIDefinition is missing a version
+
+  Credential Confirmation Should Not Be Hidden
+    [+] Credential Confirmation Should Not Be Hidden (167 ms)
+  Handler Must Be Correct
+    [-] Handler Must Be Correct (14 ms)
+        CreateUIDefinition is missing handler property
+        The handler for CreateUIDefinition must be 'Microsoft.Compute.MultiVm' or 'Microsoft.Azure.CreateUIDef'
+
+  HideExisting Must Be Correctly Handled
+    [+] HideExisting Must Be Correctly Handled (247 ms)
+  Location Should Be In Outputs
+    [-] Location Should Be In Outputs (14 ms)
+        Outputs is missing from CreateUIDefinition
+
+  Outputs Must Be Present In Template Parameters
+    [-] Outputs Must Be Present In Template Parameters (15 ms)
+        CreateUIDefinition is missing the .parameters.outputs property
+
+  Parameters Without Default Must Exist In CreateUIDefinition
+    [-] Parameters Without Default Must Exist In CreateUIDefinition (19 ms)
+        virtualNetwork_bastion_subnet_name does not have a default value, and is not defined in CreateUIDefinition.outputs
+        virtualNetwork_bastion_subnet_address_prefix does not have a default value, and is not defined in CreateUIDefinition.outputs
+        virtualNetwork_app_subnet_name does not have a default value, and is not defined in CreateUIDefinition.outputs
+        virtualNetwork_app_subnet_address_prefix does not have a default value, and is not defined in CreateUIDefinition.outputs
+        virtualNetwork_data_subnet_name does not have a default value, and is not defined in CreateUIDefinition.outputs
+        virtualNetwork_data_subnet_address_prefix does not have a default value, and is not defined in CreateUIDefinition.outputs
+        virtualNetwork_gateway_subnet_name does not have a default value, and is not defined in CreateUIDefinition.outputs
+        virtualNetwork_gateway_subnet_address_prefix does not have a default value, and is not defined in CreateUIDefinition.outputs
+        vmAdminPassword does not have a default value, and is not defined in CreateUIDefinition.outputs
+        sqlAdministratorPassword does not have a default value, and is not defined in CreateUIDefinition.outputs
+
+  Password Textboxes Must Be Used For Password Parameters
+    [-] Password Textboxes Must Be Used For Password Parameters (91 ms)
+        Could not find vmCredentials in outputs Line: 109, Column: 11
+        Could not find sqlAdministratorPassword in outputs Line: 265, Column: 11
+
+  PasswordBoxes Must Have Min Length
+    [+] PasswordBoxes Must Have Min Length (95 ms)
+  Textboxes Are Well Formed
+    [+] Textboxes Are Well Formed (104 ms)
+  Tooltips Should Be Present
+    [-] Tooltips Should Be Present (124 ms)
+        Element missing tooltip: resourceScope Line: 14, Column: 30
+        Element missing tooltip: deployJumpbox Line: 59, Column: 9
+        Element missing tooltip: vmName Line: 80, Column: 9
+        Element missing tooltip: vmAdminUsername Line: 97, Column: 11
+        Element missing tooltip: vmCredentials Line: 109, Column: 11
+        Element missing tooltip: sqlAdministratorLogin Line: 252, Column: 11
+        Element missing tooltip: sqlAdministratorPassword Line: 265, Column: 11
+        Element missing tooltip: selectSynapseADLSStorageAccount Line: 290, Column: 11
+        Element missing tooltip: deploySynapseKeyVault Line: 344, Column: 11
+        Element missing tooltip: disableKeyVaultPublicNetworkAccess Line: 364, Column: 11
+        Element missing tooltip: tagsByResource Line: 379, Column: 9
+
+  Usernames Should Not Have A Default
+    [+] Usernames Should Not Have A Default (93 ms)
+  Validations Must Have Message
+    [+] Validations Must Have Message (93 ms)
+  VMSizes Must Match Template
+    [+] VMSizes Must Match Template (90 ms)
+Validating 010-Vnet\azdeploy-vnet.json
+  adminUsername Should Not Be A Literal
+    [+] adminUsername Should Not Be A Literal (111 ms)
+  apiVersions Should Be Recent In Reference Functions
+    [+] apiVersions Should Be Recent In Reference Functions (15 ms)
+  apiVersions Should Be Recent
+    [-] apiVersions Should Be Recent (350 ms)
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-05-01 of Microsoft.Network/networkSecurityGroups/securityRules is 1103 days old Line: 381, Column: 5
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-05-01 of Microsoft.Network/networkSecurityGroups/securityRules is 1103 days old Line: 403, Column: 5
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-05-01 of Microsoft.Network/virtualNetworks is 1103 days old Line: 425, Column: 5
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-05-01 of Microsoft.Network/virtualNetworks/subnets is 1103 days old Line: 513, Column: 5
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-05-01 of Microsoft.Network/virtualNetworks/subnets is 1103 days old Line: 527, Column: 5
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-05-01 of Microsoft.Network/virtualNetworks/subnets is 1103 days old Line: 542, Column: 5
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-05-01 of Microsoft.Network/virtualNetworks/subnets is 1103 days old Line: 560, Column: 5
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-05-01 of Microsoft.Network/virtualNetworks/subnets is 1103 days old Line: 579, Column: 5
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+
+  artifacts parameter
+    [+] artifacts parameter (13 ms)
+  CommandToExecute Must Use ProtectedSettings For Secrets
+    [+] CommandToExecute Must Use ProtectedSettings For Secrets (123 ms)
+  DependsOn Best Practices
+    [+] DependsOn Best Practices (110 ms)
+  Deployment Resources Must Not Be Debug
+    [+] Deployment Resources Must Not Be Debug (104 ms)
+  DeploymentTemplate Must Not Contain Hardcoded Uri
+    [+] DeploymentTemplate Must Not Contain Hardcoded Uri (21 ms)
+  DeploymentTemplate Schema Is Correct
+    [+] DeploymentTemplate Schema Is Correct (16 ms)
+  Dynamic Variable References Should Not Use Concat
+    [+] Dynamic Variable References Should Not Use Concat (16 ms)
+  IDs Should Be Derived From ResourceIDs
+    [+] IDs Should Be Derived From ResourceIDs (155 ms)
+  Location Should Not Be Hardcoded
+    [-] Location Should Not Be Hardcoded (239 ms)
+        azdeploy-vnet.json must use the location parameter, not resourceGroup().location or deployment().location (except when used as a default value in the main template)
+        azdeploy-vnet.json must use the location parameter, not resourceGroup().location or deployment().location (except when used as a default value in the main template)
+
+  ManagedIdentityExtension must not be used
+    [+] ManagedIdentityExtension must not be used (14 ms)
+  Min And Max Value Are Numbers
+    [+] Min And Max Value Are Numbers (19 ms)
+  Outputs Must Not Contain Secrets
+    [+] Outputs Must Not Contain Secrets (15 ms)
+  Parameter Types Should Be Consistent
+    [+] Parameter Types Should Be Consistent (96 ms)
+  Parameters Must Be Referenced
+    [+] Parameters Must Be Referenced (269 ms)
+  Password params must be secure
+    [+] Password params must be secure (14 ms)
+  providers apiVersions Is Not Permitted
+    [+] providers apiVersions Is Not Permitted (18 ms)
+  ResourceIds should not contain
+    [+] ResourceIds should not contain (50 ms)
+  Resources Should Have Location
+    [+] Resources Should Have Location (23 ms)
+  Resources Should Not Be Ambiguous
+    [+] Resources Should Not Be Ambiguous (18 ms)
+  Secure Params In Nested Deployments
+    [+] Secure Params In Nested Deployments (111 ms)
+  Secure String Parameters Cannot Have Default
+    [+] Secure String Parameters Cannot Have Default (15 ms)
+  Template Should Not Contain Blanks
+    [-] Template Should Not Contain Blanks (541 ms)
+        Empty property:  [] Line: 88, Column: 25
+        Empty property:  [] Line: 89, Column: 30
+        Empty property:  [] Line: 90, Column: 30
+        Empty property:  [] Line: 91, Column: 35
+        Empty property:  [] Line: 105, Column: 25
+        Empty property:  [] Line: 106, Column: 30
+        Empty property:  [] Line: 107, Column: 30
+        Empty property:  [] Line: 108, Column: 35
+        Empty property:  [] Line: 132, Column: 25
+        Empty property:  [] Line: 133, Column: 30
+        Empty property:  [] Line: 134, Column: 30
+        Empty property:  [] Line: 135, Column: 35
+        Empty property:  [] Line: 149, Column: 25
+        Empty property:  [] Line: 150, Column: 30
+        Empty property:  [] Line: 151, Column: 30
+        Empty property:  [] Line: 152, Column: 35
+        Empty property:  [] Line: 166, Column: 25
+        Empty property:  [] Line: 167, Column: 30
+        Empty property:  [] Line: 168, Column: 30
+        Empty property:  [] Line: 169, Column: 35
+        Empty property:  [] Line: 183, Column: 25
+        Empty property:  [] Line: 184, Column: 30
+        Empty property:  [] Line: 185, Column: 30
+        Empty property:  [] Line: 186, Column: 35
+        Empty property:  [] Line: 200, Column: 25
+        Empty property:  [] Line: 201, Column: 30
+        Empty property:  [] Line: 202, Column: 30
+        Empty property:  [] Line: 203, Column: 35
+        Empty property:  [] Line: 217, Column: 25
+        Empty property:  [] Line: 218, Column: 30
+        Empty property:  [] Line: 219, Column: 30
+        Empty property:  [] Line: 220, Column: 35
+        Empty property:  [] Line: 395, Column: 22
+        Empty property:  [] Line: 396, Column: 27
+        Empty property:  [] Line: 397, Column: 27
+        Empty property:  [] Line: 398, Column: 32
+        Empty property:  [] Line: 417, Column: 22
+        Empty property:  [] Line: 418, Column: 27
+        Empty property:  [] Line: 419, Column: 27
+        Empty property:  [] Line: 420, Column: 32
+        Empty property:  [] Line: 443, Column: 20
+        Empty property:  [] Line: 452, Column: 25
+        Empty property:  [] Line: 453, Column: 20
+        Empty property:  [] Line: 470, Column: 20
+        Empty property:  [] Line: 487, Column: 20
+        Empty property:  [] Line: 499, Column: 25
+        Empty property:  [] Line: 500, Column: 20
+        Empty property:  [] Line: 506, Column: 28
+        Empty property:  [] Line: 520, Column: 17
+        Empty property:  [] Line: 534, Column: 22
+        Empty property:  [] Line: 535, Column: 17
+        Empty property:  [] Line: 553, Column: 17
+        Empty property:  [] Line: 571, Column: 22
+        Empty property:  [] Line: 572, Column: 17
+        Empty property:  [] Line: 591, Column: 22
+        Empty property:  [] Line: 592, Column: 17
+
+  URIs Should Be Properly Constructed
+    [+] URIs Should Be Properly Constructed (108 ms)
+  Variables Must Be Referenced
+    [+] Variables Must Be Referenced (88 ms)
+  Virtual Machines Should Not Be Preview
+    [+] Virtual Machines Should Not Be Preview (112 ms)
+  VM Images Should Use Latest Version
+    [+] VM Images Should Use Latest Version (14 ms)
+  VM Size Should Be A Parameter
+    [-] VM Size Should Be A Parameter (124 ms)
+        VM Size for resourceType '' named '' must be a parameter
+
+Validating 010-Vnet\azdeploy-vnet.parameters.json
+  DeploymentParameters Should Have ContentVersion
+    [+] DeploymentParameters Should Have ContentVersion (14 ms)
+  DeploymentParameters Should Have Parameters
+    [+] DeploymentParameters Should Have Parameters (14 ms)
+  DeploymentParameters Should Have Schema
+    [+] DeploymentParameters Should Have Schema (14 ms)
+  DeploymentParameters Should Have Value
+    [+] DeploymentParameters Should Have Value (14 ms)
+Validating 020-JumpVM\azdeploy-vm.json
+  adminUsername Should Not Be A Literal
+    [+] adminUsername Should Not Be A Literal (52 ms)
+  apiVersions Should Be Recent In Reference Functions
+    [+] apiVersions Should Be Recent In Reference Functions (15 ms)
+  apiVersions Should Be Recent
+    [-] apiVersions Should Be Recent (140 ms)
+        Api versions must be the latest or under 2 years old (730 days) - API version 2018-10-01 of Microsoft.Network/networkInterfaces is 1681 days old Line: 102, Column: 14
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2019-02-01 of Microsoft.Network/networkSecurityGroups is 1558 days old Line: 131, Column: 14
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2019-02-01 of Microsoft.Network/publicIpAddresses is 1558 days old Line: 140, Column: 14
+        Valid Api Versions:
+        2022-07-01
+        2022-07-01
+        2022-05-01
+        2022-01-01
+        2021-12-01
+        2021-08-01
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2021-03-01 of Microsoft.Compute/virtualMachines is 799 days old Line: 152, Column: 14
+        Valid Api Versions:
+        2022-11-01
+        2022-11-01
+        2022-08-01
+        2022-03-01
+        2021-11-01
+        2021-07-01
+        Microsoft.DevTestLab/schedules uses a preview version ( 2017-04-26-preview ) and there are more recent versions available. Line: 209, Column: 14
+        Valid Api Versions:
+        2018-09-15
+        2018-10-15-preview
+        Api versions must be the latest or under 2 years old (730 days) - API version 2017-04-26-preview of Microsoft.DevTestLab/schedules is 2204 days old Line: 209, Column: 14
+        Valid Api Versions:
+        2018-09-15
+        2018-10-15-preview
+        Api versions must be the latest or under 2 years old (730 days) - API version 2018-10-01 of Microsoft.Compute/virtualMachines/extensions is 1681 days old Line: 232, Column: 14
+        Valid Api Versions:
+        2022-11-01
+        2022-11-01
+        2022-08-01
+        2022-03-01
+        2021-11-01
+        2021-07-01
+
+  artifacts parameter
+    [+] artifacts parameter (13 ms)
+  CommandToExecute Must Use ProtectedSettings For Secrets
+    [+] CommandToExecute Must Use ProtectedSettings For Secrets (66 ms)
+  DependsOn Best Practices
+    [-] DependsOn Best Practices (58 ms)
+        Depends On Must not start with [concat(
+        Depends On Must not start with [concat(
+        Depends On Must not start with [concat(
+        Depends On Must not start with [concat(
+
+  Deployment Resources Must Not Be Debug
+    [+] Deployment Resources Must Not Be Debug (41 ms)
+  DeploymentTemplate Must Not Contain Hardcoded Uri
+    [+] DeploymentTemplate Must Not Contain Hardcoded Uri (19 ms)
+  DeploymentTemplate Schema Is Correct
+    [+] DeploymentTemplate Schema Is Correct (14 ms)
+  Dynamic Variable References Should Not Use Concat
+    [+] Dynamic Variable References Should Not Use Concat (16 ms)
+  IDs Should Be Derived From ResourceIDs
+    [-] IDs Should Be Derived From ResourceIDs (92 ms)
+        Property: "id" must use one of the following expressions for an resourceId property:
+            extensionResourceId,resourceId,subscriptionResourceId,tenantResourceId,if,parameters,reference,variables,subscription,guid
+        Blank ID Property found: 
+mdmId ParentObject
+----- ------------                                                                             
+      {@{publisher=Microsoft.Azure.ActiveDirectory; type=[variables('aadLoginExtensionName')];…
+
+
+
+  Location Should Not Be Hardcoded
+    [-] Location Should Not Be Hardcoded (134 ms)
+        azdeploy-vm.json must use the location parameter, not resourceGroup().location or deployment().location (except when used as a default value in the main template)
+
+  ManagedIdentityExtension must not be used
+    [+] ManagedIdentityExtension must not be used (14 ms)
+  Min And Max Value Are Numbers
+    [+] Min And Max Value Are Numbers (19 ms)
+  Outputs Must Not Contain Secrets
+    [+] Outputs Must Not Contain Secrets (15 ms)
+  Parameter Types Should Be Consistent
+    [+] Parameter Types Should Be Consistent (95 ms)
+  Parameters Must Be Referenced
+    [+] Parameters Must Be Referenced (101 ms)
+  Password params must be secure
+    [+] Password params must be secure (15 ms)
+  providers apiVersions Is Not Permitted
+    [+] providers apiVersions Is Not Permitted (14 ms)
+  ResourceIds should not contain
+    [-] ResourceIds should not contain (24 ms)
+        Using "resourceId(resourceGroup(" is not allowed - found on line: 94 for property: nsgId
+        Using "resourceId(resourceGroup(" is not allowed - found on line: 118 for property: id
+
+  Resources Should Have Location
+    [+] Resources Should Have Location (15 ms)
+  Resources Should Not Be Ambiguous
+    [+] Resources Should Not Be Ambiguous (14 ms)
+  Secure Params In Nested Deployments
+    [+] Secure Params In Nested Deployments (42 ms)
+  Secure String Parameters Cannot Have Default
+    [+] Secure String Parameters Cannot Have Default (14 ms)
+  Template Should Not Contain Blanks
+    [-] Template Should Not Contain Blanks (127 ms)
+        Empty property:  "" Line: 240, Column: 29
+
+  URIs Should Be Properly Constructed
+    [+] URIs Should Be Properly Constructed (55 ms)
+  Variables Must Be Referenced
+    [+] Variables Must Be Referenced (65 ms)
+  Virtual Machines Should Not Be Preview
+    [+] Virtual Machines Should Not Be Preview (56 ms)
+  VM Images Should Use Latest Version
+    [+] VM Images Should Use Latest Version (13 ms)
+  VM Size Should Be A Parameter
+    [-] VM Size Should Be A Parameter (115 ms)
+        VM Size for resourceType '' named '' must be a parameter
+
+Validating 020-JumpVM\azdeploy-vm.parameters.json
+  DeploymentParameters Should Have ContentVersion
+    [+] DeploymentParameters Should Have ContentVersion (13 ms)
+  DeploymentParameters Should Have Parameters
+    [+] DeploymentParameters Should Have Parameters (15 ms)
+  DeploymentParameters Should Have Schema
+    [+] DeploymentParameters Should Have Schema (14 ms)
+  DeploymentParameters Should Have Value
+    [+] DeploymentParameters Should Have Value (14 ms)
+Validating 030-Bastion\azdeploy-bastion-nsg.json
+  adminUsername Should Not Be A Literal
+    [+] adminUsername Should Not Be A Literal (59 ms)
+  apiVersions Should Be Recent In Reference Functions
+    [+] apiVersions Should Be Recent In Reference Functions (16 ms)
+  apiVersions Should Be Recent
+    [+] apiVersions Should Be Recent (131 ms)
+  artifacts parameter
+    [+] artifacts parameter (14 ms)
+  CommandToExecute Must Use ProtectedSettings For Secrets
+    [+] CommandToExecute Must Use ProtectedSettings For Secrets (58 ms)
+  DependsOn Best Practices
+    [+] DependsOn Best Practices (52 ms)
+  Deployment Resources Must Not Be Debug
+    [+] Deployment Resources Must Not Be Debug (49 ms)
+  DeploymentTemplate Must Not Contain Hardcoded Uri
+    [+] DeploymentTemplate Must Not Contain Hardcoded Uri (20 ms)
+  DeploymentTemplate Schema Is Correct
+    [+] DeploymentTemplate Schema Is Correct (14 ms)
+  Dynamic Variable References Should Not Use Concat
+    [+] Dynamic Variable References Should Not Use Concat (15 ms)
+  IDs Should Be Derived From ResourceIDs
+    [+] IDs Should Be Derived From ResourceIDs (71 ms)
+  Location Should Not Be Hardcoded
+    [+] Location Should Not Be Hardcoded (110 ms)
+  ManagedIdentityExtension must not be used
+    [+] ManagedIdentityExtension must not be used (14 ms)
+  Min And Max Value Are Numbers
+    [+] Min And Max Value Are Numbers (16 ms)
+  Outputs Must Not Contain Secrets
+    [+] Outputs Must Not Contain Secrets (16 ms)
+  Parameter Types Should Be Consistent
+    [+] Parameter Types Should Be Consistent (95 ms)
+  Parameters Must Be Referenced
+    [+] Parameters Must Be Referenced (45 ms)
+  Password params must be secure
+    [+] Password params must be secure (14 ms)
+  providers apiVersions Is Not Permitted
+    [+] providers apiVersions Is Not Permitted (15 ms)
+  ResourceIds should not contain
+    [+] ResourceIds should not contain (18 ms)
+  Resources Should Have Location
+    [+] Resources Should Have Location (14 ms)
+  Resources Should Not Be Ambiguous
+    [+] Resources Should Not Be Ambiguous (14 ms)
+  Secure Params In Nested Deployments
+    [+] Secure Params In Nested Deployments (50 ms)
+  Secure String Parameters Cannot Have Default
+    [+] Secure String Parameters Cannot Have Default (14 ms)
+  Template Should Not Contain Blanks
+    [+] Template Should Not Contain Blanks (116 ms)
+  URIs Should Be Properly Constructed
+    [+] URIs Should Be Properly Constructed (56 ms)
+  Variables Must Be Referenced
+    [+] Variables Must Be Referenced (47 ms)
+  Virtual Machines Should Not Be Preview
+    [+] Virtual Machines Should Not Be Preview (52 ms)
+  VM Images Should Use Latest Version
+    [+] VM Images Should Use Latest Version (14 ms)
+  VM Size Should Be A Parameter
+    [-] VM Size Should Be A Parameter (117 ms)
+        VM Size for resourceType '' named '' must be a parameter
+
+Validating 030-Bastion\azdeploy-bastion-nsg.parameters.json
+  DeploymentParameters Should Have ContentVersion
+    [+] DeploymentParameters Should Have ContentVersion (14 ms)
+  DeploymentParameters Should Have Parameters
+    [+] DeploymentParameters Should Have Parameters (13 ms)
+  DeploymentParameters Should Have Schema
+    [+] DeploymentParameters Should Have Schema (13 ms)
+  DeploymentParameters Should Have Value
+    [+] DeploymentParameters Should Have Value (14 ms)
+Validating 040-SynapseWS\azdeploy-synapse.json
+  adminUsername Should Not Be A Literal
+    [+] adminUsername Should Not Be A Literal (51 ms)
+  apiVersions Should Be Recent In Reference Functions
+    [+] apiVersions Should Be Recent In Reference Functions (38 ms)
+  apiVersions Should Be Recent
+    [?] apiVersions Should Be Recent (162 ms)
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments/Microsoft.Storage/storageAccounts
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments/Microsoft.Storage/storageAccounts/blobServices/containers
+
+  artifacts parameter
+    [+] artifacts parameter (14 ms)
+  CommandToExecute Must Use ProtectedSettings For Secrets
+    [+] CommandToExecute Must Use ProtectedSettings For Secrets (83 ms)
+  DependsOn Best Practices
+    [-] DependsOn Best Practices (58 ms)
+        Depends On Must not start with [concat(
+        Depends On Must not start with [concat( Line: 183, Column: 14
+        Depends On Must not start with [concat( Line: 193, Column: 14
+        Depends On Must not start with [concat(
+        Depends On Must not start with [concat(
+
+  Deployment Resources Must Not Be Debug
+    [+] Deployment Resources Must Not Be Debug (46 ms)
+  DeploymentTemplate Must Not Contain Hardcoded Uri
+    [-] DeploymentTemplate Must Not Contain Hardcoded Uri (25 ms)
+        Found hardcoded reference to core.windows.net Line: 119, Column: 114
+
+  DeploymentTemplate Schema Is Correct
+    [+] DeploymentTemplate Schema Is Correct (14 ms)
+  Dynamic Variable References Should Not Use Concat
+    [+] Dynamic Variable References Should Not Use Concat (16 ms)
+  IDs Should Be Derived From ResourceIDs
+    [+] IDs Should Be Derived From ResourceIDs (72 ms)
+  Location Should Not Be Hardcoded
+    [+] Location Should Not Be Hardcoded (166 ms)
+  ManagedIdentityExtension must not be used
+    [+] ManagedIdentityExtension must not be used (14 ms)
+  Min And Max Value Are Numbers
+    [+] Min And Max Value Are Numbers (21 ms)
+  Outputs Must Not Contain Secrets
+    [+] Outputs Must Not Contain Secrets (19 ms)
+  Parameter Types Should Be Consistent
+    [+] Parameter Types Should Be Consistent (97 ms)
+  Parameters Must Be Referenced
+    [+] Parameters Must Be Referenced (201 ms)
+  Password params must be secure
+    [+] Password params must be secure (14 ms)
+  providers apiVersions Is Not Permitted
+    [+] providers apiVersions Is Not Permitted (14 ms)
+  ResourceIds should not contain
+    [+] ResourceIds should not contain (23 ms)
+  Resources Should Have Location
+    [+] Resources Should Have Location (17 ms)
+  Resources Should Not Be Ambiguous
+    [+] Resources Should Not Be Ambiguous (14 ms)
+  Secure Params In Nested Deployments
+    [+] Secure Params In Nested Deployments (50 ms)
+  Secure String Parameters Cannot Have Default
+    [+] Secure String Parameters Cannot Have Default (14 ms)
+  Template Should Not Contain Blanks
+    [-] Template Should Not Contain Blanks (188 ms)
+        Empty property:  [] Line: 251, Column: 43
+        Empty property:  [] Line: 252, Column: 31
+
+  URIs Should Be Properly Constructed
+    [-] URIs Should Be Properly Constructed (88 ms)
+        Function 'concat' found within 'defaultDataLakeStorageAccountUrl' Line: 119, Column: 10
+
+  Variables Must Be Referenced
+    [+] Variables Must Be Referenced (89 ms)
+  Virtual Machines Should Not Be Preview
+    [+] Virtual Machines Should Not Be Preview (72 ms)
+  VM Images Should Use Latest Version
+    [+] VM Images Should Use Latest Version (13 ms)
+  VM Size Should Be A Parameter
+    [-] VM Size Should Be A Parameter (117 ms)
+        VM Size for resourceType '' named '' must be a parameter
+
+Validating 040-SynapseWS\azdeploy-synapse.parameters.json
+  DeploymentParameters Should Have ContentVersion
+    [+] DeploymentParameters Should Have ContentVersion (14 ms)
+  DeploymentParameters Should Have Parameters
+    [+] DeploymentParameters Should Have Parameters (14 ms)
+  DeploymentParameters Should Have Schema
+    [+] DeploymentParameters Should Have Schema (13 ms)
+  DeploymentParameters Should Have Value
+    [+] DeploymentParameters Should Have Value (15 ms)
+Validating 050-KeyVault\azdeploy-keyvault.json
+  adminUsername Should Not Be A Literal
+    [+] adminUsername Should Not Be A Literal (23 ms)
+  apiVersions Should Be Recent In Reference Functions
+    [?] apiVersions Should Be Recent In Reference Functions (28 ms)
+        The apiVersion 2018-06-01 was not found for the resource type: Microsoft.Synapse/workspaces
+
+  apiVersions Should Be Recent
+    [?] apiVersions Should Be Recent (43 ms)
+        The apiVersion 2022-11-01 was not found for the resource type: Microsoft.KeyVault/vaults
+        The apiVersion 2023-02-01 was not found for the resource type: Microsoft.KeyVault/vaults/privateEndpointConnections
+
+  artifacts parameter
+    [+] artifacts parameter (14 ms)
+  CommandToExecute Must Use ProtectedSettings For Secrets
+    [+] CommandToExecute Must Use ProtectedSettings For Secrets (30 ms)
+  DependsOn Best Practices
+    [+] DependsOn Best Practices (21 ms)
+  Deployment Resources Must Not Be Debug
+    [+] Deployment Resources Must Not Be Debug (22 ms)
+  DeploymentTemplate Must Not Contain Hardcoded Uri
+    [-] DeploymentTemplate Must Not Contain Hardcoded Uri (18 ms)
+        Found hardcoded reference to vault.azure.net Line: 68, Column: 80
+
+  DeploymentTemplate Schema Is Correct
+    [+] DeploymentTemplate Schema Is Correct (13 ms)
+  Dynamic Variable References Should Not Use Concat
+    [+] Dynamic Variable References Should Not Use Concat (14 ms)
+  IDs Should Be Derived From ResourceIDs
+    [+] IDs Should Be Derived From ResourceIDs (28 ms)
+  Location Should Not Be Hardcoded
+    [+] Location Should Not Be Hardcoded (55 ms)
+  ManagedIdentityExtension must not be used
+    [+] ManagedIdentityExtension must not be used (15 ms)
+  Min And Max Value Are Numbers
+    [+] Min And Max Value Are Numbers (18 ms)
+  Outputs Must Not Contain Secrets
+    [+] Outputs Must Not Contain Secrets (14 ms)
+  Parameter Types Should Be Consistent
+    [+] Parameter Types Should Be Consistent (102 ms)
+  Parameters Must Be Referenced
+    [+] Parameters Must Be Referenced (57 ms)
+  Password params must be secure
+    [+] Password params must be secure (16 ms)
+  providers apiVersions Is Not Permitted
+    [+] providers apiVersions Is Not Permitted (13 ms)
+  ResourceIds should not contain
+    [+] ResourceIds should not contain (17 ms)
+  Resources Should Have Location
+    [+] Resources Should Have Location (14 ms)
+  Resources Should Not Be Ambiguous
+    [+] Resources Should Not Be Ambiguous (14 ms)
+  Secure Params In Nested Deployments
+    [+] Secure Params In Nested Deployments (22 ms)
+  Secure String Parameters Cannot Have Default
+    [+] Secure String Parameters Cannot Have Default (13 ms)
+  Template Should Not Contain Blanks
+    [-] Template Should Not Contain Blanks (59 ms)
+        Empty property:  {} Line: 83, Column: 35
+
+  URIs Should Be Properly Constructed
+    [-] URIs Should Be Properly Constructed (37 ms)
+        Function 'concat' found within 'vaultUri' Line: 68, Column: 18
+
+  Variables Must Be Referenced
+    [-] Variables Must Be Referenced (30 ms)
+        Unreferenced variable: resourceGroupName
+
+  Virtual Machines Should Not Be Preview
+    [+] Virtual Machines Should Not Be Preview (31 ms)
+  VM Images Should Use Latest Version
+    [+] VM Images Should Use Latest Version (15 ms)
+  VM Size Should Be A Parameter
+    [-] VM Size Should Be A Parameter (123 ms)
+        VM Size for resourceType '' named '' must be a parameter
+
+Validating 050-KeyVault\azdeploy-keyvault.parameters.json
+  DeploymentParameters Should Have ContentVersion
+    [+] DeploymentParameters Should Have ContentVersion (15 ms)
+  DeploymentParameters Should Have Parameters
+    [+] DeploymentParameters Should Have Parameters (14 ms)
+  DeploymentParameters Should Have Schema
+    [+] DeploymentParameters Should Have Schema (14 ms)
+  DeploymentParameters Should Have Value
+    [+] DeploymentParameters Should Have Value (14 ms)
+Validating 060-PrivateLinkHub\azdeploy-plh.json
+  adminUsername Should Not Be A Literal
+    [+] adminUsername Should Not Be A Literal (17 ms)
+  apiVersions Should Be Recent In Reference Functions
+    [+] apiVersions Should Be Recent In Reference Functions (16 ms)
+  apiVersions Should Be Recent
+    [-] apiVersions Should Be Recent (29 ms)
+        Microsoft.Synapse/privateLinkHubs uses a preview version ( 2019-06-01-preview ) and there are more recent versions available. Line: 17, Column: 14
+        Valid Api Versions:
+        2021-06-01
+        2021-06-01-preview
+        2021-06-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2019-06-01-preview of Microsoft.Synapse/privateLinkHubs is 1438 days old Line: 17, Column: 14
+        Valid Api Versions:
+        2021-06-01
+        2021-06-01-preview
+        2021-06-01
+
+  artifacts parameter
+    [+] artifacts parameter (14 ms)
+  CommandToExecute Must Use ProtectedSettings For Secrets
+    [+] CommandToExecute Must Use ProtectedSettings For Secrets (24 ms)
+  DependsOn Best Practices
+    [+] DependsOn Best Practices (21 ms)
+  Deployment Resources Must Not Be Debug
+    [+] Deployment Resources Must Not Be Debug (21 ms)
+  DeploymentTemplate Must Not Contain Hardcoded Uri
+    [+] DeploymentTemplate Must Not Contain Hardcoded Uri (21 ms)
+  DeploymentTemplate Schema Is Correct
+    [+] DeploymentTemplate Schema Is Correct (14 ms)
+  Dynamic Variable References Should Not Use Concat
+    [+] Dynamic Variable References Should Not Use Concat (15 ms)
+  IDs Should Be Derived From ResourceIDs
+    [+] IDs Should Be Derived From ResourceIDs (16 ms)
+  Location Should Not Be Hardcoded
+    [-] Location Should Not Be Hardcoded (35 ms)
+        azdeploy-plh.json must use the location parameter, not resourceGroup().location or deployment().location (except when used as a default value in the main template)
+
+  ManagedIdentityExtension must not be used
+    [+] ManagedIdentityExtension must not be used (14 ms)
+  Min And Max Value Are Numbers
+    [+] Min And Max Value Are Numbers (13 ms)
+  Outputs Must Not Contain Secrets
+    [+] Outputs Must Not Contain Secrets (14 ms)
+  Parameter Types Should Be Consistent
+    [+] Parameter Types Should Be Consistent (98 ms)
+  Parameters Must Be Referenced
+    [+] Parameters Must Be Referenced (22 ms)
+  Password params must be secure
+    [+] Password params must be secure (17 ms)
+  providers apiVersions Is Not Permitted
+    [+] providers apiVersions Is Not Permitted (13 ms)
+  ResourceIds should not contain
+    [+] ResourceIds should not contain (15 ms)
+  Resources Should Have Location
+    [+] Resources Should Have Location (15 ms)
+  Resources Should Not Be Ambiguous
+    [+] Resources Should Not Be Ambiguous (16 ms)
+  Secure Params In Nested Deployments
+    [+] Secure Params In Nested Deployments (17 ms)
+  Secure String Parameters Cannot Have Default
+    [+] Secure String Parameters Cannot Have Default (14 ms)
+  Template Should Not Contain Blanks
+    [+] Template Should Not Contain Blanks (35 ms)
+  URIs Should Be Properly Constructed
+    [+] URIs Should Be Properly Constructed (20 ms)
+  Variables Must Be Referenced
+    [+] Variables Must Be Referenced (18 ms)
+  Virtual Machines Should Not Be Preview
+    [+] Virtual Machines Should Not Be Preview (21 ms)
+  VM Images Should Use Latest Version
+    [+] VM Images Should Use Latest Version (14 ms)
+  VM Size Should Be A Parameter
+    [-] VM Size Should Be A Parameter (116 ms)
+        VM Size for resourceType '' named '' must be a parameter
+
+Validating 060-PrivateLinkHub\azdeploy-plh.parameters.json
+  DeploymentParameters Should Have ContentVersion
+    [+] DeploymentParameters Should Have ContentVersion (13 ms)
+  DeploymentParameters Should Have Parameters
+    [+] DeploymentParameters Should Have Parameters (13 ms)
+  DeploymentParameters Should Have Schema
+    [+] DeploymentParameters Should Have Schema (13 ms)
+  DeploymentParameters Should Have Value
+    [+] DeploymentParameters Should Have Value (14 ms)
+Validating 070-PrivateEndpoints\azdeploy-pe.json
+  adminUsername Should Not Be A Literal
+    [+] adminUsername Should Not Be A Literal (67 ms)
+  apiVersions Should Be Recent In Reference Functions
+    [+] apiVersions Should Be Recent In Reference Functions (16 ms)
+  apiVersions Should Be Recent
+    [-] apiVersions Should Be Recent (289 ms)
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        Api versions must be the latest or under 2 years old (730 days) - API version 2018-09-01 of Microsoft.Resources/deployments/Microsoft.Network/privateDnsZones is 1711 days old Line: 182, Column: 13
+        Valid Api Versions:
+        2021-04-01
+        2021-04-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2018-09-01 of Microsoft.Resources/deployments/Microsoft.Network/privateDnsZones is 1711 days old
+        Valid Api Versions:
+        2021-04-01
+        2021-04-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2018-09-01 of Microsoft.Resources/deployments/Microsoft.Network/privateDnsZones is 1711 days old
+        Valid Api Versions:
+        2021-04-01
+        2021-04-01
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-06-01 of Microsoft.Resources/deployments/Microsoft.Network/privateDnsZones/virtualNetworkLinks is 1072 days old Line: 239, Column: 46
+        Valid Api Versions:
+        2021-04-01
+        2021-04-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-06-01 of Microsoft.Resources/deployments/Microsoft.Network/privateDnsZones/virtualNetworkLinks is 1072 days old
+        Valid Api Versions:
+        2021-04-01
+        2021-04-01
+        Api versions must be the latest or under 2 years old (730 days) - API version 2020-06-01 of Microsoft.Resources/deployments/Microsoft.Network/privateDnsZones/virtualNetworkLinks is 1072 days old
+        Valid Api Versions:
+        2021-04-01
+        2021-04-01
+        The apiVersion 2022-09-01 was not found for the resource type: Microsoft.Resources/deployments
+        The apiVersion 2022-07-01 was not found for the resource type: Microsoft.Resources/deployments/Microsoft.Network/privateEndpoints/privateDnsZoneGroups
+        The apiVersion 2022-07-01 was not found for the resource type: Microsoft.Resources/deployments/Microsoft.Network/privateEndpoints/privateDnsZoneGroups
+        The apiVersion 2022-07-01 was not found for the resource type: Microsoft.Resources/deployments/Microsoft.Network/privateEndpoints/privateDnsZoneGroups
+        The apiVersion 2022-07-01 was not found for the resource type: Microsoft.Resources/deployments/Microsoft.Network/privateEndpoints/privateDnsZoneGroups
+
+  artifacts parameter
+    [+] artifacts parameter (14 ms)
+  CommandToExecute Must Use ProtectedSettings For Secrets
+    [+] CommandToExecute Must Use ProtectedSettings For Secrets (83 ms)
+  DependsOn Best Practices
+    [+] DependsOn Best Practices (73 ms)
+  Deployment Resources Must Not Be Debug
+    [+] Deployment Resources Must Not Be Debug (73 ms)
+  DeploymentTemplate Must Not Contain Hardcoded Uri
+    [+] DeploymentTemplate Must Not Contain Hardcoded Uri (29 ms)
+  DeploymentTemplate Schema Is Correct
+    [+] DeploymentTemplate Schema Is Correct (14 ms)
+  Dynamic Variable References Should Not Use Concat
+    [+] Dynamic Variable References Should Not Use Concat (15 ms)
+  IDs Should Be Derived From ResourceIDs
+    [-] IDs Should Be Derived From ResourceIDs (193 ms)
+        Property: "privateDnsZoneId" must use one of the following expressions for an resourceId property:
+            extensionResourceId,resourceId,subscriptionResourceId,tenantResourceId,if,parameters,reference,variables,subscription,guid
+        Property: "privateDnsZoneId" must use one of the following expressions for an resourceId property:
+            extensionResourceId,resourceId,subscriptionResourceId,tenantResourceId,if,parameters,reference,variables,subscription,guid
+        Property: "privateDnsZoneId" must use one of the following expressions for an resourceId property:
+            extensionResourceId,resourceId,subscriptionResourceId,tenantResourceId,if,parameters,reference,variables,subscription,guid
+        Property: "privateDnsZoneId" must use one of the following expressions for an resourceId property:
+            extensionResourceId,resourceId,subscriptionResourceId,tenantResourceId,if,parameters,reference,variables,subscription,guid
+
+  Location Should Not Be Hardcoded
+    [-] Location Should Not Be Hardcoded (220 ms)
+        azdeploy-pe.json must use the location parameter, not resourceGroup().location or deployment().location (except when used as a default value in the main template)
+
+  ManagedIdentityExtension must not be used
+    [+] ManagedIdentityExtension must not be used (16 ms)
+  Min And Max Value Are Numbers
+    [+] Min And Max Value Are Numbers (22 ms)
+  Outputs Must Not Contain Secrets
+    [+] Outputs Must Not Contain Secrets (19 ms)
+  Parameter Types Should Be Consistent
+    [+] Parameter Types Should Be Consistent (102 ms)
+  Parameters Must Be Referenced
+    [+] Parameters Must Be Referenced (145 ms)
+  Password params must be secure
+    [+] Password params must be secure (14 ms)
+  providers apiVersions Is Not Permitted
+    [+] providers apiVersions Is Not Permitted (14 ms)
+  ResourceIds should not contain
+    [+] ResourceIds should not contain (22 ms)
+  Resources Should Have Location
+    [+] Resources Should Have Location (16 ms)
+  Resources Should Not Be Ambiguous
+    [+] Resources Should Not Be Ambiguous (14 ms)
+  Secure Params In Nested Deployments
+    [+] Secure Params In Nested Deployments (75 ms)
+  Secure String Parameters Cannot Have Default
+    [+] Secure String Parameters Cannot Have Default (14 ms)
+  Template Should Not Contain Blanks
+    [+] Template Should Not Contain Blanks (213 ms)
+  URIs Should Be Properly Constructed
+    [+] URIs Should Be Properly Constructed (75 ms)
+  Variables Must Be Referenced
+    [+] Variables Must Be Referenced (62 ms)
+  Virtual Machines Should Not Be Preview
+    [+] Virtual Machines Should Not Be Preview (72 ms)
+  VM Images Should Use Latest Version
+    [+] VM Images Should Use Latest Version (15 ms)
+  VM Size Should Be A Parameter
+    [-] VM Size Should Be A Parameter (117 ms)
+        VM Size for resourceType '' named '' must be a parameter
+
+Validating 070-PrivateEndpoints\azdeploy-pe.parameters.json
+  DeploymentParameters Should Have ContentVersion
+    [+] DeploymentParameters Should Have ContentVersion (14 ms)
+  DeploymentParameters Should Have Parameters
+    [+] DeploymentParameters Should Have Parameters (15 ms)
+  DeploymentParameters Should Have Schema
+    [+] DeploymentParameters Should Have Schema (15 ms)
+  DeploymentParameters Should Have Value
+    [+] DeploymentParameters Should Have Value (17 ms)
+Total : 290
+Pass  : 250
+Fail  : 40
+
+
+
+

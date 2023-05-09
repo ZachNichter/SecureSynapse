@@ -15,7 +15,7 @@
 			"value": "172.20.4.0/26"
 		},
 		"virtualNetwork_app_subnet_name": {
-			"value": "AppSubnet"
+			"value": "PrivateEndpointSubnet"
 		},
 		"virtualNetwork_app_subnet_address_prefix": {
 			"value": "172.20.3.0/26"

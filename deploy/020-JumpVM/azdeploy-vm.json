@@ -28,36 +28,36 @@
             ]
         },
         "subnetName": {
-            "type": "string"
+            "type": "String"
         },
         "virtualNetworkName": {
-            "type": "string"
+            "type": "String"
         },
         "publicIpAddressType": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Dynamic"
         },
         "publicIpAddressSku": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Basic"
         },
         "osDiskType": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "StandardSSD_LRS"
         },
         "virtualMachineSize": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Standard_DS11_v2"
         },
         "vmAdminUsername": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "cloudsa"
         },
         "vmAdminPassword": {
             "type": "secureString"
         },
         "patchMode": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "AutomaticByOS"
         },
         "enableHotpatching": {
@@ -65,23 +65,23 @@
             "defaultValue": false
         },
         "autoShutdownStatus": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Enabled"
         },
         "autoShutdownTime": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "19:00"
         },
         "autoShutdownTimeZone": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Central Standard Time"
         },
         "autoShutdownNotificationStatus": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "Enabled"
         },
         "autoShutdownNotificationLocale": {
-            "type": "string",
+            "type": "String",
             "defaultValue": "en"
         }
     },
@@ -247,15 +247,15 @@
     ],
     "outputs": {
         "vmName": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('virtualMachineName')]"
         },
         "vmSize": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('virtualMachineSize')]"
         },
         "vmAdminUsername": {
-            "type": "string",
+            "type": "String",
             "value": "[parameters('vmAdminUsername')]"
         }
     }
