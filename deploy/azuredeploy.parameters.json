@@ -51,7 +51,7 @@
             "value": "false"
         },
         "allowSynapseADAuthOnly": {
-            "value": "true"
+            "value": true
         },
         "sqlAdministratorLogin": {
             "value": "sqladminuser"

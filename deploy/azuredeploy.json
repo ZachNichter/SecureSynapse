@@ -140,8 +140,8 @@
 	  }
 	},
 	"allowSynapseADAuthOnly": {
-	  "type": "String",
-	  "defaultValue": "true",
+	  "type": "bool",
+	  "defaultValue": true,
 	  "metadata": {
 		"description": "Allow Azure AD authentication only for all Workspace subresources."
 	  }
@@ -189,7 +189,6 @@
 	"createJumpVMBool": "[bool(parameters('createJumpVM'))]",
 	"createNewStorageAccountBool": "[bool(parameters('createNewStorageAccount'))]",
 	"allowNSGManagementSynapseNetworkTrafficBool": "[bool(parameters('allowNSGManagementSynapseNetworkTraffic'))]",
-	"allowSynapseADAuthOnlyBool": "[bool(parameters('allowSynapseADAuthOnly'))]",
 
 	"uniqueSuffix": "[uniqueString(resourceGroup().id, deployment().name)]",
 	"dataLakeStorageAccountUnique": "[concat(parameters('dataLakeAccount'), variables('uniqueSuffix'))]",
@@ -273,7 +272,7 @@
 			"dataLakeStorageFilesystemName": { "value": "[parameters('dataLakeStorageAccountContainer')]" },
 			"dataLakeStorageAccountType": { "value": "[parameters('dataLakeAccountType')]" },
 			"dataLakeStorageAccountKind": { "value": "[parameters('dataLakeAccountKind')]" },
-			"allowSynapseADAuthOnly": { "value": "[variables('allowSynapseADAuthOnlyBool')]" },
+			"allowSynapseADAuthOnly": { "value": "[parameters('allowSynapseADAuthOnly')]" },
 			"sqlAdministratorLogin": { "value": "[parameters('sqlAdministratorLogin')]" },
 			"sqlAdministratorPassword": { "value": "[parameters('sqlAdministratorPassword')]" },
 			"allowNSGManagementSynapseNetworkTraffic": { "value": "[variables('allowNSGManagementSynapseNetworkTrafficBool')]" },
