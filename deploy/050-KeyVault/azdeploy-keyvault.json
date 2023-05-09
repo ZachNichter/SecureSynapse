@@ -71,25 +71,6 @@
                     "actionsRequired": "None"
                 }
             }
-        // },
-		// {
-		// 	"condition": "[parameters('setSynapseWorkspaceSystemMSIRbacOnKeyVault')]",
-		// 	"type": "Microsoft.Authorization/roleAssignments",
-		// 	"apiVersion": "2022-04-01",
-		// 	"scope": "[format('/Microsoft.KeyVault/vaults/{0}', parameters('keyVaultName'))]",
-		// 	"name": "[guid(resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName')), resourceId('Microsoft.Synapse/workspaces', parameters('synapseName')), subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('akvRoleIdMapping')[variables('akvSecretsUserRoleName')]))]",
-		// 	"properties": {
-		// 		"roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('akvRoleIdMapping')[variables('akvSecretsUserRoleName')])]",
-		// 		"principalId": "[reference(resourceId('Microsoft.Synapse/workspaces', parameters('synapseName')), '2018-06-01', 'full').identity.principalId]",
-		// 		"principalType": "ServicePrincipal"
-		// 	},
-		// 	"dependsOn": [
-		// 		"[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]",
-		// 		"[resourceId('Microsoft.Synapse/workspaces', parameters('synapseName'))]"
-		// 	],
-		// 	"metadata": {
-		// 		"description": "Assigns the Synapse Managed Identity to the Key Vault Secrets User role"
-		// 	}
 		}
     ]
 }

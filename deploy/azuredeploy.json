@@ -302,9 +302,7 @@
 		},
 		"parameters": {
 			"keyVaultName": { "value": "[parameters('keyVaultName')]" },
-			"publicNetworkAccess": { "value": "[variables('disableKeyVaultPublicNetworkAccessTranslation')]"},
-			"setSynapseWorkspaceSystemMSIRbacOnKeyVault": { "value": true },
-			"synapseName": { "value": "[variables('synapseWSNameUnique')]" }
+			"publicNetworkAccess": { "value": "[variables('disableKeyVaultPublicNetworkAccessTranslation')]"}
 		}
 	  }
 	},
