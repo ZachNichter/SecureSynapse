@@ -1,7 +1,7 @@
 {
     "$schema": "<relative path to createFormUI.schema.json>",
     "view": {
-        "kind": "Form",
+        "kind": "form",
         "properties": {
             "title": "DPi30 Secure Synapse Deployment",
             "steps": [
