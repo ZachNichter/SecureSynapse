@@ -3,11 +3,9 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
 	"virtualNetwork_vnet_name": {
-	  "defaultValue": "vnet-customer",
 	  "type": "String"
 	},
 	"virtualNetwork_vnet_address_prefix": {
-	  "defaultValue": "172.20.0.0/20",
 	  "type": "String"
 	},
 	"virtualNetwork_bastion_subnet_name": {
@@ -35,11 +33,9 @@
 	  "type": "String"
 	},
 	"virtualNetwork_default_subnet_name": {
-	  "defaultValue": "default",
 	  "type": "String"
 	},
 	"virtualNetwork_default_subnet_address_prefix": {
-	  "defaultValue": "/20",
 	  "type": "String"
 	},
 	"createJumpVM": {
@@ -197,7 +193,7 @@
 	"virtualMachineNameUnique": "[substring(variables('vmUniqueName'), 0, 15)]",
 	"bastionHostNameUnique": "[concat(parameters('bastionHostName'), '-', variables('uniqueSuffix'))]",
 	"synapseWSNameUnique": "[concat(parameters('synapseWSName'), '-', variables('uniqueSuffix'))]",
-	"distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', resourceGroup().name)]",
+	"distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', replace(resourceGroup().name,'-',''))]",
 
 
 	"linked-vnet-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/010-Vnet/azdeploy-vnet.json",

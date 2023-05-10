@@ -6,7 +6,7 @@
             "value": "vnet-projectname"
         },
         "virtualNetwork_vnet_address_prefix": {
-            "value": "172.20.0.0/20"
+            "value": "172.20.0.0/16"
         },
 		"virtualNetwork_bastion_subnet_name": {
 			"value": "BastionSubnet"
