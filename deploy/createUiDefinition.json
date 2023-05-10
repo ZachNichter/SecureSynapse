@@ -74,7 +74,7 @@
 							"defaultValue": "[concat('vm', substring(steps('basics').resNamingSection.defaultResNamePart,0,2))]",
 							"constraints": {
 								"required": true,
-								"regex": "^[a-z0-9-]{2,2}$",
+								"regex": "^[a-z0-9-]{2,}$",
 								"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2 characters long."
 							},
 							"visible": "[steps('vmStep').deployJumpbox]"
@@ -98,6 +98,7 @@
 								{
 									"name": "vmCredentials",
 									"type": "Microsoft.Common.PasswordBox",
+									"defaultValue": "ChangeMe23!",
 									"label": {
 										"password": "Password",
 										"confirmPassword": "Confirm password"
@@ -266,7 +267,7 @@
 								{
 									"name": "sqlAdministratorPassword",
 									"type": "Microsoft.Common.PasswordBox",
-									"defaultValue": "ChangeMe!",
+									"defaultValue": "ChangeMe23!",
 									"label": {
 										"password": "Password",
 										"confirmPassword": "Confirm password"

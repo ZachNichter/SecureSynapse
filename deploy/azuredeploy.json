@@ -112,6 +112,7 @@
     },
     "sqlAdminPassword": {
       "type": "securestring",
+      "defaultValue": "ChangeMe23!",
       "metadata": {
           "description": "description"
       }
