@@ -33,7 +33,8 @@
 	  "type": "String"
 	},
 	"virtualNetwork_default_subnet_name": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "default"
 	},
 	"virtualNetwork_default_subnet_address_prefix": {
 	  "type": "String"
