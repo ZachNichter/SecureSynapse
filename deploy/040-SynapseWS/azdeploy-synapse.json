@@ -264,15 +264,15 @@
             "tags": {},
             "resources": [
 				{
-					"type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+					"type": "blobServices/containers",
 					"apiVersion": "2022-05-01",
                     "condition": "[variables('isNewStorageAccountBool')]",
-					"name": "[format('{0}/default/{1}', parameters('dataLakeStorageAccountName'), parameters('dataLakeStorageFilesystemName'))]",
+					"name": "[concat('default/', parameters('dataLakeStorageFilesystemName'))]",
                     "properties": {
                         "publicAccess": "None"
                     },
 					"dependsOn": [
-						"[resourceId('Microsoft.Storage/storageAccounts', parameters('dataLakeStorageAccountName'))]"
+						"[concat('Microsoft.Storage/storageAccounts/', parameters('dataLakeStorageAccountName'))]"
 					]
 				}
             ]
@@ -302,7 +302,7 @@
                 }
             },
             "dependsOn": [
-				"[resourceId('Microsoft.Storage/storageAccounts', parameters('dataLakeStorageAccountName'))]"
+				"[concat('Microsoft.Storage/storageAccounts/', parameters('dataLakeStorageAccountName'))]"
             ]
         }
     ],

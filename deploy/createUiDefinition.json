@@ -387,7 +387,7 @@
 			"location": "[steps('basics').resourceScope.location.name]",
 			"parameters": {
 				"virtualNetwork_vnet_name": "[steps('vnetStep').vnet.name]",
-				"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.name]",
+				"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.addressPrefix]",
 				"virtualNetwork_bastion_subnet_name": "[steps('vnetStep').vnet.subnets.bastionSubnet.name]",
 				"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.bastionSubnet.addressPrefix]",
 				"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.appSubnet.name]",
