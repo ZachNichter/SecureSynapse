@@ -136,7 +136,7 @@
 								"addressPrefixSize": "/16"
 							},
 							"constraints": {
-								"minAddressPrefixSize": "/20"
+								"minAddressPrefixSize": "/24"
 							},
 							"options": {
 								"hideExisting": true
