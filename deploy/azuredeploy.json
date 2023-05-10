@@ -124,8 +124,7 @@
     "allowAllConnectionsBool": "[bool(parameters('allowAllConnections'))]",
     "allowSynapseADAuthOnlyBool": "[bool(parameters('allowSynapseADAuthOnly'))]",
     "uniqueSuffix": "[uniqueString(resourceGroup().id, deployment().name)]",
-// subnetNameForAcls
-	"dataLakeAccountTrim": "[substring(parameters('dataLakeAccount'),13,1)]",
+	"dataLakeAccountTrim": "[if(greater(length(parameters('dataLakeAccount')),12), substring(parameters('dataLakeAccount'),0,13),parameters('dataLakeAccount'))]",
     "dataLakeAccountUnique": "[concat(variables('dataLakeAccountTrim'), variables('uniqueSuffix'))]",
     "virtualMachineNameUnique": "[concat(parameters('virtualMachineName'), variables('uniqueSuffix'))]",      // Windows has max name length 15 characters
     "synapseWSNameUnique": "[concat(parameters('synapseWSName'), '-', variables('uniqueSuffix'))]",
@@ -136,14 +135,14 @@
 	"linked-vnet-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/01-Vnet/azdeployvnet.json",
 	"linked-jumpvm-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/02-JumpVM/azdeployvm.json",
 	"linked-synapsews-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/03-SynapseWS/azdeploysynapse.json",
-	"linked-synapsews-privatelinkhub": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/040-PrivateLinkHub/azdeployplh.json",
-	"linked-synapsews-pe": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/050-PrivateEndpoints/azdeploype.json"
+	"linked-synapsews-privatelinkhub": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/04-PrivateLinkHub/azdeployplh.json",
+	"linked-synapsews-pe": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/05-PrivateEndpoints/azdeploype.json"
   },
   "resources": [
     {
       "name": "synapseVnet",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2019-05-01",
+      "apiVersion": "2022-09-01",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -165,7 +164,7 @@
     {
       "name": "synapseJumpVM",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2019-05-01",
+      "apiVersion": "2022-09-01",
       "condition": "[variables('createJumpVMBool')]",
       "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'synapseVnet')]"],
       "properties": {
@@ -186,7 +185,7 @@
     {
       "name": "synapseWorkspace",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "condition": "[variables('createSynapseWSBool')]",
       "properties": {
         "mode": "Incremental",
@@ -207,7 +206,6 @@
           "isNewStorageAccount": { "value": "[variables('createNewStorageAccountBool')]" },
           "managedVirtualNetworkSettings": {
             "value": {
-                "allowedAadTenantIdsForLinking": [],
                 "preventDataExfiltration": true
             }
           }
@@ -217,7 +215,7 @@
     {
       "name": "synapsePrivateLinkHub",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "condition": "[variables('createSynapseWSBool')]",
       "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'synapseWorkspace')]"],
       "properties": {
@@ -235,7 +233,7 @@
     {
       "name": "synapsePrivateLinkHubPE",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "condition": "[variables('createSynapseWSBool')]",
       "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'synapsePrivateLinkHub')]"],
       "properties": {
@@ -248,11 +246,11 @@
         "parameters": {
           "hubPrivateEndpointName": { "value": "[concat('hub-', variables('synapseWSNameUnique'),'-pe')]" },
           "hubPrivateLinkResource": {
-            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Synapse/privateLinkHubs/', reference('synapsePrivateLinkHub', '2019-05-01').outputs.synapsePLHName.value)]"
+            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Synapse/privateLinkHubs/', reference('synapsePrivateLinkHub', '2022-09-01').outputs.synapsePLHName.value)]"
           },
           "sqlPrivateEndpointName": { "value": "[concat('sql-', variables('synapseWSNameUnique'),'-pe')]" },
           "sqlPrivateLinkResource": {
-            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Synapse/workspaces/', reference('synapseWorkspace', '2019-05-01').outputs.synapseWorkspaceName.value)]"
+            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Synapse/workspaces/', reference('synapseWorkspace', '2022-09-01').outputs.synapseWorkspaceName.value)]"
           },
           "sqlOnDemandPrivateEndpointName": { "value": "[concat('sqlondemand-', variables('synapseWSNameUnique'),'-pe')]" },
           "devPrivateEndpointName": { "value": "[concat('dev-', variables('synapseWSNameUnique'),'-pe')]" },
@@ -275,20 +273,20 @@
     "vmSize": {
       "condition": "[variables('createJumpVMBool')]",
       "type": "string",
-      "value": "[reference('synapseJumpVM', '2019-05-01').outputs.vmSize.value]"
+      "value": "[reference('synapseJumpVM', '2022-09-01').outputs.vmSize.value]"
     },
     "vmAdminUsername": {
       "condition": "[variables('createJumpVMBool')]",
       "type": "string",
-      "value": "[reference('synapseJumpVM', '2019-05-01').outputs.vmAdminUsername.value]"
+      "value": "[reference('synapseJumpVM', '2022-09-01').outputs.vmAdminUsername.value]"
     },
     "synapseWorkspaceName": {
       "type": "string",
-      "value": "[reference('synapseWorkspace', '2019-05-01').outputs.synapseWorkspaceName.value]"
+      "value": "[reference('synapseWorkspace', '2022-09-01').outputs.synapseWorkspaceName.value]"
     },
     "synapseWorkspaceURL": {
       "type": "string",
-      "value": "[reference('synapseWorkspace', '2019-05-01').outputs.webEndpoint.value]"
+      "value": "[reference('synapseWorkspace', '2022-09-01').outputs.webEndpoint.value]"
     },
     "synapseStorageAccount": {
       "type": "string",
@@ -296,35 +294,35 @@
     },
     "synapseStorageString": {
       "type": "string",
-      "value": "[reference('synapseWorkspace', '2019-05-01').outputs.synapseStorageString.value]"
+      "value": "[reference('synapseWorkspace', '2022-09-01').outputs.synapseStorageString.value]"
     },
     "synapseSQL": {
       "type": "string",
-      "value": "[reference('synapseWorkspace', '2019-05-01').outputs.sqlEndpoint.value]"
+      "value": "[reference('synapseWorkspace', '2022-09-01').outputs.sqlEndpoint.value]"
     },
     "synapseSqlOndemand": {
       "type": "string",
-      "value": "[reference('synapseWorkspace', '2019-05-01').outputs.ondemandEndpoint.value]"
+      "value": "[reference('synapseWorkspace', '2022-09-01').outputs.ondemandEndpoint.value]"
     },
     "synapsePLHName": {
       "type": "string",
-      "value": "[reference('synapsePrivateLinkHub', '2019-05-01').outputs.synapsePLHName.value]"
+      "value": "[reference('synapsePrivateLinkHub', '2022-09-01').outputs.synapsePLHName.value]"
     },
     "hubPrivateEndpointName": {
       "type": "string",
-      "value": "[reference('synapsePrivateLinkHubPE', '2019-05-01').outputs.hubPrivateEndpointName.value]"
+      "value": "[reference('synapsePrivateLinkHubPE', '2022-09-01').outputs.hubPrivateEndpointName.value]"
     },
     "DnsZoneGroupName": {
       "type": "string",
-      "value": "[reference('synapsePrivateLinkHubPE', '2019-05-01').outputs.DnsZoneGroupName.value]"
+      "value": "[reference('synapsePrivateLinkHubPE', '2022-09-01').outputs.DnsZoneGroupName.value]"
     },
     "virtualNetworkLinkName": {
       "type": "string",
-      "value": "[reference('synapsePrivateLinkHubPE', '2019-05-01').outputs.virtualNetworkLinkName.value]"
+      "value": "[reference('synapsePrivateLinkHubPE', '2022-09-01').outputs.virtualNetworkLinkName.value]"
     },
     "privateDnsZone": {
       "type": "string",
-      "value": "[reference('synapsePrivateLinkHubPE', '2019-05-01').outputs.privateDnsZone.value]"
+      "value": "[reference('synapsePrivateLinkHubPE', '2022-09-01').outputs.privateDnsZone.value]"
     }
   }
 }
