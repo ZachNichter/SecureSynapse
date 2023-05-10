@@ -56,11 +56,11 @@
 								"allowedValues": [
 									{
 										"label": "Yes (Recommended)",
-										"value": true
+										"value": "true"
 									},
 									{
 										"label": "No",
-										"value": false
+										"value": "false"
 									}
 								],
 								"required": true
@@ -71,11 +71,11 @@
 							"name": "vmName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "Virtual machine name",
-							"defaultValue": "[concat('vm', substring(steps('basics').resNamingSection.defaultResNamePart,0,13))]",
+							"defaultValue": "[concat('vm', substring(steps('basics').resNamingSection.defaultResNamePart,0,2))]",
 							"constraints": {
 								"required": true,
-								"regex": "^[a-z0-9-]{2,15}$",
-								"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2-15 characters long."
+								"regex": "^[a-z0-9-]{2,2}$",
+								"validationMessage": "Only lowercase alphanumeric characters are allowed, and must be 2 characters long."
 							},
 							"visible": "[steps('vmStep').deployJumpbox]"
 						},
@@ -105,7 +105,7 @@
 									"constraints": {
 										"required": true,
 										"regex": "(?=^.{8,}$)(?=.*\\d)(?=.*[!@#$%^&*]+)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
-										"validationMessage": "Password must be at least 8 characters long, including both uppercase and lowercase characters, numbers and special characters."
+										"validationMessage": "Password must be at least 8 characters long. Password must include an uppercase character. Password must include a lowercase character. Password must include a number. Password must include a special character."
 									},
 									"options": {
 										"hideConfirmation": false
@@ -301,10 +301,11 @@
 									},
 									"defaultValue": {
 										"prefix": "[concat('adlsraw', steps('basics').resNamingSection.defaultResNamePart)]",
-										"type": "Standard_RAGRS"
+										"type": "Standard_LRS"
 									},
 									"constraints": {
 										"allowedTypes": [
+											"Standard_LRS",
 											"Standard_RAGRS",											"Standard_LRS",
 											"Standard_GRS",
 											"Standard_ZRS"
@@ -356,11 +357,11 @@
 										"allowedValues": [
 											{
 												"label": "Yes (Recommended)",
-												"value": true
+												"value": "true"
 											},
 											{
 												"label": "No",
-												"value": false
+												"value": "false"
 											}
 										],
 										"required": true
@@ -390,11 +391,11 @@
 										"allowedValues": [
 											{
 												"label": "Yes (Recommended)",
-												"value": false
+												"value": "false"
 											},
 											{
 												"label": "No",
-												"value": true
+												"value": "true"
 											}
 										],
 										"required": true
