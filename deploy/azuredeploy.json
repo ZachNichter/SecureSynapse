@@ -3,41 +3,52 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
 	"virtualNetwork_vnet_name": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "vnet-changeme"
 	},
 	"virtualNetwork_vnet_address_prefix": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "172.20.0.0/16"
 	},
 	"virtualNetwork_bastion_subnet_name": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "BastionSubnet"
 	},
 	"virtualNetwork_bastion_subnet_address_prefix": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "172.20.4.0/24"
 	},
 	"virtualNetwork_app_subnet_name": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "PrivateEndpointSubnet"
 	},
 	"virtualNetwork_app_subnet_address_prefix": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "172.20.3.0/24"
 	},
 	"virtualNetwork_data_subnet_name": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "DataSubnet"
 	},
 	"virtualNetwork_data_subnet_address_prefix": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "172.20.2.0/24"
 	},
 	"virtualNetwork_gateway_subnet_name": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "GatewaySubnet"
 	},
 	"virtualNetwork_gateway_subnet_address_prefix": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "172.20.1.0/24"
 	},
 	"virtualNetwork_default_subnet_name": {
 	  "type": "String",
 	  "defaultValue": "default"
 	},
 	"virtualNetwork_default_subnet_address_prefix": {
-	  "type": "String"
+	  "type": "String",
+	  "defaultValue": "172.20.0.0/24"
 	},
 	"createJumpVM": {
 	  "type": "bool",
