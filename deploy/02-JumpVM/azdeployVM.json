@@ -28,36 +28,37 @@
             ]
         },
         "subnetName": {
-            "type": "String"
+            "type": "string"
         },
         "virtualNetworkName": {
-            "type": "String"
+            "type": "string"
         },
         "publicIpAddressType": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "Dynamic"
         },
         "publicIpAddressSku": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "Basic"
         },
         "osDiskType": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "StandardSSD_LRS"
         },
         "virtualMachineSize": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "Standard_DS11_v2"
         },
         "vmAdminUsername": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "cloudsa"
         },
         "vmAdminPassword": {
-            "type": "secureString"
+            "type": "secureString",
+            "defaultValue": null
         },
         "patchMode": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "AutomaticByOS"
         },
         "enableHotpatching": {
@@ -65,23 +66,23 @@
             "defaultValue": false
         },
         "autoShutdownStatus": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "Enabled"
         },
         "autoShutdownTime": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "19:00"
         },
         "autoShutdownTimeZone": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "Central Standard Time"
         },
         "autoShutdownNotificationStatus": {
-            "type": "String",
-            "defaultValue": "Enabled"
+            "type": "string",
+            "defaultValue": "Disabled"
         },
         "autoShutdownNotificationLocale": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "en"
         }
     },
@@ -206,7 +207,7 @@
         {
             "name": "[concat('shutdown-computevm-', parameters('virtualMachineName'))]",
             "type": "Microsoft.DevTestLab/schedules",
-            "apiVersion": "2017-04-26-preview",
+            "apiVersion": "2018-09-15",
             "location": "[variables('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
@@ -222,7 +223,7 @@
                 "notificationSettings": {
                     "status": "[parameters('autoShutdownNotificationStatus')]",
                     "notificationLocale": "[parameters('autoShutdownNotificationLocale')]",
-                    "timeInMinutes": "30"
+                    "timeInMinutes": 30
                 }
             }
         },
@@ -247,15 +248,15 @@
     ],
     "outputs": {
         "vmName": {
-            "type": "String",
+            "type": "string",
             "value": "[parameters('virtualMachineName')]"
         },
         "vmSize": {
-            "type": "String",
+            "type": "string",
             "value": "[parameters('virtualMachineSize')]"
         },
         "vmAdminUsername": {
-            "type": "String",
+            "type": "string",
             "value": "[parameters('vmAdminUsername')]"
         }
     }

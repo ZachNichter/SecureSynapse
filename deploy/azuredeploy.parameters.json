@@ -3,76 +3,25 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualNetwork_vnet_name": {
-            "value": "vnet-projectname"
+            "value": "vnet-customer"
         },
-        "virtualNetwork_vnet_address_prefix": {
+        "virtualNetwork_address_block": {
             "value": "172.20.0.0/16"
         },
-		"virtualNetwork_bastion_subnet_name": {
-			"value": "BastionSubnet"
-		},
-		"virtualNetwork_bastion_subnet_address_prefix": {
-			"value": "172.20.4.0/26"
-		},
-		"virtualNetwork_app_subnet_name": {
-			"value": "PrivateEndpointSubnet"
-		},
-		"virtualNetwork_app_subnet_address_prefix": {
-			"value": "172.20.3.0/26"
-		},
-		"virtualNetwork_data_subnet_name": {
-			"value": "DataSubnet"
-		},
-		"virtualNetwork_data_subnet_address_prefix": {
-			"value": "172.20.2.0/26"
-		},
-		"virtualNetwork_gateway_subnet_name": {
-			"value": "GatewaySubnet"
-		},
-		"virtualNetwork_gateway_subnet_address_prefix": {
-			"value": "172.20.1.0/26"
-		},
-		"virtualNetwork_default_subnet_name": {
-			"value": "default"
-		},
-		"virtualNetwork_default_subnet_address_prefix": {
-			"value": "172.20.0.0/26"
-		},
-		"keyVaultName":{
-			"value": "akv-projectname"
-		},
-        "createSynapseWS": {
-            "value": "true"
+        "virtualNetwork_appsubnet_address_block": {
+            "value": "172.20.3.0/26"
         },
-		"synapseWSName": {
-			"value": "syn-ws-projectname"
-		},
-        "allowNSGManagementSynapseNetworkTraffic": {
-            "value": "false"
+        "virtualNetwork_datasubnet_address_block": {
+            "value": "172.20.2.0/26"
         },
-        "allowSynapseADAuthOnly": {
-            "value": true
+        "virtualNetwork_gateway_address_block": {
+            "value": "172.20.1.0/26"
         },
-        "sqlAdministratorLogin": {
-            "value": "sqladminuser"
+        "virtualNetwork_default_address_block": {
+            "value": "172.20.0.0/26"
         },
-        "sqlAdministratorPassword": {
-            "value": "ChangeThis"
-        },
-        "createNewStorageAccount": {
-			"value": true
-        },
-        "dataLakeAccount": {
-            "value": "adlsprojectname"
-        },
-		"dataLakeAccountType":  {
-            "value": "Standard_RAGRS"
-        },
-		"dataLakeAccountKind":   {
-			"value": "StorageV2"
-		},
         "createJumpVM": {
-            "value": true
+            "value": "true"
         },
         "virtualMachineName": {
             "value": "vm"
@@ -81,14 +30,34 @@
             "value": "cloudsa"
         },
         "vmAdminPassword": {
-            "value": "ChangeThis"
+            "value": ""
         },
-        "deployBastion": {
-            "value": true
+        "createSynapseWS": {
+            "value": "true"
         },
-		"bastionHostName": {
-			"value": "bas-projectname"
-		}
-
-	}
+        "createNewStorageAccount": {
+            "value": "true"
+        },
+        "dataLakeAccount": {
+            "value": "secsyndlac"
+        },
+        "dataLakeAccountContainer": {
+            "value": "synapsefilesystem"
+        },
+        "synapseWSName": {
+            "value": "secsynarm-ws"
+        },
+        "allowAllConnections": {
+            "value": "false"
+        },
+        "allowSynapseADAuthOnly": {
+            "value": "true"
+        },
+        "sqlAdminLogin": {
+            "value": "sqladminuser"
+        },
+        "sqlAdminPassword": {
+            "value": ""
+        }
+    }
 }

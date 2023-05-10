@@ -214,7 +214,7 @@
 						{
 							"name": "workspaceSection",
 							"type": "Microsoft.Common.Section",
-							"label": "Synapse workspace",
+							"label": "Synapse Workspace",
 							"elements": [
 								{
 									"name": "synapseWSName",
@@ -239,11 +239,11 @@
 										"allowedValues": [
 											{
 												"label": "Yes (Recommended)",
-												"value": true
+												"value": "true"
 											},
 											{
 												"label": "No",
-												"value": false
+												"value": "false"
 											}
 										],
 										"required": true
@@ -296,17 +296,21 @@
 										"prefix": "Storage account name",
 										"type": "Storage account type"
 									},
+									"toolTip": {
+										"prefix": "Only lowercase alphanumeric characters are allowed. Length of 3-13 characters."
+									},
 									"defaultValue": {
-										"prefix": "[concat('adls', steps('basics').resNamingSection.defaultResNamePart)]",
+										"prefix": "[concat('adlsraw', steps('basics').resNamingSection.defaultResNamePart)]",
 										"type": "Standard_RAGRS"
 									},
 									"constraints": {
-										"allowedTypes": ["Standard_RAGRS"],
-										"excludedTypes": [
-											"Premium_LRS",
-											"Standard_LRS",
+										"allowedTypes": [
+											"Standard_RAGRS",											"Standard_LRS",
 											"Standard_GRS",
 											"Standard_ZRS"
+										],
+										"excludedTypes": [
+											"Premium_LRS"
 										]
 									},
 									"options": {
@@ -400,29 +404,6 @@
 							]
 						}
 					]
-				},
-				{
-					"name": "tagStep",
-					"label": "Tags",
-					"elements": [
-						{
-							"name": "tagsByResource",
-							"type": "Microsoft.Common.TagsByResource",
-							"resources": [
-								"Microsoft.Compute/virtualMachines",
-								"Microsoft.KeyVault/vaults",
-								"Microsoft.Network/bastionHosts",
-								"Microsoft.Network/networkSecurityGroups",
-								"Microsoft.Network/privateDnsZones",
-								"Microsoft.Network/privateEndpoints",
-								"Microsoft.Network/publicIPAddresses",
-								"Microsoft.Network/virtualNetworks",
-								"Microsoft.Storage/storageAccounts",
-								"Microsoft.Synapse/privateLinkHubs",
-								"Microsoft.Synapse/workspaces"
-							]
-						}
-					]
 				}
 			]
 		},
@@ -432,41 +413,30 @@
 			"location": "[steps('basics').resourceScope.location.name]",
 			"parameters": {
 				"virtualNetwork_vnet_name": "[steps('vnetStep').vnet.name]",
-				"virtualNetwork_vnet_address_prefix": "[steps('vnetStep').vnet.addressPrefix]",
-				"virtualNetwork_bastion_subnet_name": "[steps('vnetStep').vnet.subnets.bastionSubnet.name]",
-				"virtualNetwork_bastion_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.bastionSubnet.addressPrefix]",
+				"virtualNetwork_address_block": "[steps('vnetStep').vnet.addressPrefix]",
 				"virtualNetwork_app_subnet_name": "[steps('vnetStep').vnet.subnets.appSubnet.name]",
-				"virtualNetwork_app_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.appSubnet.addressPrefix]",
+				"virtualNetwork_appsubnet_address_block": "[steps('vnetStep').vnet.subnets.appSubnet.addressPrefix]",
 				"virtualNetwork_data_subnet_name": "[steps('vnetStep').vnet.subnets.dataSubnet.name]",
-				"virtualNetwork_data_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.dataSubnet.addressPrefix]",
+				"virtualNetwork_datasubnet_address_block": "[steps('vnetStep').vnet.subnets.dataSubnet.addressPrefix]",
 				"virtualNetwork_gateway_subnet_name": "[steps('vnetStep').vnet.subnets.gatewaySubnet.name]",
-				"virtualNetwork_gateway_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.gatewaySubnet.addressPrefix]",
+				"virtualNetwork_gateway_address_block": "[steps('vnetStep').vnet.subnets.gatewaySubnet.addressPrefix]",
 				"virtualNetwork_default_subnet_name": "[steps('vnetStep').vnet.subnets.default.name]",
-				"virtualNetwork_default_subnet_address_prefix": "[steps('vnetStep').vnet.subnets.default.addressPrefix]",
+				"virtualNetwork_default_address_block": "[steps('vnetStep').vnet.subnets.default.addressPrefix]",
 
 				"createSynapseWS": "true",
-				"synapseWSName": "[steps('synapseStep').workspaceSection.synapseWSName]",
-				"allowNSGManagementSynapseNetworkTraffic": "true",
-				"allowSynapseADAuthOnly": "[steps('synapseStep').workspaceSection.allowSynapseADAuthOnly]",
-				"sqlAdministratorLogin": "[steps('synapseStep').workspaceSection.sqlAdministratorLogin]",
-				"sqlAdministratorPassword": "[steps('synapseStep').workspaceSection.sqlAdministratorPassword]",
 				"createNewStorageAccount": "true",
 				"dataLakeAccount": "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.prefix]",
-				"dataLakeAccountType":  "[steps('synapseStep').storageSection.selectSynapseADLSStorageAccount.type]",
-				"dataLakeAccountKind":  "StorageV2",
 				"dataLakeAccountContainer": "[steps('synapseStep').storageSection.dataLakeAccountContainer]",
-				"createSynapseKeyVault": "[string(steps('synapseStep').keyVaultSection.deploySynapseKeyVault)]",
-				"keyVaultName": "[steps('synapseStep').keyVaultSection.keyVaultName]",
-				"disableKeyVaultPublicNetworkAccess": "[steps('synapseStep').keyVaultSection.disableKeyVaultPublicNetworkAccess]",
+				"synapseWSName": "[steps('synapseStep').workspaceSection.synapseWSName]",
+				"allowAllConnections": "false",
+				"allowSynapseADAuthOnly": "[steps('synapseStep').workspaceSection.allowSynapseADAuthOnly]",
+				"sqlAdminLogin": "[steps('synapseStep').workspaceSection.sqlAdministratorLogin]",
+				"sqlAdminPassword": "[steps('synapseStep').workspaceSection.sqlAdministratorPassword]",
 
 				"createJumpVM": "[steps('vmStep').deployJumpbox]",
-				"deployBastion": "[steps('vmStep').deployJumpbox]",
-				"bastionHostName": "[concat('bas-', steps('basics').resNamingSection.defaultResNamePart)]",
 				"virtualMachineName": "[steps('vmStep').vmName]",
 				"vmAdminUsername": "[steps('vmStep').vmCredSection.vmAdminUsername]",
 				"vmAdminPassword": "[steps('vmStep').vmCredSection.vmCredentials]",
-
-				"tagsByResource": "[steps('tagStep').tagsByResource]"
 			}
 		}
 	}

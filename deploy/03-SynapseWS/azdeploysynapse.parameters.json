@@ -3,42 +3,48 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "value": "synapse-ws"
+            "value": "secsynarm-ws"
         },
-        "dataLakeStorageAccountName": {
-            "value": "adlssecuresynapse"
+        "defaultDataLakeStorageAccountName": {
+            "value": "securesynapseadls"
         },
-        "dataLakeStorageFilesystemName": {
-            "value": "securesynapse-fs"
+        "defaultDataLakeStorageFilesystemName": {
+            "value": "synapsefiles"
         },
-        "allowSynapseADAuthOnly": {
-            "value": true
-        },
+		"allowSynapseADAuthOnly": {
+			"value": true
+		},
         "sqlAdministratorLogin": {
-            "value": "sqladmin"
+            "value": "sqlAdmin"
         },
-        "sqlAdministratorPassword": {
-            "value": ""
+        "sqlAdministratorLoginPassword": {
+            "value": "ChangeMe!"
         },
         "setWorkspaceIdentityRbacOnStorageAccount": {
             "value": true
         },
-		"allowNSGManagementSynapseNetworkTraffic": {
-			"value": true
-		},
+        "allowAllConnections": {
+            "value": true
+        },
+        "subnetNameForAcls": {
+            "value": ""
+        },
         "grantWorkspaceIdentityControlForSql": {
             "value": "Enabled"
         },
         "managedVirtualNetwork": {
             "value": "default"
         },
-        "dataLakeStorageAccountSubscriptionID": {
-            "value": ""
+        "tagValues": {
+            "value": {}
         },
-        "dataLakeStorageAccountLocation": {
-            "value": ""
+        "storageSubscriptionID": {
+            "value": "" // TODO: Get the subscription ID from master template
         },
-        "dataLakeStorageAccountRoleUniqueId": {
+        "storageLocation": {
+            "value": "" // TODO: Get location from resource group
+        },
+        "storageRoleUniqueId": {
             "value": ""
         },
         "isNewStorageAccount": {
@@ -53,22 +59,25 @@
         "managedResourceGroupName": {
             "value": ""
         },
-        "dataLakeStorageAccountAccessTier": {
+        "storageAccessTier": {
             "value": "Hot"
         },
-		"dataLakeMinimumTlsVersion": {
-			"value": "TLS1_2"
-		},
-		"dataLakeStorageAccountType": {
+        "storageAccountType": {
             "value": "Standard_RAGRS"
         },
         "storageSupportsHttpsTrafficOnly": {
             "value": true
         },
-        "dataLakeStorageAccountKind": {
+        "storageKind": {
             "value": "StorageV2"
         },
         "storageIsHnsEnabled": {
+            "value": true
+        },
+        "userObjectId": {
+            "value": "" // TODO: Need to pass user object ID in as param from master template
+        },
+        "setSbdcRbacOnStorageAccount": {
             "value": true
         },
         "setWorkspaceMsiByPassOnStorageAccount": {

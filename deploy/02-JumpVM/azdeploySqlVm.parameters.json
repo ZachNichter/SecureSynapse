@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "createJumpVM": {
+            "value": false
+        },
+        "virtualMachineName": {
+            "value": "VM"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_D2ds_v4"
+        },
+        "existingVirtualNetworkName": {
+            "value": "vnet-customer"
+        },
+        "existingVnetResourceGroup": {
+            "value": ""
+        },
+        "existingSubnetName": {
+            "value": "appvm-sub"
+        },
+        "imageOffer": {
+            "value": "sql2019-ws2019"
+        },
+        "sqlSku": {
+            "value": "SQLDEV"
+        },
+        "adminUsername": {
+            "value": "cloudsa"
+        },
+        "adminPassword": {
+            "value": "ChangeThisPWD!"
+        },
+        "storageWorkloadType": {
+            "value": "General"
+        },
+        "sqlDataDisksCount": {
+            "value": 1
+        },
+        "dataPath": {
+            "value": "F:\\SQLData"
+        },
+        "sqlLogDisksCount": {
+            "value": 1
+        },
+        "logPath": {
+            "value": "G:\\SQLLog"
+        },
+        "location": {
+
+            "value": ""
+        }
+    }
+}

@@ -1,15 +1,19 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+    "contentVersion": "1.0.0.1",
     "parameters": {
         "hubName": {
-            "type": "String",
-            "defaultValue": "hubPROJECTNAME"
+            "type": "string",
+            "defaultValue": "hubsynapse"
+        },
+        "tagValues": {
+            "type": "object",
+            "defaultValue": {}
         }
     },
     "variables": {
 //        "uniqueSuffix": "[uniqueString(resourceGroup().id)]",            // not needed if unique name is passed in
-//        "hubNameUnique": "[concat(parameters('hubName'), variables('uniqueSuffix'))]",
+//        "hubNameUnique": "[concat(parameters('hubName'), variables('uniqueSuffix'))]",  
         "location_v": "[resourceGroup().location]"
     },
     "resources": [
@@ -25,12 +29,12 @@
             "properties": {},
             "resources": [],
             "dependsOn": [],
-            "tags": {}
+            "tags": "[parameters('tagValues')]"
         }
     ],
     "outputs": {
         "synapsePLHName": {
-            "type": "String",
+            "type": "string",
             "value": "[parameters('hubName')]"
         }
     }
