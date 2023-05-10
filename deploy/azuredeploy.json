@@ -132,12 +132,11 @@
     "distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', variables('uniqueSuffix'))]",
     "appSubnetName": "privateEndpointSubnet",
     "dataSubnetName": "dataSubnet",
-
-	"linked-vnet-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/01-Vnet/azdeployvnet.json",
-	"linked-jumpvm-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/02-JumpVM/azdeployvm.json",
+	"linked-vnet-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/01-Vnet/azdeployVnet.json",
+	"linked-jumpvm-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/02-JumpVM/azdeployVM.json",
 	"linked-synapsews-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/03-SynapseWS/azdeploysynapse.json",
-	"linked-synapsews-privatelinkhub": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/04-PrivateLinkHub/azdeployplh.json",
-	"linked-synapsews-pe": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/05-PrivateEndpoints/azdeploype.json"
+	"linked-synapsews-privatelinkhub": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/04-PrivateLinkHub/azdeployPLH.json",
+	"linked-synapsews-pe": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/05-PrivateEndpoints/azdeployPE.json"
   },
   "resources": [
     {
