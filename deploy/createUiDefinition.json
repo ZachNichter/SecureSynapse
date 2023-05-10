@@ -104,8 +104,8 @@
 									},
 									"constraints": {
 										"required": true,
-										"regex": "^[A-Za-z0-9]{8,30}$",
-										"validationMessage": "Required to have at least 1 uppercase, 1 lowercase, 1 number and 1 special character, and must be 8-30 characters long."
+										"regex": "(?=^.{8,}$)(?=.*\\d)(?=.*[!@#$%^&*]+)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
+										"validationMessage": "Password must be at least 8 characters long, including both uppercase and lowercase characters, numbers and special characters."
 									},
 									"options": {
 										"hideConfirmation": false
@@ -274,8 +274,8 @@
 									"toolTip": "",
 									"constraints": {
 										"required": true,
-										"regex": "^[A-Za-z0-9]{8,30}$",
-										"validationMessage": "Required to have at least 1 uppercase, 1 lowercase, 1 number and 1 special character, and must be 8-30 characters long."
+										"regex": "(?=^.{8,}$)(?=.*\\d)(?=.*[!@#$%^&*]+)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
+										"validationMessage": "Password must be at least 8 characters long, including both uppercase and lowercase characters, numbers and special characters."
 											},
 									"options": {
 										"hideConfirmation": false
