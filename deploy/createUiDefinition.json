@@ -3,7 +3,7 @@
     "view": {
 		"kind":"form",
 		"properties": {
-			"title": "Analytics end-to-end with Azure Synapse - Deployment Accelerator",
+			"title": "Crayon DPi30 Secure Synapse Deployment Accelerator",
 			"steps": [
 				{
                     "name": "basics",
@@ -103,7 +103,9 @@
 										"confirmPassword": "Confirm password"
 									},
 									"constraints": {
-										"required": true
+										"required": true,
+										"regex": "^[A-Za-z0-9]{8,30}$",
+										"validationMessage": "Required to have at least 1 uppercase, 1 lowercase, 1 number and 1 special character, and must be 8-30 characters long."
 									},
 									"options": {
 										"hideConfirmation": false
@@ -229,10 +231,23 @@
 								},
 								{
 									"name": "allowSynapseADAuthOnly",
-									"type": "Microsoft.Common.CheckBox",
-									"label": "Allow Azure AD authentication only for SQL pools? (Recommended)",
-									"tooltip": "Azure AD authentication is the most secure authentication into all synapse SQL pools. This option will disable SQL authentication for synapse SQL pools",
-									"defaultValue": true,
+									"type": "Microsoft.Common.OptionsGroup",
+									"label": "Allow Azure AD authentication only for SQL pools?",
+									"tooltip": "Azure AD authentication is the most secure authentication into all synapse SQL pools. This option will disable SQL authentication for synapse SQL pools.",
+									"defaultValue": "Yes (Recommended)",
+									"constraints": {
+										"allowedValues": [
+											{
+												"label": "Yes (Recommended)",
+												"value": true
+											},
+											{
+												"label": "No",
+												"value": false
+											}
+										],
+										"required": true
+									},
 									"visible": true
 								},
 								{
@@ -258,8 +273,10 @@
 									},
 									"toolTip": "",
 									"constraints": {
-										"required": true
-									},
+										"required": true,
+										"regex": "^[A-Za-z0-9]{8,30}$",
+										"validationMessage": "Required to have at least 1 uppercase, 1 lowercase, 1 number and 1 special character, and must be 8-30 characters long."
+											},
 									"options": {
 										"hideConfirmation": false
 									},
@@ -327,9 +344,23 @@
 								},
 								{
 									"name": "deploySynapseKeyVault",
-									"type": "Microsoft.Common.CheckBox",
-									"label": "Create a new key vault resource for this deployment? (Recommended)",
-									"defaultValue": true,
+									"type": "Microsoft.Common.OptionsGroup",
+									"label": "Create a new key vault resource for this deployment?",
+									"tooltip": "Azure AD authentication is the most secure authentication into all synapse SQL pools. This option will disable SQL authentication for synapse SQL pools.",
+									"defaultValue": "Yes (Recommended)",
+									"constraints": {
+										"allowedValues": [
+											{
+												"label": "Yes (Recommended)",
+												"value": true
+											},
+											{
+												"label": "No",
+												"value": false
+											}
+										],
+										"required": true
+									},
 									"visible": true
 								},
 								{
@@ -347,9 +378,23 @@
 								},
 								{
 									"name": "disableKeyVaultPublicNetworkAccess",
-									"type": "Microsoft.Common.CheckBox",
-									"label": "Disable public network access to this key vault? (Recommended)",
-									"defaultValue": true,
+									"type": "Microsoft.Common.OptionsGroup",
+									"label": "Disable public network access to this key vault?",
+									"tooltip": "Azure AD authentication is the most secure authentication into all synapse SQL pools. This option will disable SQL authentication for synapse SQL pools.",
+									"defaultValue": "Yes (Recommended)",
+									"constraints": {
+										"allowedValues": [
+											{
+												"label": "Yes (Recommended)",
+												"value": false
+											},
+											{
+												"label": "No",
+												"value": true
+											}
+										],
+										"required": true
+									},
 									"visible": "[steps('synapseStep').keyVaultSection.deploySynapseKeyVault]"
 								}
 							]
