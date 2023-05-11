@@ -134,19 +134,19 @@
 							},
 							"defaultValue": {
 								"name": "",
-								"addressPrefixSize": "/16"
+								"addressPrefixSize": "/20"
 							},
 							"constraints": {
 								"minAddressPrefixSize": "/24"
 							},
 							"options": {
-								"hideExisting": true
+								"hideExisting": false
 							},
 							"subnets": {
 								"defaultSubnet": {
 									"label": "Default subnet",
 									"defaultValue": {
-										"name": "default",
+										"name": "DefaultSubnet",
 										"addressPrefixSize": "/24"
 									},
 									"constraints": {
