@@ -236,7 +236,7 @@
     {
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "apiVersion": "2020-05-01",
-      "name": "[concat(parameters('virtualNetwork_vnet_name'), '/default')]",
+      "name": "[concat(parameters('virtualNetwork_vnet_name'), '/DefaultSubnet')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetwork_vnet_name'))]"
       ],
@@ -279,7 +279,7 @@
         },
         "subnets": [
           {
-            "name": "default",
+            "name": "DefaultSubnet",
             "properties": {
               "addressPrefix": "[parameters('virtualNetwork_default_address_block')]",
               "delegations": [],

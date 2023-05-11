@@ -130,8 +130,9 @@
     "virtualMachineNameUnique": "[concat(parameters('virtualMachineName'), variables('uniqueSuffix'))]",      // Windows has max name length 15 characters
     "synapseWSNameUnique": "[concat(parameters('synapseWSName'), '-', variables('uniqueSuffix'))]",
     "distinctVnetName": "[concat(parameters('virtualNetwork_vnet_name'), '-', variables('uniqueSuffix'))]",
-    "appSubnetName": "privateEndpointSubnet",
-    "dataSubnetName": "dataSubnet",
+    "appSubnetName": "PrivateEndpointSubnet",
+    "dataSubnetName": "DataSubnet",
+
 	"linked-vnet-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/01-Vnet/azdeployVnet.json",
 	"linked-jumpvm-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/02-JumpVM/azdeployVM.json",
 	"linked-synapsews-template": "https://raw.githubusercontent.com/ZachNichter/SecureSynapse/main/deploy/03-SynapseWS/azdeploysynapse.json",
